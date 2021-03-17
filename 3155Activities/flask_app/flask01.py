@@ -1,8 +1,11 @@
 # FLASK Tutorial 1 -- We show the bare bones code to get an app up and running
 
 # imports
-import os                 # os is used to get environment variables IP & PORT
-from flask import Flask   # Flask is the web app that we will customize
+import os
+from flask import Flask
+from flask import render_template
+
+
 
 app = Flask(__name__)     # create an app
 
@@ -11,7 +14,8 @@ app = Flask(__name__)     # create an app
 # get called. What it returns is what is shown as the web page
 @app.route('/index')
 def index():
-    return 'Welcome, Notes App User!'
+   
+     return render_template('index.html')
 
 
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
