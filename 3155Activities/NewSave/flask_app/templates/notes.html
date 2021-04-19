@@ -13,6 +13,7 @@
             <a href="{{url_for('index') }}"> Home</a> ||
             <a href="{{ url_for('get_notes') }}"> My Notes</a>
         </nav>
+        <h1>Welcome {{user.name}} to the 49er Notes App!</h1>
         <h1>Listing notes</h1>
 
         <table>
@@ -22,7 +23,7 @@
             </tr>
             {% for key, value in notes.items() %}
             <tr>
-                <td><a href="notes/{{key}}">{{ value.title }}</a></td>
+                <td><a href="{{ url_for('get_note', note_id=key) }}">{{ value.title }}</a></td>
                 <td>{{ value.date }}</td>
             </tr>
             {% endfor %}
