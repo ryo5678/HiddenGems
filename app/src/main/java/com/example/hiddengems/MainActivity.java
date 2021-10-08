@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainerView, new MainFragment(),"test")
+                .add(R.id.containerView, new MainFragment(),"First Screen")
                 .commit();
 
     }
