@@ -16,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HiddenGemsUIExperiment">
         <activity
+            android:name=".NavigationBar"
+            android:exported="true"
+            android:label="@string/title_activity_navigation_bar" />
+        <activity
             android:name=".profileScreen"
             android:exported="true" />
         <activity
