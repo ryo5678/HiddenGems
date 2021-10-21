@@ -1,10 +1,12 @@
-package com.example.hiddengems;
+package com.example.hiddengems.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class homeScreen extends AppCompatActivity {
+import com.example.hiddengems.R;
+
+public class HomeFragment extends AppCompatActivity {
 
     public String name = "Guest";
     @Override

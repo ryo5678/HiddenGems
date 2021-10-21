@@ -20,16 +20,16 @@
             android:exported="true"
             android:label="@string/title_activity_navigation_bar" />
         <activity
-            android:name=".profileScreen"
+            android:name=".profile.ProfileFragment"
             android:exported="true" />
         <activity
             android:name=".addScreen"
             android:exported="true" />
         <activity
-            android:name=".searchScreen"
+            android:name=".search.SearchFragment"
             android:exported="true" />
         <activity
-            android:name=".homeScreen"
+            android:name=".home.HomeFragment"
             android:exported="true" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -44,7 +44,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".map.MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity

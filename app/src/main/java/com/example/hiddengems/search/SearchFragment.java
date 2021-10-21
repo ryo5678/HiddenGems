@@ -1,10 +1,12 @@
-package com.example.hiddengems;
+package com.example.hiddengems.search;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class searchScreen extends AppCompatActivity {
+import com.example.hiddengems.R;
+
+public class SearchFragment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

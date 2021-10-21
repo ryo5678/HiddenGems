@@ -1,4 +1,4 @@
-package com.example.hiddengems;
+package com.example.hiddengems.home;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hiddengems.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CustomerServiceFragment#newInstance} factory method to
+ * Use the {@link WhatsNewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomerServiceFragment extends Fragment {
+public class WhatsNewFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class CustomerServiceFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CustomerServiceFragment() {
+    public WhatsNewFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class CustomerServiceFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CustomerServiceFragment.
+     * @return A new instance of fragment WhatsNewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomerServiceFragment newInstance(String param1, String param2) {
-        CustomerServiceFragment fragment = new CustomerServiceFragment();
+    public static WhatsNewFragment newInstance(String param1, String param2) {
+        WhatsNewFragment fragment = new WhatsNewFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class CustomerServiceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer_service, container, false);
+        return inflater.inflate(R.layout.fragment_whats_new, container, false);
     }
 }

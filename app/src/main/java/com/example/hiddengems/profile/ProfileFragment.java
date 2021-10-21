@@ -1,10 +1,12 @@
-package com.example.hiddengems;
+package com.example.hiddengems.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class profileScreen extends AppCompatActivity {
+import com.example.hiddengems.R;
+
+public class ProfileFragment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
