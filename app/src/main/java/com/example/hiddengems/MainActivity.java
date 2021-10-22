@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.hiddengems.databinding.ActivityMainBinding;
+import com.example.hiddengems.profile.*;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile {
 
     ActivityMainBinding binding;
-    FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +22,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.containerView, new MainFragment(),"First Screen")
+                .add(R.id.rootView, new ProfileFragment())
                 .commit();
 
+    }
+
+    @Override
+    public void tagRequest() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.rootView, RequestTagsFragment.newInstance())
+                .addToBackStack("TagRequest")
+                .commit();
     }
 }
