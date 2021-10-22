@@ -53,6 +53,9 @@ public class RequestTagsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Request Tags");
+
+
+
         binding.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
