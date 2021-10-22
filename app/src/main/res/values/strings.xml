@@ -21,6 +21,47 @@
     <string name="submit">Submit</string>
     <string name="missing">The textbox can not be left empty. Please enter a tag or tags before submitting.</string>
 
+    <string-array name="filter_categories">
+        <item>Monument</item>
+        <item>Restaurant</item>
+        <item>Event</item>
+        <item>Historical</item>
+        <item>Park</item>
+        <item>Trail</item>
+        <item>Bar</item>
+        <item>Bakery</item>
+    </string-array>
+
+    <string-array name="filter_tags">
+        <item>Italian</item>
+        <item>Sushi</item>
+        <item>Coffee</item>
+        <item>Mexican</item>
+        <item>Indian</item>
+        <item>Bowling</item>
+        <item>Craft Beer</item>
+        <item>Waterfall</item>
+        <item>Overlook</item>
+        <item>Thai</item>
+        <item>Dancing</item>
+        <item>Memorial</item>
+    </string-array>
+
+    <string-array name="seasons">
+        <item>Summer</item>
+        <item>Fall</item>
+        <item>Winter</item>
+        <item>Spring</item>
+    </string-array>
+
+    <string-array name="Ratings">
+        <item>1-Star</item>
+        <item>2-Star</item>
+        <item>3-Star</item>
+        <item>4-Star</item>
+        <item>5-Star</item>
+    </string-array>
+  
     <!--Operating Hours-->
     <string name="OpHoursChange">Operating Hours Change?</string>
     <string name="opHoursDescription">Has there been a change in a location\'s operating hours
