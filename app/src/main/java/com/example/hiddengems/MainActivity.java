@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.hiddengems.databinding.ActivityMainBinding;
+import com.example.hiddengems.profile.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,8 +22,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.containerView, new MainFragment(),"First Screen")
+                .add(R.id.rootView, new ProfileFragment())
                 .commit();
 
     }
