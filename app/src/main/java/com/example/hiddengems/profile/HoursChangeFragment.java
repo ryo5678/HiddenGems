@@ -43,7 +43,6 @@ public class HoursChangeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHoursChangeBinding.inflate(inflater,container,false);
-
         return binding.getRoot();
     }
 

@@ -42,4 +42,12 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("operatingHoursRequest")
                 .commit();
     }
+
+    @Override
+    public void contactUs() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.rootView, ContactUsFragment.newInstance())
+                .addToBackStack("contactUs")
+                .commit();
+    }
 }
