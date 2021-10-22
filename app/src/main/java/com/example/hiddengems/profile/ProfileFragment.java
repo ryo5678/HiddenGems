@@ -58,6 +58,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        binding.requestOperatingHours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.operatingHoursRequest();
+            }
+        });
+
 
     }
 
@@ -73,5 +80,6 @@ public class ProfileFragment extends Fragment {
 
     public interface profile{
         void tagRequest();
+        void operatingHoursRequest();
     }
 }

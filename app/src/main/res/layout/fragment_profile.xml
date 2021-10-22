@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="auto"
     tools:context=".profile.ProfileFragment">
 
     <TextView
@@ -23,8 +24,8 @@
 
     <Button
         android:id="@+id/requestTags"
-        android:layout_width="155dp"
-        android:layout_height="38dp"
+        android:layout_width="213dp"
+        android:layout_height="48dp"
         android:backgroundTint="@color/black"
         android:text="@string/rtag"
         android:textAllCaps="false"
@@ -35,4 +36,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.686" />
+
+    <Button
+        android:id="@+id/requestOperatingHours"
+        android:layout_width="216dp"
+        android:layout_height="58dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/rOperatingHours"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.778" />
+
+    <Button
+        android:id="@+id/requestRemovalLocations"
+        android:layout_width="213dp"
+        android:layout_height="57dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/rRemoveLocation"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.882" />
+
+    <Button
+        android:id="@+id/LikedLocations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:text="@string/likedLocations"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.349" />
+
+    <Button
+        android:id="@+id/MyGems"
+        android:layout_width="152dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/myGems"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.433" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,4 +34,12 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("TagRequest")
                 .commit();
     }
+
+    @Override
+    public void operatingHoursRequest() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.rootView, HoursChangeFragment.newInstance())
+                .addToBackStack("operatingHoursRequest")
+                .commit();
+    }
 }
