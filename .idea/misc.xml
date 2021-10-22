@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Ritik Parekh/StudioProjects/HiddenGems/app/src/main/res/layout/activity_add_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ritik Parekh/StudioProjects/HiddenGems/app/src/main/res/layout/fragment_hours_change.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ritik Parekh/StudioProjects/HiddenGems/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Ritik Parekh/StudioProjects/HiddenGems/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ritik Parekh/StudioProjects/HiddenGems/app/src/main/res/layout/fragment_request_tags.xml" value="0.25416666666666665" />
         <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.3061594202898551" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_liked_locations.xml" value="0.3061594202898551" />
