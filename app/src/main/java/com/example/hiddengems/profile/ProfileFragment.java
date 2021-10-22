@@ -65,6 +65,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        binding.contactUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.contactUs();
+            }
+        });
+
 
     }
 
@@ -81,5 +88,6 @@ public class ProfileFragment extends Fragment {
     public interface profile{
         void tagRequest();
         void operatingHoursRequest();
+        void contactUs();
     }
 }
