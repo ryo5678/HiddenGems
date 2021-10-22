@@ -1,5 +1,6 @@
 package com.example.hiddengems.profile;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -42,9 +43,6 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater,container,false);
 
-
-
-
         return binding.getRoot();
     }
 
@@ -52,5 +50,28 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Profile");
+
+        binding.requestTags.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.tagRequest();
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof profile){
+            action = (profile) context;
+        }
+    }
+
+    public static profile action;
+
+    public interface profile{
+        void tagRequest();
     }
 }
