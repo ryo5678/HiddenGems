@@ -65,5 +65,15 @@
         <item>4-Star</item>
         <item>5-Star</item>
     </string-array>
+  
+    <!--Operating Hours-->
+    <string name="OpHoursChange">Operating Hours Change?</string>
+    <string name="opHoursDescription">Has there been a change in a location\'s operating hours
+    that has not been updated?</string>
+    <string name="opHoursDescripton2">Write the name of the location below and we will
+    look into this. Thank you.</string>
+    <string name="lName">Location Name:</string>
+    <string name="updatedHours">Updated Operating Hours:</string>
+
 
 </resources>
