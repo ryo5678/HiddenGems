@@ -71,5 +71,9 @@
     <string name="lName">Location Name:</string>
     <string name="updatedHours">Updated Operating Hours:</string>
 
+    <!-- Location Removal -->
+    <string name="locRemoval">Location Removal</string>
+    <string name="locDescription">Is the original location no longer there?</string>
+
 
 </resources>
