@@ -1,12 +1,17 @@
 package com.example.hiddengems;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
@@ -51,7 +56,5 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("contactUs")
                 .commit();
     }
-
-
 
 }

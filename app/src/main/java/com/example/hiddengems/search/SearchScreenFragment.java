@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,6 +18,9 @@ import com.example.hiddengems.R;
 
 
 public class SearchScreenFragment extends Fragment {
+
+    String SelectedFilter;
+
 
     public SearchScreenFragment() {
         // Required empty public constructor
@@ -32,8 +37,7 @@ public class SearchScreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -51,9 +55,15 @@ public class SearchScreenFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.search_menu, menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        SelectedFilter = (String) item.getTitle();
+        //Log.d("selecteditem", SelectedFilter);
+        //getActivity().setTitle(SelectedFilter);
+        return super.onOptionsItemSelected(item);
+    }
 
 }

@@ -5,12 +5,20 @@
     <item android:id="@+id/start_menu"
         android:icon="@drawable/ic_search_icon"
         android:title="Start Menu"
-        app:showAsAction="ifRoom">
+        app:showAsAction="always">
 
         <menu>
 
             <item android:id="@+id/Search_Categories"
-                android:title="Categories"/>
+                android:title="Categories">
+
+                <menu>
+                    <item android:id="@+id/Resturant"
+                        android:title="Resturant"/>
+                </menu>
+
+            </item>
+
             <item android:id="@+id/Search_Tags"
                 android:title="Tags"/>
             <item android:id="@+id/Search_Ratings"
