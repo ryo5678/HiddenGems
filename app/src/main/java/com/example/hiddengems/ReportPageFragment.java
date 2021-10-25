@@ -48,18 +48,19 @@ public class ReportPageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String reportDescription =  binding.reportDescription.getText().toString();
+                String reason = binding.reportReason.getSelectedItem().toString();
 
                 if(reportDescription.isEmpty()) {
-                    reportPage("");
+                    reportPage(reason, "");
                 }
                 else {
-                    reportPage(reportDescription);
+                    reportPage(reason, reportDescription);
                 }
             }
         });
     }
 
-    public void reportPage(String reportDescription){
+    public void reportPage(String reason, String reportDescription){
         // Send report and return to previous page
 
         FragmentManager fm = getActivity()
