@@ -61,5 +61,12 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("contactUs")
                 .commit();
     }
-
+    /*
+    public void search() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.rootView, SearchScreenFragment.newInstance())
+                .addToBackStack("Search")
+                .commit();
+    }
+    */
 }

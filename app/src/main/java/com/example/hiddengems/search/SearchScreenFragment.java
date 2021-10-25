@@ -1,10 +1,12 @@
 package com.example.hiddengems.search;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,25 +15,28 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hiddengems.R;
-import com.example.hiddengems.dataModels.LocationList;
-import com.example.hiddengems.dataModels.location;
-
-import java.util.ArrayList;
+import com.example.hiddengems.databinding.FragmentRequestTagsBinding;
+import com.example.hiddengems.databinding.FragmentSearchScreenBinding;
 
 
 public class SearchScreenFragment extends Fragment {
 
-    public String SelectedFilter;
+    String SelectedFilter;
+    FragmentSearchScreenBinding binding;
+    String text;
 
     public SearchScreenFragment() {
         // Required empty public constructor
     }
 
+
     public static SearchScreenFragment newInstance(String param1, String param2) {
         SearchScreenFragment fragment = new SearchScreenFragment();
         Bundle args = new Bundle();
+
         return fragment;
     }
 
@@ -52,6 +57,7 @@ public class SearchScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Search");
+
     }
 
     @Override
@@ -62,7 +68,15 @@ public class SearchScreenFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         SelectedFilter = (String) item.getTitle();
+        //Log.d("selecteditem", SelectedFilter);
+        //getActivity().setTitle(SelectedFilter);
         return super.onOptionsItemSelected(item);
     }
+
+
+    public void missingInput(Context context){
+        Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
+    }
+
 
 }
