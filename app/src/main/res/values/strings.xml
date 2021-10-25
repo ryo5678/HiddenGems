@@ -61,7 +61,7 @@
         <item>4-Star</item>
         <item>5-Star</item>
     </string-array>
-  
+
     <!--Operating Hours-->
     <string name="OpHoursChange">Operating Hours Change?</string>
     <string name="opHoursDescription">Has there been a change in a location\'s operating hours
@@ -72,8 +72,12 @@
     <string name="updatedHours">Updated Operating Hours:</string>
 
     <!-- Location Removal -->
-    <string name="locRemoval">Location Removal</string>
-    <string name="locDescription">Is the original location no longer there?</string>
+    <string name="locDescription">
+        Is there a location that needs to be removed for any particular reason? \n\n
+        List the location and reason of removal in the text area below and we will look into this. \n\n
+        Thank you for your support
+    </string>
+    <string name="locHint">Insert location name</string>
 
 
 </resources>
