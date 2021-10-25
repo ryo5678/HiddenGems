@@ -57,7 +57,6 @@ public class SearchScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Search");
-
     }
 
     @Override
@@ -69,14 +68,8 @@ public class SearchScreenFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         SelectedFilter = (String) item.getTitle();
         //Log.d("selecteditem", SelectedFilter);
-        //getActivity().setTitle(SelectedFilter);
+        getActivity().setTitle("Search by: " + SelectedFilter);
         return super.onOptionsItemSelected(item);
     }
-
-
-    public void missingInput(Context context){
-        Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
-    }
-
 
 }

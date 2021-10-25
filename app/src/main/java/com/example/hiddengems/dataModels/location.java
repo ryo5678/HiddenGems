@@ -2,6 +2,9 @@ package com.example.hiddengems.dataModels;
 
 import android.media.Image;
 
+import java.util.ArrayList;
+
+
 public class location {
     String Name;
     String Address;
@@ -22,5 +25,7 @@ public class location {
     String[] Reviews;
 
 }
+
+
 
 
