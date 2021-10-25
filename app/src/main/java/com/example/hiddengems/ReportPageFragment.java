@@ -23,15 +23,13 @@ public class ReportPageFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ReportPageFragment newInstance(String param1, String param2) {
+    public static ReportPageFragment newInstance() {
         ReportPageFragment fragment = new ReportPageFragment();
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +49,12 @@ public class ReportPageFragment extends Fragment {
             public void onClick(View view) {
                 String reportDescription =  binding.reportDescription.getText().toString();
 
-                reportPage(reportDescription);
+                if(reportDescription.isEmpty()) {
+                    reportPage("");
+                }
+                else {
+                    reportPage(reportDescription);
+                }
             }
         });
     }
@@ -61,6 +64,6 @@ public class ReportPageFragment extends Fragment {
 
         FragmentManager fm = getActivity()
                 .getSupportFragmentManager();
-        fm.popBackStack("locationRemovalRequest", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fm.popBackStack("reportPage", FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }

@@ -50,4 +50,12 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("locationRemovalRequest")
                 .commit();
     }
+
+    /*@Override
+    public void reportPage() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.rootView, ReportPageFragment.newInstance())
+                .addToBackStack("reportPage")
+                .commit();
+    }*/
 }
