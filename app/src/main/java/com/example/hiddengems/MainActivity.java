@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
+import com.example.hiddengems.search.SearchScreenFragment;
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile {
 
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         setContentView(binding.getRoot());
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.rootView, new ProfileFragment())
+                .add(R.id.rootView, new SearchScreenFragment())
                 .commit();
 
     }
@@ -50,4 +51,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("contactUs")
                 .commit();
     }
+
+
+
 }

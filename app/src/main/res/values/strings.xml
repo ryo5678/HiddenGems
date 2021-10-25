@@ -65,7 +65,7 @@
         <item>4-Star</item>
         <item>5-Star</item>
     </string-array>
-  
+
     <!--Operating Hours-->
     <string name="OpHoursChange">Operating Hours Change?</string>
     <string name="opHoursDescription">Has there been a change in a location\'s operating hours
