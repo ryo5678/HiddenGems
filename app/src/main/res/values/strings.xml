@@ -79,5 +79,17 @@
     </string>
     <string name="locHint">Insert location name</string>
 
+    <!-- Report Page -->
+    <string name="reportTitle">Report Page</string>
+    <string-array name="reportReason">
+        <item>Please Select Reason</item>
+        <item>Spam</item>
+        <item>Unavailable</item>
+        <item>Wrong Information</item>
+        <item>Inappropriate Content</item>
+    </string-array>
+    <string name="reportDescription">Enter short description</string>
+    <string name="reportHint">Enter description here</string>
+
 
 </resources>
