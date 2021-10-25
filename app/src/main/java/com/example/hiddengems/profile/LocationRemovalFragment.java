@@ -1,10 +1,12 @@
 package com.example.hiddengems.profile;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +54,7 @@ public class LocationRemovalFragment extends Fragment {
                 String locationName = binding.locationToBeRemoved.getText().toString();
 
                 if(locationName.isEmpty()) {
-                    Toast.makeText(getActivity(), "Empty Field", Toast.LENGTH_SHORT).show();
+                    missingInput(getActivity());
                 }
                 else {
                     removeLocation(locationName);
@@ -63,5 +65,13 @@ public class LocationRemovalFragment extends Fragment {
 
     public void removeLocation(String locationName){
         // Remove location from database
+
+        FragmentManager fm = getActivity()
+                .getSupportFragmentManager();
+        fm.popBackStack("locationRemovalRequest", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    public void missingInput(Context context){
+        Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
     }
 }
