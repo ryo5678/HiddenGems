@@ -57,19 +57,6 @@ public class SearchScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Search");
-        binding.searchSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                text = binding.enterLocation.getText().toString();
-                if (text.isEmpty()) {
-                    missingInput(getActivity());
-                } else {
-                    searchLocation(text);
-                }
-            }
-        });
-
 
     }
 
@@ -87,37 +74,6 @@ public class SearchScreenFragment extends Fragment {
     }
 
 
-    public void searchLocation(String text){
-        //String token = mUserToken.token;
-        /*FormBody formBody = new FormBody.Builder()
-                .add("post_text", text)
-                .build();
-        Request request = new Request.Builder()
-                .url("https://www.theappsdr.com/posts/create")
-                .addHeader("Authorization", "BEARER "  + token)
-                .post(formBody)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
-                if(response.isSuccessful()) {
-                    ResponseBody responseBody = response.body();
-                    String body = responseBody.string();
-                    Log.d(TAG,body);
-                    */
-        FragmentManager fm = getActivity()
-                .getSupportFragmentManager();
-        //fm.popBackStack("Search", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                /*}
-            }
-        });*/
-    }
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
     }
