@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hiddengems.R;
+import com.example.hiddengems.databinding.FragmentHoursChangeBinding;
 import com.example.hiddengems.databinding.FragmentLocationRemovalBinding;
 
 public class LocationRemovalFragment extends Fragment {
@@ -30,15 +31,14 @@ public class LocationRemovalFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location_removal, container, false);
+        binding = FragmentLocationRemovalBinding.inflate(inflater,container,false);
+
+        return binding.getRoot();
     }
 
     @Override

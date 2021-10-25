@@ -65,6 +65,10 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        binding.requestRemovalLocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { action.locationRemovalRequest(); }
+        });
 
     }
 
@@ -81,5 +85,6 @@ public class ProfileFragment extends Fragment {
     public interface profile{
         void tagRequest();
         void operatingHoursRequest();
+        void locationRemovalRequest();
     }
 }
