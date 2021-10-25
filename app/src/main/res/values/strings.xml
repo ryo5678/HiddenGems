@@ -5,8 +5,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_navigation_bar">NavigationBar</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_search">Search</string>
+    <string name="title_add">Add</string>
+    <string name="title_map">Map</string>
+    <string name="title_profile">Profile</string>
     <string name="service"><u>Customer Service</u></string>
     <string name="rtag">Request Tags</string>
     <string name="rOperatingHours">Request Operating Hours</string>
@@ -65,7 +67,7 @@
         <item>4-Star</item>
         <item>5-Star</item>
     </string-array>
-  
+
     <!--Operating Hours-->
     <string name="OpHoursChange">Operating Hours Change?</string>
     <string name="opHoursDescription">Has there been a change in a location\'s operating hours
