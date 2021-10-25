@@ -13,13 +13,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.hiddengems.dataModels.LocationList;
+import com.example.hiddengems.dataModels.location;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
 import com.example.hiddengems.search.SearchScreenFragment;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile {
 
     ActivityMainBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

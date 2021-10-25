@@ -15,22 +15,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hiddengems.R;
+import com.example.hiddengems.dataModels.LocationList;
+import com.example.hiddengems.dataModels.location;
+
+import java.util.ArrayList;
 
 
 public class SearchScreenFragment extends Fragment {
 
-    String SelectedFilter;
-
+    public String SelectedFilter;
 
     public SearchScreenFragment() {
         // Required empty public constructor
     }
 
-
     public static SearchScreenFragment newInstance(String param1, String param2) {
         SearchScreenFragment fragment = new SearchScreenFragment();
         Bundle args = new Bundle();
-
         return fragment;
     }
 
@@ -61,8 +62,6 @@ public class SearchScreenFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         SelectedFilter = (String) item.getTitle();
-        //Log.d("selecteditem", SelectedFilter);
-        //getActivity().setTitle(SelectedFilter);
         return super.onOptionsItemSelected(item);
     }
 
