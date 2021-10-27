@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, addFragment).commit();
                 return true;
             case R.id.navigation_map:
-
+                return true;
             case R.id.navigation_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, profileFragment).commit();
                 return true;
