@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/start_menu"
+        android:icon="@drawable/ic_search_icon"
+        android:title="Start Menu"
+        app:showAsAction="always">
+
+        <menu>
+
+            <item android:id="@+id/Search_Categories"
+                android:title="Categories">
+
+                <menu>
+                    <item android:id="@+id/Resturant"
+                        android:title="Resturant"/>
+                    <item android:id="@+id/Monument"
+                        android:title="Monument"/>
+                    <item android:id="@+id/Event"
+                        android:title="Event"/>
+                    <item android:id="@+id/Historical"
+                        android:title="Historical"/>
+                    <item android:id="@+id/Park"
+                        android:title="Park"/>
+                    <item android:id="@+id/Trail"
+                        android:title="Trail"/>
+                    <item android:id="@+id/Bar"
+                        android:title="Bar"/>
+                    <item android:id="@+id/Bakery"
+                        android:title="Bakery"/>
+                    <item android:id="@+id/Venue"
+                        android:title="Venue"/>
+                </menu>
+
+            </item>
+
+            <item android:id="@+id/Search_Tags"
+                android:title="Tags">
+
+                <menu>
+                    <item android:id="@+id/Italian"
+                        android:title="Italian"/>
+                    <item android:id="@+id/Sushi"
+                        android:title="Sushi"/>
+                    <item android:id="@+id/Coffee"
+                        android:title="Coffee"/>
+                    <item android:id="@+id/Mexican"
+                        android:title="Mexican"/>
+                    <item android:id="@+id/Indian"
+                        android:title="Indian"/>
+                    <item android:id="@+id/Bowling"
+                        android:title="Bowling"/>
+                    <item android:id="@+id/Craft_Beer"
+                        android:title="Craft Beer"/>
+                    <item android:id="@+id/Waterfall"
+                        android:title="Waterfall"/>
+                    <item android:id="@+id/Overlook"
+                        android:title="Overlook"/>
+                    <item android:id="@+id/Thai"
+                        android:title="Thai"/>
+                    <item android:id="@+id/Dancing"
+                        android:title="Dancing"/>
+                    <item android:id="@+id/Memorial"
+                        android:title="Memorial"/>
+                    <item android:id="@+id/Sports"
+                        android:title="Sports"/>
+                </menu>
+
+            </item>
+
+            <item android:id="@+id/Search_Ratings"
+                android:title= "Ratings">
+
+                <menu>
+                    <item android:id="@+id/One_Star"
+                        android:title="1-Star"/>
+                    <item android:id="@+id/Two_Star"
+                        android:title="2-Star"/>
+                    <item android:id="@+id/Three_Star"
+                        android:title="3-Star"/>
+                    <item android:id="@+id/Four_Star"
+                        android:title="4-Star"/>
+                    <item android:id="@+id/Five_Star"
+                        android:title="5-Star"/>
+                </menu>
+
+            </item>
+
+            <item android:id="@+id/Search_Season"
+                android:title="Seasons">
+
+                <menu>
+                    <item android:id="@+id/Summer"
+                        android:title="Summer"/>
+                    <item android:id="@+id/Fall"
+                        android:title="Fall"/>
+                    <item android:id="@+id/Winter"
+                        android:title="Winter"/>
+                    <item android:id="@+id/Spring"
+                        android:title="Spring"/>
+                </menu>
+
+            </item>
+
+        </menu>
+
+    </item>
+
+
+</menu>

@@ -5,14 +5,20 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_navigation_bar">NavigationBar</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_search">Search</string>
+    <string name="title_add">Add</string>
+    <string name="title_map">Map</string>
+    <string name="title_profile">Profile</string>
     <string name="service"><u>Customer Service</u></string>
     <string name="rtag">Request Tags</string>
     <string name="rOperatingHours">Request Operating Hours</string>
     <string name="rRemoveLocation">Request Removal of Locations</string>
     <string name="likedLocations">Liked Locations</string>
     <string name="myGems">My Gems</string>
+    <string name="ContactUs">Contact Us</string>
+    <string name="CUTitle">How can we help you?</string>
+    <string name="CUMessage">Leave us a message below and we will address your concerns as soon as possible.</string>
+    <string name="CUPromtp">Please type message here</string>
     <string name="ltag">Looking for more tags?</string>
     <string name="dtag">Enter the tags that you would like us to add into the textbox below.
     We will review them and do our best to make them happen. Please seperate each tag with a comma.
@@ -61,7 +67,8 @@
         <item>4-Star</item>
         <item>5-Star</item>
     </string-array>
-  
+
+    <string name="searchLookingFor">What are you looking for?</string>
     <!--Operating Hours-->
     <string name="OpHoursChange">Operating Hours Change?</string>
     <string name="opHoursDescription">Has there been a change in a location\'s operating hours
@@ -70,6 +77,35 @@
     look into this. Thank you.</string>
     <string name="lName">Location Name:</string>
     <string name="updatedHours">Updated Operating Hours:</string>
+    <!-- Location Removal -->
+    <string name="locDescription">
+        Is there a location that needs to be removed for any particular reason? \n\n
+        List the location and reason of removal in the text area below and we will look into this. \n\n
+        Thank you for your support
+    </string>
+    <string name="locHint">Insert location name</string>
+
+    <!-- Report Page -->
+    <string name="reportTitle">Report Page</string>
+    <string-array name="reportReason">
+        <item>Please Select Reason</item>
+        <item>Spam</item>
+        <item>Unavailable</item>
+        <item>Wrong Information</item>
+        <item>Inappropriate Content</item>
+    </string-array>
+    <string name="reportDescription">Enter short description</string>
+    <string name="reportHint">Enter description here</string>
+
+    <!-- Add Page -->
+    <string name="addName">Name: </string>
+    <string name="addAddress">Address: </string>
+    <string name="addCategory">Category: </string>
+    <string name="addTags">Tags: </string>
+    <string name="addOperatingHours">Operating Hours </string>
+    <string name="addStartTime">Start Time: </string>
+    <string name="addEndTime">End Time: </string>
+    <string name="addImageUpload">Image Upload:\n(max of 5)</string>
 
 
 
