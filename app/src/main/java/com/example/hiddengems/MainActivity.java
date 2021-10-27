@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("contactUs")
                 .commit();
     }
+
     @Override
     public void locationRemovalRequest() {
         getSupportFragmentManager().beginTransaction()
