@@ -35,10 +35,10 @@ public class SearchScreenFragment extends Fragment {
     }
 
 
+
     public static SearchScreenFragment newInstance(String param1, String param2) {
         SearchScreenFragment fragment = new SearchScreenFragment();
         Bundle args = new Bundle();
-
         return fragment;
     }
 
