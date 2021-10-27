@@ -15,17 +15,13 @@
     <string name="rRemoveLocation">Request Removal of Locations</string>
     <string name="likedLocations">Liked Locations</string>
     <string name="myGems">My Gems</string>
-    <string name="ContactUs">Contact Us</string>
-    <string name="CUTitle">How can we help you?</string>
-    <string name="CUMessage">Leave us a message below and we will address your concerns as soon as possible.</string>
-    <string name="CUPromtp">Please type message here</string>
     <string name="ltag">Looking for more tags?</string>
     <string name="dtag">Enter the tags that you would like us to add into the textbox below.
     We will review them and do our best to make them happen. Please seperate each tag with a comma.
         (tag, tag2, etc.)</string>
     <string name="enterTags">Enter your tags here.</string>
     <string name="submit">Submit</string>
-    <string name="missing">The textbox can not be left empty.</string>
+    <string name="missing">The textbox can not be left empty. Please enter a tag or tags before submitting.</string>
 
     <string-array name="filter_categories">
         <item>Monument</item>
@@ -36,7 +32,6 @@
         <item>Trail</item>
         <item>Bar</item>
         <item>Bakery</item>
-        <item>Venue</item>
     </string-array>
 
     <string-array name="filter_tags">
@@ -70,7 +65,6 @@
     </string-array>
 
     <string name="searchLookingFor">What are you looking for?</string>
-
     <!--Operating Hours-->
     <string name="OpHoursChange">Operating Hours Change?</string>
     <string name="opHoursDescription">Has there been a change in a location\'s operating hours
@@ -79,6 +73,26 @@
     look into this. Thank you.</string>
     <string name="lName">Location Name:</string>
     <string name="updatedHours">Updated Operating Hours:</string>
+    <!-- Location Removal -->
+    <string name="locDescription">
+        Is there a location that needs to be removed for any particular reason? \n\n
+        List the location and reason of removal in the text area below and we will look into this. \n\n
+        Thank you for your support
+    </string>
+    <string name="locHint">Insert location name</string>
+
+    <!-- Report Page -->
+    <string name="reportTitle">Report Page</string>
+    <string-array name="reportReason">
+        <item>Please Select Reason</item>
+        <item>Spam</item>
+        <item>Unavailable</item>
+        <item>Wrong Information</item>
+        <item>Inappropriate Content</item>
+    </string-array>
+    <string name="reportDescription">Enter short description</string>
+    <string name="reportHint">Enter description here</string>
+
 
 
 </resources>

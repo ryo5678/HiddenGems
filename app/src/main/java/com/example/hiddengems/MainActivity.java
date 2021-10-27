@@ -99,7 +99,25 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("contactUs")
                 .commit();
     }
+    @Override
+    public void locationRemovalRequest() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.rootView, LocationRemovalFragment.newInstance())
+                .addToBackStack("locationRemovalRequest")
+                .commit();
+    }
+
     /*
+    @Override
+    public void reportPage() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.rootView, ReportPageFragment.newInstance())
+                .addToBackStack("reportPage")
+                .commit();
+    }*/
+
+    /*
+    @Override
     public void search() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.rootView, SearchScreenFragment.newInstance())
