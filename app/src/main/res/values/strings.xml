@@ -5,21 +5,27 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_navigation_bar">NavigationBar</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_search">Search</string>
+    <string name="title_add">Add</string>
+    <string name="title_map">Map</string>
+    <string name="title_profile">Profile</string>
     <string name="service"><u>Customer Service</u></string>
     <string name="rtag">Request Tags</string>
     <string name="rOperatingHours">Request Operating Hours</string>
     <string name="rRemoveLocation">Request Removal of Locations</string>
     <string name="likedLocations">Liked Locations</string>
     <string name="myGems">My Gems</string>
+    <string name="ContactUs">Contact Us</string>
+    <string name="CUTitle">How can we help you?</string>
+    <string name="CUMessage">Leave us a message below and we will address your concerns as soon as possible.</string>
+    <string name="CUPromtp">Please type message here</string>
     <string name="ltag">Looking for more tags?</string>
     <string name="dtag">Enter the tags that you would like us to add into the textbox below.
     We will review them and do our best to make them happen. Please seperate each tag with a comma.
         (tag, tag2, etc.)</string>
     <string name="enterTags">Enter your tags here.</string>
     <string name="submit">Submit</string>
-    <string name="missing">The textbox can not be left empty. Please enter a tag or tags before submitting.</string>
+    <string name="missing">The textbox can not be left empty.</string>
 
     <string-array name="filter_categories">
         <item>Monument</item>
@@ -61,7 +67,7 @@
         <item>4-Star</item>
         <item>5-Star</item>
     </string-array>
-  
+
     <!--Operating Hours-->
     <string name="OpHoursChange">Operating Hours Change?</string>
     <string name="opHoursDescription">Has there been a change in a location\'s operating hours
