@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/text_add_name"
+        android:id="@+id/textAddName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addName"
@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.053" />
 
     <EditText
-        android:id="@+id/edit_add_name"
+        android:id="@+id/editAddName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -30,26 +30,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
+        app:layout_constraintStart_toStartOf="@+id/editAddAddress"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.034" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/addAddress"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/text_add_address"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.123" />
-
     <TextView
-        android:id="@+id/text_add_address"
+        android:id="@+id/textAddAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Address: "
@@ -61,20 +47,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.14" />
 
-    <Spinner
-        android:id="@+id/spinner_add_tags"
-        android:layout_width="200sp"
+    <EditText
+        android:id="@+id/editAddAddress"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/filter_tags"
+        android:ems="10"
+        android:hint="@string/addAddress"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/text_add_category"
+        app:layout_constraintStart_toEndOf="@+id/textAddAddress"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.322" />
+        app:layout_constraintVertical_bias="0.123" />
 
     <TextView
-        android:id="@+id/text_add_category"
+        android:id="@+id/textAddCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addCategory"
@@ -86,8 +74,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.238" />
 
+    <Spinner
+        android:id="@+id/spinnerAddCategory"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:entries="@array/filter_categories"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textAddCategory"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.247" />
+
     <TextView
-        android:id="@+id/text_add_tags"
+        android:id="@+id/textAddTags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addTags"
@@ -100,19 +100,19 @@
         app:layout_constraintVertical_bias="0.314" />
 
     <Spinner
-        android:id="@+id/spinner_add_category"
+        android:id="@+id/spinnerAddTags"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
-        android:entries="@array/filter_categories"
+        android:entries="@array/filter_tags"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/text_add_category"
+        app:layout_constraintStart_toEndOf="@+id/textAddCategory"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247" />
+        app:layout_constraintVertical_bias="0.322" />
 
     <TextView
-        android:id="@+id/text_operating_hours"
+        android:id="@+id/textOperatingHours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addOperatingHours"
@@ -125,7 +125,7 @@
         app:layout_constraintVertical_bias="0.433" />
 
     <TextView
-        android:id="@+id/text_add_start_time"
+        android:id="@+id/textAddStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addStartTime"
@@ -138,7 +138,7 @@
         app:layout_constraintVertical_bias="0.518" />
 
     <EditText
-        android:id="@+id/editStartTime"
+        android:id="@+id/editAddStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -146,12 +146,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/text_add_start_time"
+        app:layout_constraintStart_toEndOf="@+id/textAddStartTime"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.505" />
 
     <TextView
-        android:id="@+id/text_add_end_time"
+        android:id="@+id/textAddEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addEndTime"
@@ -164,7 +164,7 @@
         app:layout_constraintVertical_bias="0.595" />
 
     <EditText
-        android:id="@+id/edit_end_time"
+        android:id="@+id/editAddEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -172,12 +172,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/text_add_start_time"
+        app:layout_constraintStart_toEndOf="@+id/textAddStartTime"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.584" />
 
     <TextView
-        android:id="@+id/text_add_image_upload"
+        android:id="@+id/textAddImageUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -206,7 +206,7 @@
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/addSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit"
