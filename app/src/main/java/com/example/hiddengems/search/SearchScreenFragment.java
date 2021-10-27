@@ -15,20 +15,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.hiddengems.R;
 import com.example.hiddengems.Views.LocationView;
 import com.example.hiddengems.dataModels.location;
-import com.example.hiddengems.databinding.FragmentSearchScreenBinding;
+//import com.example.hiddengems.databinding.FragmentSearchScreenBinding;
 
 import java.nio.channels.SelectionKey;
 
 public class SearchScreenFragment extends Fragment {
 
     String SelectedFilter;
-    FragmentSearchScreenBinding binding;
-    String text;
+   // FragmentSearchScreenBinding binding;
+    String SearchedText;
 
     public SearchScreenFragment() {
         // Required empty public constructor
@@ -50,6 +51,7 @@ public class SearchScreenFragment extends Fragment {
         //String[] check = {"Hello"};
        // location textloc = new location("Big daddy","117 cheese drive", "Bar", check );
         //example.setLocation(textloc,0.9);
+
     }
 
     @Override
@@ -97,5 +99,6 @@ public class SearchScreenFragment extends Fragment {
         }
 
     }
+
 
 }
