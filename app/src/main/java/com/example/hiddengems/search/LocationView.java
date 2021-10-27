@@ -1,4 +1,4 @@
-package com.example.hiddengems.Views;
+package com.example.hiddengems.search;
 
 import android.annotation.TargetApi;
 import android.content.Context;
