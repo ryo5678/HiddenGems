@@ -36,6 +36,7 @@
         <item>Trail</item>
         <item>Bar</item>
         <item>Bakery</item>
+        <item>Venue</item>
     </string-array>
 
     <string-array name="filter_tags">
@@ -68,6 +69,8 @@
         <item>5-Star</item>
     </string-array>
 
+    <string name="searchLookingFor">What are you looking for?</string>
+
     <!--Operating Hours-->
     <string name="OpHoursChange">Operating Hours Change?</string>
     <string name="opHoursDescription">Has there been a change in a location\'s operating hours
@@ -76,26 +79,6 @@
     look into this. Thank you.</string>
     <string name="lName">Location Name:</string>
     <string name="updatedHours">Updated Operating Hours:</string>
-
-    <!-- Location Removal -->
-    <string name="locDescription">
-        Is there a location that needs to be removed for any particular reason? \n\n
-        List the location and reason of removal in the text area below and we will look into this. \n\n
-        Thank you for your support
-    </string>
-    <string name="locHint">Insert location name</string>
-
-    <!-- Report Page -->
-    <string name="reportTitle">Report Page</string>
-    <string-array name="reportReason">
-        <item>Please Select Reason</item>
-        <item>Spam</item>
-        <item>Unavailable</item>
-        <item>Wrong Information</item>
-        <item>Inappropriate Content</item>
-    </string-array>
-    <string name="reportDescription">Enter short description</string>
-    <string name="reportHint">Enter description here</string>
 
 
 </resources>
