@@ -97,5 +97,15 @@
     <string name="reportDescription">Enter short description</string>
     <string name="reportHint">Enter description here</string>
 
+    <!-- Add Page -->
+    <string name="addName">Name: </string>
+    <string name="addAddress">Address: </string>
+    <string name="addCategory">Category: </string>
+    <string name="addTags">Tags: </string>
+    <string name="addOperatingHours">Operating Hours </string>
+    <string name="addStartTime">Start Time: </string>
+    <string name="addEndTime">End Time: </string>
+    <string name="addImageUpload">Image Upload:\n(max of 5)</string>
+
 
 </resources>
