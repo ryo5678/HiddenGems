@@ -15,6 +15,10 @@
     <string name="rRemoveLocation">Request Removal of Locations</string>
     <string name="likedLocations">Liked Locations</string>
     <string name="myGems">My Gems</string>
+    <string name="ContactUs">Contact Us</string>
+    <string name="CUTitle">How can we help you?</string>
+    <string name="CUMessage">Leave us a message below and we will address your concerns as soon as possible.</string>
+    <string name="CUPromtp">Please type message here</string>
     <string name="ltag">Looking for more tags?</string>
     <string name="dtag">Enter the tags that you would like us to add into the textbox below.
     We will review them and do our best to make them happen. Please seperate each tag with a comma.
