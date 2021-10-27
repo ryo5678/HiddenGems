@@ -1,28 +1,38 @@
 package com.example.hiddengems.dataModels;
 
 import android.media.Image;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class location {
-    String Name;
-    String Address;
-    String Category;
-    String[] Tags;
+public class location implements Serializable {
+    public String Name;
+    public String Address;
+    public String Category;
+    public String[] Tags;
     //operatinghours[] Hours;
-    int startTime;
-    int endTime;
-    menuItem[] Menu;
-    Image[] Images;
-    boolean isEvent;
-    int startDate;
-    int endDate;
-    String Season;
-    int Likes;
-    String Rating;
-    String[] Comments;
-    String[] Reviews;
+    public int startTime;
+    public int endTime;
+    public menuItem[] Menu;
+    public Image[] Images;
+    public boolean isEvent;
+    public int startDate;
+    public int endDate;
+    public String Season;
+    public int Likes;
+    public String Rating;
+    public String[] Comments;
+    public String[] Reviews;
+
+
+    public location(String Name, String Address, String Category, String[] Tags) {
+        this.Name = Name;
+        this.Address = Address;
+        this.Category = Category;
+        this.Tags = Tags;
+    }
+
+
 
 }
 
