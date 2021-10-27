@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/layout/fragment_request_tags.xml" value="0.30117753623188404" />
         <entry key="app/src/main/res/layout/fragment_search_screen.xml" value="0.30117753623188404" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/menu/search_menu.xml" value="0.36041666666666666" />
       </map>
     </option>
   </component>
