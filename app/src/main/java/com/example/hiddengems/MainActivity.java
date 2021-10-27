@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.hiddengems.dataModels.location;
+import com.example.hiddengems.dataModels.locations;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.map.MapsActivity;
 import com.example.hiddengems.profile.*;
@@ -28,6 +28,8 @@ import com.example.hiddengems.home.*;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
+
+import com.example.hiddengems.dataModels.person.*;
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -104,6 +106,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, LocationRemovalFragment.newInstance())
                 .addToBackStack("locationRemovalRequest")
+                .commit();
+    }
+
+    @Override
+    public void editProfile(Users person) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, EditProfileFragment.newInstance(person))
+                .addToBackStack("editProfile")
                 .commit();
     }
 

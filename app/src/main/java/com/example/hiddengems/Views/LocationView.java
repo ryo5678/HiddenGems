@@ -12,12 +12,12 @@ import android.widget.TextView;
 import androidx.core.view.ViewCompat;
 
 import com.example.hiddengems.R;
-import com.example.hiddengems.dataModels.location;
+import com.example.hiddengems.dataModels.locations;
 
 public class LocationView extends LinearLayout {
     //Text views
     private TextView mlocationName, mdistanceAway;
-    private location mlocation;
+    private locations mlocation;
     private double mdistance;
 
     public LocationView(Context context) {
@@ -63,7 +63,7 @@ public class LocationView extends LinearLayout {
         });
     }
 
-    public void setLocation(location loc, double distance) {
+    public void setLocation(locations loc, double distance) {
         mlocation = loc;
         mdistance = distance;
         setupView();
@@ -71,7 +71,7 @@ public class LocationView extends LinearLayout {
 
     private void setupView() {
         mlocationName.setVisibility(VISIBLE);
-        mlocationName.setText(mlocation.Name);
+        //mlocationName.setText(mlocation.Name);
         mdistanceAway.setVisibility(VISIBLE);
         mdistanceAway.setText(mdistance + " Miles Away");
     }
