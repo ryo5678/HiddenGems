@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     @Override
     public void locationRemovalRequest() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rootView, LocationRemovalFragment.newInstance())
+                .replace(R.id.fragmentContainerView, LocationRemovalFragment.newInstance())
                 .addToBackStack("locationRemovalRequest")
                 .commit();
     }
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     @Override
     public void reportPage() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rootView, ReportPageFragment.newInstance())
+                .replace(R.id.fragmentContainerView, ReportPageFragment.newInstance())
                 .addToBackStack("reportPage")
                 .commit();
     }*/
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     @Override
     public void search() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rootView, SearchScreenFragment.newInstance())
+                .replace(R.id.fragmentContainerView, SearchScreenFragment.newInstance())
                 .addToBackStack("Search")
                 .commit();
     }
