@@ -65,6 +65,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        binding.LikedLocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.likedLocationsRequest();
+            }
+        });
+
 
     }
 
@@ -81,5 +88,6 @@ public class ProfileFragment extends Fragment {
     public interface profile{
         void tagRequest();
         void operatingHoursRequest();
+        void likedLocationsRequest();
     }
 }
