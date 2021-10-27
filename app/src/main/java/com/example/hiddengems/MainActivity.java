@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.hiddengems.dataModels.LocationList;
 import com.example.hiddengems.dataModels.location;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.map.MapsActivity;

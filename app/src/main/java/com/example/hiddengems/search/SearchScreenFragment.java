@@ -18,9 +18,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hiddengems.R;
-import com.example.hiddengems.databinding.FragmentRequestTagsBinding;
+import com.example.hiddengems.Views.LocationView;
+import com.example.hiddengems.dataModels.location;
 import com.example.hiddengems.databinding.FragmentSearchScreenBinding;
 
+import java.nio.channels.SelectionKey;
 
 public class SearchScreenFragment extends Fragment {
 
@@ -44,6 +46,10 @@ public class SearchScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+       // LocationView example = getView().findViewById(R.id.example_test);
+        //String[] check = {"Hello"};
+       // location textloc = new location("Big daddy","117 cheese drive", "Bar", check );
+        //example.setLocation(textloc,0.9);
     }
 
     @Override
@@ -68,8 +74,28 @@ public class SearchScreenFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         SelectedFilter = (String) item.getTitle();
         //Log.d("selecteditem", SelectedFilter);
-        getActivity().setTitle("Search by: " + SelectedFilter);
+        if (notTitle(SelectedFilter)) {
+            getActivity().setTitle("Search by: " + SelectedFilter);
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean notTitle(String selectedItem) {
+
+        if (selectedItem.equals("Start Menu")) {
+            return false;
+        } else if (selectedItem.equals("Categories")) {
+            return false;
+        } else if (selectedItem.equals("Tags")) {
+            return false;
+        }else if (selectedItem.equals("Ratings")) {
+            return false;
+        }else if (selectedItem.equals("Seasons")) {
+            return false;
+        }else  {
+            return true;
+        }
+
     }
 
 }
