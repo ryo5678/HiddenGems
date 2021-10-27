@@ -5,20 +5,23 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class LocationList extends Application implements Serializable {
+//public class LocationList extends Application implements Serializable {
 
-    public ArrayList<location> AllLocations;
+ //   public ArrayList<location> AllLocations;
 
-    public LocationList(ArrayList<location> startingLocs) {
-        this.AllLocations = startingLocs;
-    }
+//    public LocationList(ArrayList<location> startingLocs) {
 
-    public ArrayList<location> getAllLocations() {
-        return AllLocations;
-    }
+ //       this.AllLocations = startingLocs;
+ //   }
 
-    public void AddLocation(location newLocation) {
-        AllLocations.add(newLocation);
-    }
+  //  public ArrayList<location> getAllLocations() {
+//
+ //       return AllLocations;
+ //   }
 
-}
+ //   public void AddLocation(location newLocation) {
+
+  //      AllLocations.add(newLocation);
+ //   }
+
+//}

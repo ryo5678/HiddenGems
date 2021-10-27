@@ -58,6 +58,7 @@ public class ProfileFragment extends Fragment {
                 action.tagRequest();
             }
         });
+
         binding.requestOperatingHours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +73,12 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        binding.requestRemovalLocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.locationRemovalRequest();
+            }
+        });
 
     }
 
@@ -89,5 +96,6 @@ public class ProfileFragment extends Fragment {
         void tagRequest();
         void operatingHoursRequest();
         void contactUs();
+        void locationRemovalRequest();
     }
 }

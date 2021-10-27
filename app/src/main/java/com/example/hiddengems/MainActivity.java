@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.hiddengems.dataModels.LocationList;
 import com.example.hiddengems.dataModels.location;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.map.MapsActivity;
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, addFragment).commit();
                 return true;
             case R.id.navigation_map:
-
+                return true;
             case R.id.navigation_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, profileFragment).commit();
                 return true;
@@ -100,10 +99,28 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("contactUs")
                 .commit();
     }
+    @Override
+    public void locationRemovalRequest() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationRemovalFragment.newInstance())
+                .addToBackStack("locationRemovalRequest")
+                .commit();
+    }
+
     /*
+    @Override
+    public void reportPage() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, ReportPageFragment.newInstance())
+                .addToBackStack("reportPage")
+                .commit();
+    }*/
+
+    /*
+    @Override
     public void search() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rootView, SearchScreenFragment.newInstance())
+                .replace(R.id.fragmentContainerView, SearchScreenFragment.newInstance())
                 .addToBackStack("Search")
                 .commit();
     }
