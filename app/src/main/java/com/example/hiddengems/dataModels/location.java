@@ -20,7 +20,8 @@ public class location implements Serializable {
     public int endDate;
     public String Season;
     public int Likes;
-    public String Rating;
+    public int currentRating;
+    public int numberofRatings;
     public String[] Comments;
     public String[] Reviews;
 
