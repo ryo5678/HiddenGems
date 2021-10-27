@@ -36,6 +36,7 @@
         <item>Trail</item>
         <item>Bar</item>
         <item>Bakery</item>
+        <item>Venue</item>
     </string-array>
 
     <string-array name="filter_tags">
@@ -67,6 +68,8 @@
         <item>4-Star</item>
         <item>5-Star</item>
     </string-array>
+
+    <string name="searchLookingFor">What are you looking for?</string>
 
     <!--Operating Hours-->
     <string name="OpHoursChange">Operating Hours Change?</string>

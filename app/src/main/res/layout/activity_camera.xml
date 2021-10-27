@@ -14,14 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/image_view"/>
+        android:id="@+id/cheese"/>
 
     <Button
         android:id="@+id/bt_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:onClick="takePic"
         android:text="Open Camera" />
 
 

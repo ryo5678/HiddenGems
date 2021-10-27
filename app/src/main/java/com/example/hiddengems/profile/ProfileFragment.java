@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hiddengems.Camera_Activity;
 import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentProfileBinding;
 
@@ -57,7 +58,6 @@ public class ProfileFragment extends Fragment {
                 action.tagRequest();
             }
         });
-
         binding.requestOperatingHours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
