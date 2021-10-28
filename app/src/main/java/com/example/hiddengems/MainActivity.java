@@ -2,32 +2,19 @@ package com.example.hiddengems;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.hiddengems.dataModels.location;
 import com.example.hiddengems.databinding.ActivityMainBinding;
-import com.example.hiddengems.map.MapsActivity;
 import com.example.hiddengems.profile.*;
 
 import com.example.hiddengems.home.*;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.util.ArrayList;
+
+import com.example.hiddengems.dataModels.person.*;
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -105,6 +92,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, LocationRemovalFragment.newInstance())
                 .addToBackStack("locationRemovalRequest")
+                .commit();
+    }
+
+    @Override
+    public void editProfile(Users person) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, EditProfileFragment.newInstance(person))
+                .addToBackStack("editProfile")
                 .commit();
     }
 

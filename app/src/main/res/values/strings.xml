@@ -107,5 +107,9 @@
     <string name="addEndTime">End Time: </string>
     <string name="addImageUpload">Image Upload:\n(max of 5)</string>
 
+    <string name="profileName">John Doe</string>
+    <string name="profileEmail">johndoe@gmail.com</string>
+    <string name="editProfileButton">Edit</string>
+    <string name="saveProfileButton">Save</string>
 
 </resources>
