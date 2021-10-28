@@ -87,6 +87,13 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) { action.editProfile(person); }
         });
 
+        binding.LikedLocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.likedLocationsRequest();
+            }
+        });
+
     }
 
     @Override
@@ -105,5 +112,6 @@ public class ProfileFragment extends Fragment {
         void contactUs();
         void locationRemovalRequest();
         void editProfile(Users person);
+        void likedLocationsRequest();
     }
 }

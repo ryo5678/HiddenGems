@@ -103,6 +103,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
 
+    @Override
+    public void likedLocationsRequest() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.rootView, LikedLocationsFragment.newInstance())
+                .addToBackStack("likedLocationsRequest")
+                .commit();
+    }
+
     /*
     @Override
     public void reportPage() {
