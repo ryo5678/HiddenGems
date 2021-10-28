@@ -39,6 +39,9 @@ public class AddScreenFragment extends Fragment {
 
     public static AddScreenFragment newInstance(String param1, String param2) {
         AddScreenFragment fragment = new AddScreenFragment();
+        Bundle args = new Bundle();
+        args.putString("location", "");
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -46,7 +49,7 @@ public class AddScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //locations = (location) getArguments().getSerializable("");
+            //locations = (location) getArguments().getSerializable("location");
         }
     }
 
@@ -64,44 +67,10 @@ public class AddScreenFragment extends Fragment {
         getActivity().setTitle("Add Location");
 
         startTime = binding.editAddStartTime;
-        startTime.setInputType(InputType.TYPE_NULL);
-        startTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Calendar c = Calendar.getInstance();
-                int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minutes = c.get(Calendar.MINUTE);
-                // time picker dialog
-                picker = new TimePickerDialog(getContext(),
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
-                                startTime.setText((sHour + ":" + String.format(Locale.getDefault(),"%02d", sMinute)).toString());
-                            }
-                        }, hour, minutes, true);
-                picker.show();
-            }
-        });
+        getTime(startTime);
 
         endTime = binding.editAddEndTime;
-        endTime.setInputType(InputType.TYPE_NULL);
-        endTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Calendar c = Calendar.getInstance();
-                int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minutes = c.get(Calendar.MINUTE);
-                // time picker dialog
-                picker = new TimePickerDialog(getContext(),
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker tp, int eHour, int eMinute) {
-                                endTime.setText((eHour + ":" + String.format(Locale.getDefault(),"%02d", eMinute)).toString());
-                            }
-                        }, hour, minutes, true);
-                picker.show();
-            }
-        });
+        getTime(endTime);
 
         binding.addSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,5 +100,26 @@ public class AddScreenFragment extends Fragment {
 
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
+    }
+
+    public void getTime(EditText time) {
+        time.setInputType(InputType.TYPE_NULL);
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minutes = c.get(Calendar.MINUTE);
+                // time picker dialog
+                picker = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker tp, int eHour, int eMinute) {
+                                time.setText((eHour + ":" + String.format(Locale.getDefault(),"%02d", eMinute)).toString());
+                            }
+                        }, hour, minutes, true);
+                picker.show();
+            }
+        });
     }
 }
