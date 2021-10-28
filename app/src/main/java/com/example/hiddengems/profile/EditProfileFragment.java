@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.hiddengems.R;
 
-import com.example.hiddengems.dataModels.person.*;
+import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.databinding.FragmentEditProfileBinding;
 
 

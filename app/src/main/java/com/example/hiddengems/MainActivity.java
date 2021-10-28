@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.hiddengems.account.LoginFragment;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
 
@@ -14,9 +16,9 @@ import com.example.hiddengems.home.*;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.example.hiddengems.dataModels.person.*;
+import com.example.hiddengems.dataModels.Person.*;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener {
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -30,15 +32,13 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setOnNavigationItemSelectedListener(this);
-        navView.setSelectedItemId(R.id.navigation_home);
 
+        navView.setVisibility(View.GONE);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainerView, new LoginFragment())
+                .commit();
 
-        /*getSupportFragmentManager().beginTransaction()
-                .add(R.id.rootView, new HomeFragment())
-                .commit();*/
 
     }
     @Override
@@ -106,9 +106,17 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     @Override
     public void likedLocationsRequest() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rootView, LikedLocationsFragment.newInstance())
+                .replace(R.id.fragmentContainerView, LikedLocationsFragment.newInstance())
                 .addToBackStack("likedLocationsRequest")
                 .commit();
+    }
+
+    @Override
+    public void login(Users user) {
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.VISIBLE);
+        navView.setOnNavigationItemSelectedListener(this);
+        navView.setSelectedItemId(R.id.navigation_home);
     }
 
     /*

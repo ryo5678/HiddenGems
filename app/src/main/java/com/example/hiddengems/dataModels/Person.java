@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class person {
-    private final HashMap<String, ArrayList<Users>> apps = new HashMap<String, ArrayList<Users>>() {{
+public class Person {
+    private static final HashMap<String, ArrayList<Users>> people = new HashMap<String, ArrayList<Users>>() {{
         put("Users", new ArrayList<Users>() {{
             add(new Users("John", "Doe", "johndoe@gmail.com", "jdoe", "https://freesvg.org/img/abstract-user-flat-4.png"));
             add(new Users("Jane", "Love", "janelove@gmail.com", "jlove", "https://freesvg.org/img/abstract-user-flat-4.png"));
@@ -15,13 +15,55 @@ public class person {
     }};
 
 
-    public ArrayList<String> getUsers() {
-        ArrayList<String> users = new ArrayList<String>(apps.keySet());
-        Collections.sort(users);
-        return users;
+    public static ArrayList<Users> getUsers(String type){
+        if(people.containsKey(type)) {
+            return people.get(type);
+        }
+        return new ArrayList<Users>();
     }
 
-    public class Users implements Serializable {
+
+    public static class Users implements Serializable {
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getProfilePic() {
+            return profilePic;
+        }
+
+        public void setProfilePic(String profilePic) {
+            this.profilePic = profilePic;
+        }
+
         String firstName;
         String lastName;
         String email;
