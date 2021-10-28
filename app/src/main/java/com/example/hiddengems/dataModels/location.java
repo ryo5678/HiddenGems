@@ -4,10 +4,7 @@ import android.media.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class locations {
-    private static ArrayList<location> list = new ArrayList<location>();
-
-    public static class location implements Serializable {
+    public class location implements Serializable {
 
         String Name;
         String Address;
@@ -37,7 +34,7 @@ public class locations {
 
 
     }
-}
+
 
 
 

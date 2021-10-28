@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,12 +11,12 @@ import android.widget.TextView;
 import androidx.core.view.ViewCompat;
 
 import com.example.hiddengems.R;
-import com.example.hiddengems.dataModels.locations;
+import com.example.hiddengems.dataModels.location;
 
 public class LocationView extends LinearLayout {
     //Text views
     private TextView mlocationName, mdistanceAway;
-    private locations mlocation;
+    private location mlocation;
     private double mdistance;
 
     public LocationView(Context context) {
@@ -63,7 +62,7 @@ public class LocationView extends LinearLayout {
         });
     }
 
-    public void setLocation(locations loc, double distance) {
+    public void setLocation(location loc, double distance) {
         mlocation = loc;
         mdistance = distance;
         setupView();

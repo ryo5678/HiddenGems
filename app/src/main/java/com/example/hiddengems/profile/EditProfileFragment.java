@@ -1,5 +1,6 @@
 package com.example.hiddengems.profile;
 
+import android.app.Person;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -19,6 +20,7 @@ import com.example.hiddengems.databinding.FragmentEditProfileBinding;
 
 public class EditProfileFragment extends Fragment {
 
+    Users person;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -37,7 +39,7 @@ public class EditProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            person = (Users)getArguments().getSerializable("Person");
         }
     }
 
