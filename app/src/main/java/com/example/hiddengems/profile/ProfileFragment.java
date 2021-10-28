@@ -27,9 +27,10 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance() {
+    public static ProfileFragment newInstance(Users person) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
+        args.putSerializable("Person",person);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,6 +39,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            person = (Users)getArguments().getSerializable("Person");
         }
     }
 

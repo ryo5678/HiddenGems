@@ -11,16 +11,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hiddengems.R;
 
 import com.example.hiddengems.dataModels.person.*;
 import com.example.hiddengems.databinding.FragmentEditProfileBinding;
+import com.example.hiddengems.databinding.FragmentProfileBinding;
 
 
 public class EditProfileFragment extends Fragment {
 
     Users person;
+    FragmentEditProfileBinding binding;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -47,8 +50,53 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        binding = FragmentEditProfileBinding.inflate(inflater,container,false);
+
+        return binding.getRoot();
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.saveProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = binding.editName.getText().toString();
+                String email = binding.editEmail.getText().toString();
+                String profilePic = binding.editPic.toString();
+
+                if(name.isEmpty()  || email.isEmpty() || profilePic.isEmpty()) {
+                    missingInput(getActivity());
+                }
+                else {
+                    person.setName(name);
+                    person.setEmail(email);
+                    person.setProfilePic(profilePic);
+                    action.profile(person);
+                }
+            }
+        });
+    }
+
+    public void missingInput(Context context){
+        Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof profile) {
+            action = (profile) context;
+        }
+    }
+
+    public static profile action;
+
+    public interface profile{
+        void profile(Users person);
+    }
+
+
 
 
 }

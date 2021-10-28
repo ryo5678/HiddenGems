@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.hiddengems.dataModels.person.*;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, BottomNavigationView.OnNavigationItemSelectedListener {
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -108,6 +108,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.rootView, LikedLocationsFragment.newInstance())
                 .addToBackStack("likedLocationsRequest")
+                .commit();
+    }
+
+    @Override
+    public void profile(Users person) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, ProfileFragment.newInstance(person))
+                .addToBackStack("Profile")
                 .commit();
     }
 
