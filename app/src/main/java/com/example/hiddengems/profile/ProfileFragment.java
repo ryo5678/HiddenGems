@@ -63,11 +63,12 @@ public class ProfileFragment extends Fragment {
 
         binding.profileName.setText(person.getDisplayName());
         binding.profileEmail.setText(person.getEmail());
+        /*
         File imgFile = new File(person.getProfilePic());
         if(imgFile.exists()){
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             binding.profileImage.setImageBitmap(myBitmap);
-        }
+        }*/
 
 
         binding.requestTags.setOnClickListener(new View.OnClickListener() {

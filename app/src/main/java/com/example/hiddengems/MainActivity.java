@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
             case R.id.navigation_map:
                 return true;
             case R.id.navigation_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, profileFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, ProfileFragment.newInstance(person2)).commit();
                 return true;
         }
         return false;
