@@ -9,8 +9,8 @@ import java.util.HashMap;
 public class Person {
     private static final HashMap<String, ArrayList<Users>> people = new HashMap<String, ArrayList<Users>>() {{
         put("Users", new ArrayList<Users>() {{
-            add(new Users("John", "Doe", "johndoe@gmail.com", "jdoe", "https://freesvg.org/img/abstract-user-flat-4.png"));
-            add(new Users("Jane", "Love", "janelove@gmail.com", "jlove", "https://freesvg.org/img/abstract-user-flat-4.png"));
+            add(new Users("JohnDoe", "John Doe", "johndoe@gmail.com", "jdoe", "https://freesvg.org/img/abstract-user-flat-4.png"));
+            add(new Users("JaneDoe", "Jane Love", "janelove@gmail.com", "jlove", "https://freesvg.org/img/abstract-user-flat-4.png"));
         }});
     }};
 
@@ -24,20 +24,44 @@ public class Person {
 
 
     public static class Users implements Serializable {
-        public String getFirstName() {
-            return firstName;
+        String displayName;
+        String name;
+        String email;
+        String password;
+        String profilePic;
+
+        public Users(String display, String name, String Email, String Password, String ProfilePic) {
+            this.displayName = display;
+            this.name = name;
+            this.email = Email;
+            this.password = Password;
+            this.profilePic = ProfilePic;
         }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
+        @Override
+        public String toString() {
+            return "Users{" +
+                    "displayName=" + displayName +
+                    ", name='" + name + '\'' +
+                    ", email='" + email + '\'' +
+                    ", password='" + password + '\'' +
+                    ", profilePic='" + profilePic + '\'' +
+                    '}';
+        }
+        public String getDisplayName() {
+            return displayName;
         }
 
-        public String getLastName() {
-            return lastName;
+        public void setDisplayName(String display) {
+            this.displayName = display;
         }
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getEmail() {
@@ -62,31 +86,6 @@ public class Person {
 
         public void setProfilePic(String profilePic) {
             this.profilePic = profilePic;
-        }
-
-        String firstName;
-        String lastName;
-        String email;
-        String password;
-        String profilePic;
-
-        public Users(String firstname, String lastname, String Email, String Password, String ProfilePic) {
-            this.firstName = firstname;
-            this.lastName = lastname;
-            this.email = Email;
-            this.password = Password;
-            this.profilePic = ProfilePic;
-        }
-
-        @Override
-        public String toString() {
-            return "Users{" +
-                    "firstName=" + firstName +
-                    ", lastName='" + lastName + '\'' +
-                    ", email='" + email + '\'' +
-                    ", password='" + password + '\'' +
-                    ", profilePic='" + profilePic + '\'' +
-                    '}';
         }
     }
 }
