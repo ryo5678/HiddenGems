@@ -7,10 +7,12 @@ import android.os.Bundle;
 
 import android.view.MenuItem;
 
+import com.example.hiddengems.dataModels.location;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
 
 import com.example.hiddengems.home.*;
+import com.example.hiddengems.search.LocationView;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -129,4 +131,12 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
     */
+
+    @Override
+    public void addLocation(location locations) {
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.fragmentContainerView, LocationView.newInstance(locations))
+//                .addToBackStack("addPage")
+//                .commit();
+    }
 }

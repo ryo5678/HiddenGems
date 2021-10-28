@@ -37,11 +37,8 @@ public class AddScreenFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static AddScreenFragment newInstance(String param1, String param2) {
+    public static AddScreenFragment newInstance() {
         AddScreenFragment fragment = new AddScreenFragment();
-        Bundle args = new Bundle();
-        args.putString("location", "");
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -93,9 +90,14 @@ public class AddScreenFragment extends Fragment {
     }
 
     public void addPage(String name, String address, String category, String tags, String startTime, String endTime) {
-        FragmentManager fm = getActivity()
-                .getSupportFragmentManager();
-        fm.popBackStack("addPage", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        locations.setName(name);
+        locations.setAddress(address);
+        locations.setCategory(category);
+//        locations.setTags();
+//        locations.setStartTime();
+//        locations.setEndTime();
+
+        action.addLocation(locations);
     }
 
     public void missingInput(Context context){
@@ -134,5 +136,6 @@ public class AddScreenFragment extends Fragment {
     public static add action;
 
     public interface add{
+        void addLocation(location locations);
     }
 }
