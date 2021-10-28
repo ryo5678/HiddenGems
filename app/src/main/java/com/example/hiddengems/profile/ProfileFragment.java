@@ -15,19 +15,22 @@ import com.example.hiddengems.Camera_Activity;
 import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentProfileBinding;
 
+import com.example.hiddengems.dataModels.Person.*;
+
 public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
-
+    Users person;
 
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance() {
+    public static ProfileFragment newInstance(Users person) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
+        args.putSerializable("Person",person);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,6 +39,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            person = (Users)getArguments().getSerializable("Person");
         }
     }
 
@@ -80,6 +84,18 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        binding.editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { action.editProfile(person); }
+        });
+
+        binding.LikedLocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.likedLocationsRequest();
+            }
+        });
+
     }
 
     @Override
@@ -97,5 +113,7 @@ public class ProfileFragment extends Fragment {
         void operatingHoursRequest();
         void contactUs();
         void locationRemovalRequest();
+        void editProfile(Users person);
+        void likedLocationsRequest();
     }
 }

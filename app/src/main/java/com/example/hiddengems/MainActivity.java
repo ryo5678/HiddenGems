@@ -2,34 +2,23 @@ package com.example.hiddengems;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.hiddengems.dataModels.location;
+import com.example.hiddengems.account.LoginFragment;
 import com.example.hiddengems.databinding.ActivityMainBinding;
-import com.example.hiddengems.map.MapsActivity;
 import com.example.hiddengems.profile.*;
 
 import com.example.hiddengems.home.*;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, BottomNavigationView.OnNavigationItemSelectedListener {
+import com.example.hiddengems.dataModels.Person.*;
+
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener {
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -43,15 +32,13 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setOnNavigationItemSelectedListener(this);
-        navView.setSelectedItemId(R.id.navigation_home);
 
+        navView.setVisibility(View.GONE);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainerView, new LoginFragment())
+                .commit();
 
-        /*getSupportFragmentManager().beginTransaction()
-                .add(R.id.rootView, new HomeFragment())
-                .commit();*/
 
     }
     @Override
@@ -99,11 +86,44 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("contactUs")
                 .commit();
     }
+
     @Override
     public void locationRemovalRequest() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, LocationRemovalFragment.newInstance())
                 .addToBackStack("locationRemovalRequest")
+                .commit();
+    }
+
+    @Override
+    public void editProfile(Users person) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, EditProfileFragment.newInstance(person))
+                .addToBackStack("editProfile")
+                .commit();
+    }
+
+    @Override
+    public void likedLocationsRequest() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LikedLocationsFragment.newInstance())
+                .addToBackStack("likedLocationsRequest")
+                .commit();
+    }
+
+    @Override
+    public void login(Users user) {
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.VISIBLE);
+        navView.setOnNavigationItemSelectedListener(this);
+        navView.setSelectedItemId(R.id.navigation_home);
+    }
+
+    @Override
+    public void profile(Users person) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, ProfileFragment.newInstance(person))
+                .addToBackStack("Profile")
                 .commit();
     }
 
