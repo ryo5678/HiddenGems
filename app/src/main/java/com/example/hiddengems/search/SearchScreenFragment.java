@@ -6,9 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,11 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hiddengems.R;
-import com.example.hiddengems.Views.LocationView;
-import com.example.hiddengems.dataModels.location;
 import com.example.hiddengems.databinding.FragmentSearchScreenBinding;
-
-import java.nio.channels.SelectionKey;
 
 public class SearchScreenFragment extends Fragment {
 
@@ -63,6 +57,18 @@ public class SearchScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Search");
+        binding.searchSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                text = binding.enterLocation.getText().toString();
+                if (text.isEmpty()) {
+                    missingInput(getActivity());
+                } else {
+                    //submitLocation(text);
+                }
+            }
+        });
     }
 
     @Override
@@ -96,6 +102,14 @@ public class SearchScreenFragment extends Fragment {
             return true;
         }
 
+    }
+
+    public void submitLocation(String text){
+
+    }
+
+    public void missingInput(Context context){
+        Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
     }
 
 }

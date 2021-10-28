@@ -15,10 +15,12 @@ import com.example.hiddengems.Camera_Activity;
 import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentProfileBinding;
 
+import com.example.hiddengems.dataModels.person.*;
+
 public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
-
+    Users person;
 
 
     public ProfileFragment() {
@@ -80,6 +82,18 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        binding.editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { action.editProfile(person); }
+        });
+
+        binding.LikedLocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.likedLocationsRequest();
+            }
+        });
+
     }
 
     @Override
@@ -97,5 +111,7 @@ public class ProfileFragment extends Fragment {
         void operatingHoursRequest();
         void contactUs();
         void locationRemovalRequest();
+        void editProfile(Users person);
+        void likedLocationsRequest();
     }
 }
