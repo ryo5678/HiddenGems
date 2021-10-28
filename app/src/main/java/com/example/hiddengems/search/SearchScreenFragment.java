@@ -1,5 +1,6 @@
 package com.example.hiddengems.search;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentSearchScreenBinding;
