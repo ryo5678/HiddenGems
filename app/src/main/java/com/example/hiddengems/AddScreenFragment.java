@@ -1,6 +1,8 @@
 package com.example.hiddengems;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,19 +10,28 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.hiddengems.dataModels.location;
 import com.example.hiddengems.databinding.FragmentAddScreenBinding;
 import com.example.hiddengems.databinding.FragmentReportPageBinding;
 
 import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AddScreenFragment extends Fragment {
 
     FragmentAddScreenBinding binding;
+    TimePickerDialog picker;
+    EditText startTime, endTime;
+    location locations;
 
     public AddScreenFragment() {
         // Required empty public constructor
@@ -35,6 +46,7 @@ public class AddScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            //locations = (location) getArguments().getSerializable("");
         }
     }
 
@@ -50,6 +62,46 @@ public class AddScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Add Location");
+
+        startTime = binding.editAddStartTime;
+        startTime.setInputType(InputType.TYPE_NULL);
+        startTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minutes = c.get(Calendar.MINUTE);
+                // time picker dialog
+                picker = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+                                startTime.setText((sHour + ":" + String.format(Locale.getDefault(),"%02d", sMinute)).toString());
+                            }
+                        }, hour, minutes, true);
+                picker.show();
+            }
+        });
+
+        endTime = binding.editAddEndTime;
+        endTime.setInputType(InputType.TYPE_NULL);
+        endTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minutes = c.get(Calendar.MINUTE);
+                // time picker dialog
+                picker = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker tp, int eHour, int eMinute) {
+                                endTime.setText((eHour + ":" + String.format(Locale.getDefault(),"%02d", eMinute)).toString());
+                            }
+                        }, hour, minutes, true);
+                picker.show();
+            }
+        });
 
         binding.addSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
