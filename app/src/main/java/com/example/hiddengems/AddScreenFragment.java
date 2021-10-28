@@ -122,4 +122,17 @@ public class AddScreenFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof add){
+            action = (add) context;
+        }
+    }
+
+    public static add action;
+
+    public interface add{
+    }
 }
