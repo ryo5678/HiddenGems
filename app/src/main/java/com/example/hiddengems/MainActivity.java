@@ -21,10 +21,11 @@ import com.example.hiddengems.dataModels.Person.*;
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener {
 
     ActivityMainBinding binding;
+    Users person2;
     HomeFragment homeFragment = new HomeFragment();
     SearchScreenFragment searchFragment = new SearchScreenFragment();
     AddScreenFragment addFragment = new AddScreenFragment();
-    ProfileFragment profileFragment = new ProfileFragment();
+    ProfileFragment profileFragment = ProfileFragment.newInstance(person2);
 
 
     @Override
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
 
     @Override
     public void login(Users user) {
+        person2 = user;
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setVisibility(View.VISIBLE);
         navView.setOnNavigationItemSelectedListener(this);
