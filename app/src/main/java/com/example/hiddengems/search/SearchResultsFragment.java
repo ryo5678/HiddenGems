@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,10 +75,17 @@ public class SearchResultsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Search Results");
+        Log.d(TAG, "Before string");
+        Log.d(TAG, String.valueOf(((ArrayList<Location>) getArguments().getSerializable("searchList"))));
+        Log.d(TAG, ((ArrayList<Location>) getArguments().getSerializable("searchList")).get(0).toString());
+        Log.d(TAG,"After string");
+
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+        Log.d(TAG,"Before adatper");
+        Log.d(TAG,locationList.get(0).toString());
 
         adapter = new LocationRecyclerViewAdapter(locationList);
         recyclerView.setAdapter(adapter);

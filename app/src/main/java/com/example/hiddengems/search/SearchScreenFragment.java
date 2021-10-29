@@ -88,6 +88,7 @@ public class SearchScreenFragment extends Fragment {
                     }
                     if(foundLocations.size() != 0 || foundLocations != null) {
                         Log.d(TAG, String.valueOf(foundLocations.size()));
+                        Log.d(TAG,foundLocations.get(0).toString());
                         action.searchResults(foundLocations);
                         foundLocations.clear();
                     } else {

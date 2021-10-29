@@ -1,6 +1,8 @@
 package com.example.hiddengems.dataModels;
 
 import android.media.Image;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;

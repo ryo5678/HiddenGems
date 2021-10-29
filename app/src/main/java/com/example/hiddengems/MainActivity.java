@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     AddScreenFragment addFragment = new AddScreenFragment();
     ProfileFragment profileFragment = ProfileFragment.newInstance(person2);
     Locations test = new Locations();
+    private final String TAG = "TAG";
 
 
     @Override
@@ -145,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
 
     @Override
     public void searchResults(ArrayList<Locations.Location> locations) {
+        Log.d(TAG,locations.get(0).toString());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, SearchResultsFragment.newInstance(locations))
                 .addToBackStack("SearchResults")
