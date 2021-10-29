@@ -10,16 +10,20 @@ import android.view.View;
 
 import com.example.hiddengems.account.LoginFragment;
 import com.example.hiddengems.account.RegisterFragment;
+import com.example.hiddengems.dataModels.Locations;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
 
 import com.example.hiddengems.home.*;
+import com.example.hiddengems.search.SearchResultsFragment;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.hiddengems.dataModels.Person.*;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
 
     ActivityMainBinding binding;
     Users person2;
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     SearchScreenFragment searchFragment = new SearchScreenFragment();
     AddScreenFragment addFragment = new AddScreenFragment();
     ProfileFragment profileFragment = ProfileFragment.newInstance(person2);
+    Locations test = new Locations();
 
 
     @Override
@@ -138,6 +143,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
 
+    @Override
+    public void searchResults(ArrayList<Locations.Location> locations) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, SearchResultsFragment.newInstance(locations))
+                .addToBackStack("SearchResults")
+                .commit();
+    }
+
     /*
     @Override
     public void reportPage() {
@@ -147,13 +160,5 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }*/
 
-    /*
-    @Override
-    public void search() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, SearchScreenFragment.newInstance())
-                .addToBackStack("Search")
-                .commit();
-    }
-    */
+
 }

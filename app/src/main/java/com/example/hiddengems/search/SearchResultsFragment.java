@@ -33,7 +33,8 @@ import java.util.ArrayList;
  */
 public class SearchResultsFragment extends Fragment {
 
-    ArrayList<Gems> locationList;
+    private final String TAG = "TAG";
+    ArrayList<Location> locationList;
     FragmentSearchResultsBinding binding;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -44,7 +45,7 @@ public class SearchResultsFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static SearchResultsFragment newInstance(ArrayList<Gems> Locations) {
+    public static SearchResultsFragment newInstance(ArrayList<Location> Locations) {
         SearchResultsFragment fragment = new SearchResultsFragment();
         Bundle args = new Bundle();
         args.putSerializable("searchList", Locations);
@@ -56,7 +57,7 @@ public class SearchResultsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            locationList = (ArrayList<Gems>) getArguments().getSerializable("searchList");
+            locationList = (ArrayList<Location>) getArguments().getSerializable("searchList");
         }
     }
 
@@ -72,19 +73,20 @@ public class SearchResultsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getActivity().setTitle("Search Results");
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
         adapter = new LocationRecyclerViewAdapter(locationList);
         recyclerView.setAdapter(adapter);
 
     }
 
     public static class LocationRecyclerViewAdapter extends RecyclerView.Adapter<LocationRecyclerViewAdapter.LocationViewHolder> {
-        ArrayList<Gems> Locations;
-        public LocationRecyclerViewAdapter(ArrayList<Gems> data) {
+        ArrayList<Location> Locations;
+        public LocationRecyclerViewAdapter(ArrayList<Location> data) {
             this.Locations = data;
         }
         @NonNull
@@ -97,7 +99,7 @@ public class SearchResultsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull LocationViewHolder holder, @SuppressLint("RecyclerView") int position) {
-            Gems location = Locations.get(position);
+            Location location = Locations.get(position);
             holder.position = position;
             holder.nameView.setText(location.getName());
             holder.rateView.setText("Current rating: " + location.getCurrentRating() + " Total ratings: " + location.getNumberofRatings());
@@ -131,7 +133,7 @@ public class SearchResultsFragment extends Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Gems location = Locations.get(position);
+                        Location location = Locations.get(position);
                         action.showLocation(location);
                     }
                 });
@@ -152,6 +154,6 @@ public class SearchResultsFragment extends Fragment {
     public static location action;
 
     public interface location{
-        void showLocation(Gems location);
+        void showLocation(Location location);
     }
 }

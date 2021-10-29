@@ -19,14 +19,14 @@ import com.example.hiddengems.databinding.FragmentLocationBinding;
 public class LocationFragment extends Fragment {
 
     FragmentLocationBinding binding;
-    Gems location;
+    Location location;
 
     public LocationFragment() {
         // Required empty public constructor
     }
 
 
-    public static LocationFragment newInstance(Gems location) {
+    public static LocationFragment newInstance(Location location) {
         LocationFragment fragment = new LocationFragment();
         Bundle args = new Bundle();
         args.putSerializable("Location",location);
@@ -38,7 +38,7 @@ public class LocationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            location = (Gems)getArguments().getSerializable("Location");
+            location = (Location) getArguments().getSerializable("Location");
         }
     }
 

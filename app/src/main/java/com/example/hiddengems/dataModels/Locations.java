@@ -24,7 +24,7 @@ public class Locations {
         }});
     }};
 
-    public static ArrayList<Location> getsLocations(String key){
+    public static ArrayList<Location> getLocations(String key){
         if(locations.containsKey(key)) {
             return locations.get(key);
         } else {
