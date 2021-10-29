@@ -123,6 +123,16 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
+    public void logout() {
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.GONE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LoginFragment.newInstance())
+                .addToBackStack("Login")
+                .commit();
+    }
+
+    @Override
     public void login(Users user) {
         person2 = user;
         BottomNavigationView navView = findViewById(R.id.nav_view);
