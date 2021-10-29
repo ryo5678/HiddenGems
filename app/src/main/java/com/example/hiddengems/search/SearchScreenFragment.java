@@ -78,7 +78,7 @@ public class SearchScreenFragment extends Fragment {
                     for(int x=0;x < allLocations.size(); x++) {
                         Log.d(TAG, "in loop: " + x);
                         if(allLocations.get(x).getName().contains(text)) {
-                            if (SelectedFilter != null && allLocations.get(x).getCategory().equals(SelectedFilter)) {
+                            if (SelectedFilter != null && allLocations.get(x).equals(SelectedFilter)) {
                                 foundLocations.add(allLocations.get(x));
                             } else {
                                 foundLocations.add(allLocations.get(x));
@@ -90,7 +90,6 @@ public class SearchScreenFragment extends Fragment {
                         Log.d(TAG, String.valueOf(foundLocations.size()));
                         Log.d(TAG,foundLocations.get(0).toString());
                         action.searchResults(foundLocations);
-                        foundLocations.clear();
                     } else {
                         Toast.makeText(getActivity(), "No Matching Locations Found",Toast.LENGTH_SHORT).show();
                     }
@@ -169,5 +168,6 @@ public class SearchScreenFragment extends Fragment {
     public interface results{
         void searchResults(ArrayList<Location> locations);
     }
+
 
 }

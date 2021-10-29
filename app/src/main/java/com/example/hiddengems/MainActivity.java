@@ -16,15 +16,17 @@ import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
 
 import com.example.hiddengems.home.*;
+import com.example.hiddengems.search.LocationFragment;
 import com.example.hiddengems.search.SearchResultsFragment;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.hiddengems.dataModels.Person.*;
+import com.example.hiddengems.dataModels.Locations.*;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, SearchResultsFragment.location, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
 
     ActivityMainBinding binding;
     Users person2;
@@ -146,11 +148,19 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
-    public void searchResults(ArrayList<Locations.Location> locations) {
+    public void searchResults(ArrayList<Location> locations) {
         Log.d(TAG,locations.get(0).toString());
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, SearchResultsFragment.newInstance(locations))
                 .addToBackStack("SearchResults")
+                .commit();
+    }
+
+    @Override
+    public void showLocation(Location location) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(location))
+                .addToBackStack("ShowLocation")
                 .commit();
     }
 
