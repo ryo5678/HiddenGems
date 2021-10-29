@@ -53,6 +53,12 @@ public class LocationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getActivity().setTitle(location.getName());
+
+        binding.locationViewName.setText(location.getName());
+        binding.locationViewAddress.setText(location.getAddress());
+        binding.locationViewCategory.setText(location.getCategory());
+
         // Code goes here
         // binding.(textview).setText(location.getName()) as an example
     }
