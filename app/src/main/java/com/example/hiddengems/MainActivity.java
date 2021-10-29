@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.hiddengems.account.LoginFragment;
+import com.example.hiddengems.account.RegisterFragment;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
 
@@ -119,6 +120,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         navView.setVisibility(View.VISIBLE);
         navView.setOnNavigationItemSelectedListener(this);
         navView.setSelectedItemId(R.id.navigation_home);
+    }
+
+    @Override
+    public void register() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, RegisterFragment.newInstance())
+                .addToBackStack("Register")
+                .commit();
     }
 
     @Override
