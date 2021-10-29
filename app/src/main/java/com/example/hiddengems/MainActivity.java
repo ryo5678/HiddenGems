@@ -26,7 +26,7 @@ import com.example.hiddengems.dataModels.Locations.*;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, AddScreenFragment.add, SearchResultsFragment.location, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
 
     ActivityMainBinding binding;
     Users person2;
@@ -179,6 +179,15 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .replace(R.id.fragmentContainerView, LocationFragment.newInstance(locations))
                 .addToBackStack("addPage")
                 .commit();
+    }
+
+    @Override
+    public void signUp(Users user) {
+        person2 = user;
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.VISIBLE);
+        navView.setOnNavigationItemSelectedListener(this);
+        navView.setSelectedItemId(R.id.navigation_home);
     }
 
     /*
