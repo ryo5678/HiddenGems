@@ -63,15 +63,15 @@ public class EditProfileFragment extends Fragment {
             public void onClick(View view) {
                 String name = binding.editName.getText().toString();
                 String email = binding.editEmail.getText().toString();
-                String profilePic = binding.editPic.toString();
+                //String profilePic = binding.editPic.toString();
 
-                if(name.isEmpty()  || email.isEmpty() || profilePic.isEmpty()) {
+                if(name.isEmpty()  || email.isEmpty() /*|| profilePic.isEmpty()*/) {
                     missingInput(getActivity());
                 }
                 else {
                     person.setName(name);
                     person.setEmail(email);
-                    person.setProfilePic(profilePic);
+                    //person.setProfilePic(profilePic);
                     action.profile(person);
                 }
             }

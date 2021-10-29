@@ -9,8 +9,10 @@ import java.util.HashMap;
 public class Person {
     private static final HashMap<String, ArrayList<Users>> people = new HashMap<String, ArrayList<Users>>() {{
         put("Users", new ArrayList<Users>() {{
-            add(new Users("JohnDoe", "John Doe", "johndoe@gmail.com", "jdoe", "https://freesvg.org/img/abstract-user-flat-4.png"));
-            add(new Users("JaneDoe", "Jane Love", "janelove@gmail.com", "jlove", "https://freesvg.org/img/abstract-user-flat-4.png"));
+            add(new Users("JohnDoe", "John Doe", "johndoe@gmail.com",
+                    "jdoe", "drawable/ic_person_layer.xml"));
+            add(new Users("JaneDoe", "Jane Love", "janelove@gmail.com",
+                    "jlove", "drawable/ic_person_layer.xml"));
         }});
     }};
 
