@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hiddengems.MainActivity;
 import com.example.hiddengems.R;
 import com.example.hiddengems.dataModels.Person;
 import com.example.hiddengems.databinding.FragmentLoginBinding;
@@ -70,6 +71,15 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getActivity().setTitle("Login to Hidden Gems");
+
+        binding.registerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.register();
+            }
+        });
+
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,6 +123,7 @@ public class LoginFragment extends Fragment {
 
     public interface login{
         void login(Users user);
+        void register();
     }
 
     public void missingInput(Context context){

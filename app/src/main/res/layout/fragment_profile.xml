@@ -111,7 +111,7 @@
         app:layout_constraintVertical_bias="0.433" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/profileImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -123,7 +123,7 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/editName"
+        android:id="@+id/profileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/profileName"
@@ -135,7 +135,7 @@
         app:layout_constraintVertical_bias="0.299" />
 
     <TextView
-        android:id="@+id/editEmail"
+        android:id="@+id/profileEmail"
         android:layout_width="166dp"
         android:layout_height="27dp"
         android:text="@string/profileEmail"

@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.hiddengems.R;
 
-import com.example.hiddengems.dataModels.Location;
+import com.example.hiddengems.dataModels.Locations;
 import com.example.hiddengems.databinding.FragmentSearchResultsBinding;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
  */
 public class SearchResultsFragment extends Fragment {
 
-    ArrayList<Location> locationList;
+    ArrayList<Locations> locationList;
     FragmentSearchResultsBinding binding;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -40,7 +40,7 @@ public class SearchResultsFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static SearchResultsFragment newInstance(ArrayList<Location> Locations) {
+    public static SearchResultsFragment newInstance(ArrayList<Locations> Locations) {
         SearchResultsFragment fragment = new SearchResultsFragment();
         Bundle args = new Bundle();
         args.putSerializable("searchList", Locations);
@@ -52,7 +52,7 @@ public class SearchResultsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            locationList = (ArrayList<Location>) getArguments().getSerializable("searchList");
+            locationList = (ArrayList<Locations>) getArguments().getSerializable("searchList");
         }
     }
 
@@ -79,8 +79,8 @@ public class SearchResultsFragment extends Fragment {
     }
 
     public static class LocationRecyclerViewAdapter extends RecyclerView.Adapter<LocationRecyclerViewAdapter.LocationViewHolder> {
-        ArrayList<Location> Locations;
-        public LocationRecyclerViewAdapter(ArrayList<Location> data) {
+        ArrayList<Locations> Locations;
+        public LocationRecyclerViewAdapter(ArrayList<Locations> data) {
             this.Locations = data;
         }
         @NonNull
@@ -93,7 +93,7 @@ public class SearchResultsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull LocationViewHolder holder, @SuppressLint("RecyclerView") int position) {
-            Location location = Locations.get(position);
+            Locations location = Locations.get(position);
             holder.position = position;
 
         }

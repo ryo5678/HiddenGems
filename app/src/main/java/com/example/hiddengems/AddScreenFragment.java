@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.hiddengems.dataModels.Location;
+import com.example.hiddengems.dataModels.Locations;
 import com.example.hiddengems.databinding.FragmentAddScreenBinding;
 
 import java.util.Calendar;
@@ -28,7 +28,7 @@ public class AddScreenFragment extends Fragment {
     FragmentAddScreenBinding binding;
     TimePickerDialog picker;
     EditText startTime, endTime;
-    Location locations;
+    Locations locations;
 
     public AddScreenFragment() {
         // Required empty public constructor

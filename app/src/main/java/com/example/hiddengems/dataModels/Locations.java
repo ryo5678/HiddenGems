@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Location {
+public class Locations {
 
     private static final HashMap<String, ArrayList<Gems>> locations = new HashMap<String, ArrayList<Gems>>() {{
         put("Locations", new ArrayList<Gems>() {{
