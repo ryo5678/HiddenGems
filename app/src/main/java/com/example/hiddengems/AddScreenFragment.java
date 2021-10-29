@@ -79,23 +79,35 @@ public class AddScreenFragment extends Fragment {
                 String startTime = binding.editAddStartTime.getText().toString();
                 String endTime = binding.editAddEndTime.getText().toString();
 
+                String[] sarr = startTime.split(":");
+                int sHour = Integer.parseInt(sarr[0]);
+                int sMinute = Integer.parseInt(sarr[1]);
+                int startHour = (sHour * 60) + sMinute;
+
+                String[] earr = startTime.split(":");
+                int eHour = Integer.parseInt(earr[0]);
+                int eMinute = Integer.parseInt(earr[1]);
+                int endHour = (eHour * 60) + eMinute;
+
+                String[] strArr = new String[] {tags};
+
                 if(name.isEmpty()  || address.isEmpty() || category.isEmpty() || tags.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
                     missingInput(getActivity());
                 }
                 else {
-                    addPage(name, address, category, tags, startTime, endTime);
+                    addPage(name, address, category, strArr, startHour, endHour);
                 }
             }
         });
     }
 
-    public void addPage(String name, String address, String category, String tags, String startTime, String endTime) {
+    public void addPage(String name, String address, String category, String[] tags, int startTime, int endTime) {
         locations.setName(name);
         locations.setAddress(address);
         locations.setCategory(category);
-//        locations.setTags();
-//        locations.setStartTime();
-//        locations.setEndTime();
+        locations.setTags(tags);
+        locations.setStartTime(startTime);
+        locations.setEndTime(endTime);
 
         action.addLocation(locations);
     }
