@@ -1,6 +1,7 @@
 package com.example.hiddengems.search;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,10 @@ import android.widget.TextView;
 
 import com.example.hiddengems.R;
 
+import com.example.hiddengems.account.LoginFragment;
 import com.example.hiddengems.dataModels.Locations;
+import com.example.hiddengems.dataModels.Locations.*;
+import com.example.hiddengems.dataModels.Person;
 import com.example.hiddengems.databinding.FragmentSearchResultsBinding;
 
 import java.util.ArrayList;
@@ -29,7 +33,7 @@ import java.util.ArrayList;
  */
 public class SearchResultsFragment extends Fragment {
 
-    ArrayList<Locations> locationList;
+    ArrayList<Gems> locationList;
     FragmentSearchResultsBinding binding;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -40,7 +44,7 @@ public class SearchResultsFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static SearchResultsFragment newInstance(ArrayList<Locations> Locations) {
+    public static SearchResultsFragment newInstance(ArrayList<Gems> Locations) {
         SearchResultsFragment fragment = new SearchResultsFragment();
         Bundle args = new Bundle();
         args.putSerializable("searchList", Locations);
@@ -52,7 +56,7 @@ public class SearchResultsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            locationList = (ArrayList<Locations>) getArguments().getSerializable("searchList");
+            locationList = (ArrayList<Gems>) getArguments().getSerializable("searchList");
         }
     }
 
@@ -79,8 +83,8 @@ public class SearchResultsFragment extends Fragment {
     }
 
     public static class LocationRecyclerViewAdapter extends RecyclerView.Adapter<LocationRecyclerViewAdapter.LocationViewHolder> {
-        ArrayList<Locations> Locations;
-        public LocationRecyclerViewAdapter(ArrayList<Locations> data) {
+        ArrayList<Gems> Locations;
+        public LocationRecyclerViewAdapter(ArrayList<Gems> data) {
             this.Locations = data;
         }
         @NonNull
@@ -93,8 +97,12 @@ public class SearchResultsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull LocationViewHolder holder, @SuppressLint("RecyclerView") int position) {
-            Locations location = Locations.get(position);
+            Gems location = Locations.get(position);
             holder.position = position;
+            holder.nameView.setText(location.getName());
+            holder.rateView.setText("Current rating: " + location.getCurrentRating() + " Total ratings: " + location.getNumberofRatings());
+            // Not working yet for images, holder.preView.set
+
 
         }
 
@@ -123,8 +131,8 @@ public class SearchResultsFragment extends Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // Go to some another view with just this location
-                        // Get location with this locations.get(position).locationID
+                        Gems location = Locations.get(position);
+                        action.showLocation(location);
                     }
                 });
 
@@ -132,5 +140,18 @@ public class SearchResultsFragment extends Fragment {
 
 
         }
+    }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof location){
+            action = (location) context;
+        }
+    }
+
+    public static location action;
+
+    public interface location{
+        void showLocation(Gems location);
     }
 }
