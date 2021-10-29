@@ -55,6 +55,20 @@ public class Locations {
         public ArrayList<String> Comments;
         public ArrayList<String> Reviews;
 
+        public Location() {
+            Name = "";
+            Address = "";
+            Category = "";
+            startTime = 0;
+            endTime = 0;
+            isEvent = false;
+            startDate = 0;
+            endDate = 0;
+            Season = "";
+            Likes = 0;
+            currentRating = 0;
+            numberofRatings = 0;
+        }
 
         public Location(String Name, String Address, String Category) {
             this.Name = Name;
@@ -190,7 +204,3 @@ public class Locations {
 
 
 }
-
-
-
-
