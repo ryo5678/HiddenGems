@@ -21,8 +21,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.hiddengems.dataModels.Person.*;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener {
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, BottomNavigationView.OnNavigationItemSelectedListener, AddScreenFragment.add {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login,
+        AddScreenFragment.add, BottomNavigationView.OnNavigationItemSelectedListener {
+
 
     ActivityMainBinding binding;
     Users person2;
