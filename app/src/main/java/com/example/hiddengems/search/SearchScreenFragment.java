@@ -16,13 +16,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hiddengems.R;
+import com.example.hiddengems.dataModels.Locations;
 import com.example.hiddengems.databinding.FragmentSearchScreenBinding;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class SearchScreenFragment extends Fragment {
 
-    String SelectedFilter;
+    String SelectedFilter = null;
     FragmentSearchScreenBinding binding;
     String text;
+    ArrayList<Locations.Location> allLocations;
 
     public SearchScreenFragment() {
         // Required empty public constructor
@@ -30,9 +35,11 @@ public class SearchScreenFragment extends Fragment {
 
 
 
-    public static SearchScreenFragment newInstance(String param1, String param2) {
+    public static SearchScreenFragment newInstance(ArrayList<Locations.Location> allLocations) {
         SearchScreenFragment fragment = new SearchScreenFragment();
         Bundle args = new Bundle();
+        args.putSerializable("allLocations",allLocations);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -40,10 +47,9 @@ public class SearchScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-       // LocationView example = getView().findViewById(R.id.example_test);
-        //String[] check = {"Hello"};
-       // location textloc = new location("Big daddy","117 cheese drive", "Bar", check );
-        //example.setLocation(textloc,0.9);
+        if (getArguments() != null) {
+            allLocations = (ArrayList<Locations.Location>) getArguments().getSerializable("allLocations");
+        }
     }
 
     @Override
@@ -67,7 +73,8 @@ public class SearchScreenFragment extends Fragment {
                 if (text.isEmpty()) {
                     missingInput(getActivity());
                 } else {
-                    //submitLocation(text);
+                    ArrayList<Locations.Location> results = submitLocation(text);
+                    //goToSearchResultsFragment(results);
                 }
             }
         });
@@ -106,8 +113,19 @@ public class SearchScreenFragment extends Fragment {
 
     }
 
-    public void submitLocation(String text){
+    public ArrayList<Locations.Location> submitLocation (String text){
+        ArrayList<Locations.Location> foundLocations = new ArrayList<Locations.Location>();
+        for(int x=0;x < allLocations.size(); x++) {
+            if(allLocations.get(x).getName().contains(text)) {
+                if (SelectedFilter != null && allLocations.get(x).getCategory().equals(SelectedFilter)) {
+                    foundLocations.add(allLocations.get(x));
+                } else {
+                    foundLocations.add(allLocations.get(x));
+                }
+            }
+        }
 
+        return foundLocations;
     }
 
     public void missingInput(Context context){

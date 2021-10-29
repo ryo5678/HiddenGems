@@ -8,31 +8,31 @@ import java.util.HashMap;
 
 public class Locations {
 
-    private static final HashMap<String, ArrayList<Gems>> locations = new HashMap<String, ArrayList<Gems>>() {{
-        put("Locations", new ArrayList<Gems>() {{
-            add(new Gems("Heist Brewery","2909 N Davidson St STE 200, Charlotte, NC 28205","Bar"));
-            add(new Gems("Neighborhood Theatre", "511 E 36th St, Charlotte, NC 28205", "Venue"));
-            add(new Gems("Cabo Fish Taco","11611 N Community House Rd, Charlotte, NC 28277", "Restaurant"));
-            add(new Gems("Arbys","117 Sierra Drive","Restaurant"));
-            add(new Gems("Arrowhead Park","343 Industry Lane","Park"));
-            add(new Gems("The Bacon Boys","1776 Merica Blv","Restaurant"));
-            add(new Gems("The White House"," 1600 Pennsylvania Avenue NW, Washington, DC 20500","Historical"));
+    private static final HashMap<String, ArrayList<Location>> locations = new HashMap<String, ArrayList<Location>>() {{
+        put("Locations", new ArrayList<Location>() {{
+            add(new Location("Heist Brewery","2909 N Davidson St STE 200, Charlotte, NC 28205","Bar"));
+            add(new Location("Neighborhood Theatre", "511 E 36th St, Charlotte, NC 28205", "Venue"));
+            add(new Location("Cabo Fish Taco","11611 N Community House Rd, Charlotte, NC 28277", "Restaurant"));
+            add(new Location("Arbys","117 Sierra Drive","Restaurant"));
+            add(new Location("Arrowhead Park","343 Industry Lane","Park"));
+            add(new Location("The Bacon Boys","1776 Merica Blv","Restaurant"));
+            add(new Location("The White House"," 1600 Pennsylvania Avenue NW, Washington, DC 20500","Historical"));
         }});
-        put("Gems", new ArrayList<Gems>() {{
-            add(new Gems("Heist Brewery","2909 N Davidson St STE 200, Charlotte, NC 28205","Bar"));
-            add(new Gems("Neighborhood Theatre", "511 E 36th St, Charlotte, NC 28205", "Venue"));
+        put("Gems", new ArrayList<Location>() {{
+            add(new Location("Heist Brewery","2909 N Davidson St STE 200, Charlotte, NC 28205","Bar"));
+            add(new Location("Neighborhood Theatre", "511 E 36th St, Charlotte, NC 28205", "Venue"));
         }});
     }};
 
-    public static ArrayList<Gems> getsLocations(String key){
+    public static ArrayList<Location> getsLocations(String key){
         if(locations.containsKey(key)) {
             return locations.get(key);
         } else {
-            return new ArrayList<Gems>();
+            return new ArrayList<Location>();
         }
     }
 
-    public static class Gems implements Serializable {
+    public static class Location implements Serializable {
 
         public String Name;
         public String Address;
@@ -54,7 +54,7 @@ public class Locations {
         public ArrayList<String> Reviews;
 
 
-        public Gems(String Name, String Address, String Category) {
+        public Location(String Name, String Address, String Category) {
             this.Name = Name;
             this.Address = Address;
             this.Category = Category;
@@ -90,6 +90,18 @@ public class Locations {
                     ", Comments=" + Comments +
                     ", Reviews=" + Reviews +
                     '}';
+        }
+
+        public String getName() {
+            return Name;
+        }
+
+        public String getAddress() {
+            return Address;
+        }
+
+        public String getCategory() {
+            return Category;
         }
 
         public void setName(String Name) {
