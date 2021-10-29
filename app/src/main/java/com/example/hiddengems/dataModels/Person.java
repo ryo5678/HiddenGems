@@ -11,7 +11,7 @@ public class Person {
         put("Users", new ArrayList<Users>() {{
             add(new Users("JohnDoe", "John Doe", "johndoe@gmail.com",
                     "jdoe", "drawable/ic_person_layer.xml"));
-            add(new Users("JaneDoe", "Jane Love", "janelove@gmail.com",
+            add(new Users("JaneLove", "Jane Love", "janelove@gmail.com",
                     "jlove", "drawable/ic_person_layer.xml"));
         }});
     }};

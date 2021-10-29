@@ -71,6 +71,12 @@ public class ProfileFragment extends Fragment {
         }*/
 
 
+        binding.profileLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.logout();
+            }
+        });
         binding.requestTags.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,5 +136,6 @@ public class ProfileFragment extends Fragment {
         void locationRemovalRequest();
         void editProfile(Users person);
         void likedLocationsRequest();
+        void logout();
     }
 }
