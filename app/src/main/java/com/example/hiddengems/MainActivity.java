@@ -1,25 +1,28 @@
 package com.example.hiddengems;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.hiddengems.account.LoginFragment;
 import com.example.hiddengems.account.RegisterFragment;
-import com.example.hiddengems.dataModels.location;
+import com.example.hiddengems.dataModels.Locations.Location;
+import com.example.hiddengems.dataModels.Person.Users;
 import com.example.hiddengems.databinding.ActivityMainBinding;
-import com.example.hiddengems.profile.*;
-
-import com.example.hiddengems.home.*;
-import com.example.hiddengems.search.LocationView;
+import com.example.hiddengems.home.HomeFragment;
+import com.example.hiddengems.profile.ContactUsFragment;
+import com.example.hiddengems.profile.EditProfileFragment;
+import com.example.hiddengems.profile.HoursChangeFragment;
+import com.example.hiddengems.profile.LikedLocationsFragment;
+import com.example.hiddengems.profile.LocationRemovalFragment;
+import com.example.hiddengems.profile.ProfileFragment;
+import com.example.hiddengems.profile.RequestTagsFragment;
+import com.example.hiddengems.search.LocationFragment;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import com.example.hiddengems.dataModels.Person.*;
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login,
         AddScreenFragment.add, BottomNavigationView.OnNavigationItemSelectedListener {
@@ -162,10 +165,10 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     */
 
     @Override
-    public void addLocation(location locations) {
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.fragmentContainerView, LocationView.newInstance(locations))
-//                .addToBackStack("addPage")
-//                .commit();
+    public void addLocation(Location locations) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(locations))
+                .addToBackStack("addPage")
+                .commit();
     }
 }

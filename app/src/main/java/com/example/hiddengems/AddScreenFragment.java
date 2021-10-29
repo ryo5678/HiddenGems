@@ -3,12 +3,6 @@ package com.example.hiddengems;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +11,11 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.hiddengems.dataModels.Locations;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.hiddengems.dataModels.Locations.Location;
 import com.example.hiddengems.databinding.FragmentAddScreenBinding;
 
 import java.util.Calendar;
@@ -28,7 +26,7 @@ public class AddScreenFragment extends Fragment {
     FragmentAddScreenBinding binding;
     TimePickerDialog picker;
     EditText startTime, endTime;
-    Locations locations;
+    Location locations;
 
     public AddScreenFragment() {
         // Required empty public constructor
@@ -43,7 +41,7 @@ public class AddScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //locations = (location) getArguments().getSerializable("location");
+            locations = (Location) getArguments().getSerializable("Location");
         }
     }
 
@@ -69,6 +67,8 @@ public class AddScreenFragment extends Fragment {
         binding.addSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int sHour, sMinute, startHour, eHour, eMinute, endHour;
+
                 String name = binding.editAddName.getText().toString();
                 String address = binding.editAddAddress.getText().toString();
                 String category = binding.spinnerAddCategory.getSelectedItem().toString();
@@ -76,33 +76,41 @@ public class AddScreenFragment extends Fragment {
                 String startTime = binding.editAddStartTime.getText().toString();
                 String endTime = binding.editAddEndTime.getText().toString();
 
-                String[] sarr = startTime.split(":");
-                int sHour = Integer.parseInt(sarr[0]);
-                int sMinute = Integer.parseInt(sarr[1]);
-                int startHour = (sHour * 60) + sMinute;
+                boolean allInput = name.isEmpty()  || address.isEmpty() || category.isEmpty() || tags.isEmpty() || startTime.isEmpty() || endTime.isEmpty();
+                boolean minInput = name.isEmpty()  || address.isEmpty() || category.isEmpty();
 
-                String[] earr = startTime.split(":");
-                int eHour = Integer.parseInt(earr[0]);
-                int eMinute = Integer.parseInt(earr[1]);
-                int endHour = (eHour * 60) + eMinute;
+                if(!(startTime.isEmpty() || endTime.isEmpty())) {
+                    String[] sarr = startTime.split(":");
+                    sHour = Integer.parseInt(sarr[0]);
+                    sMinute = Integer.parseInt(sarr[1]);
+                    startHour = (sHour * 60) + sMinute;
 
-                String[] strArr = new String[] {tags};
+                    String[] earr = startTime.split(":");
+                    eHour = Integer.parseInt(earr[0]);
+                    eMinute = Integer.parseInt(earr[1]);
+                    endHour = (eHour * 60) + eMinute;
+                }
+                else {
+                    startHour = 0;
+                    endHour = 0;
+                }
 
-                if(name.isEmpty()  || address.isEmpty() || category.isEmpty() || tags.isEmpty() || startTime.isEmpty() || endTime.isEmpty()) {
+                if(minInput) {
                     missingInput(getActivity());
                 }
                 else {
-                    addPage(name, address, category, strArr, startHour, endHour);
+                    addPage(name, address, category, tags, startHour, endHour);
                 }
             }
         });
     }
 
-    public void addPage(String name, String address, String category, String[] tags, int startTime, int endTime) {
+    public void addPage(String name, String address, String category, String tags, int startTime, int endTime) {
+        locations = new Location();
         locations.setName(name);
         locations.setAddress(address);
         locations.setCategory(category);
-        locations.setTags(tags);
+        locations.addTag(tags);
         locations.setStartTime(startTime);
         locations.setEndTime(endTime);
 
@@ -145,6 +153,6 @@ public class AddScreenFragment extends Fragment {
     public static add action;
 
     public interface add{
-        void addLocation(location locations);
+        void addLocation(Location locations);
     }
 }

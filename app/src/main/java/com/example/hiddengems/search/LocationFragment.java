@@ -1,32 +1,28 @@
 package com.example.hiddengems.search;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.hiddengems.R;
-
-import com.example.hiddengems.dataModels.Locations.*;
-import com.example.hiddengems.databinding.FragmentAddScreenBinding;
+import com.example.hiddengems.dataModels.Locations.Location;
 import com.example.hiddengems.databinding.FragmentLocationBinding;
 
 public class LocationFragment extends Fragment {
 
     FragmentLocationBinding binding;
-    Gems location;
+    Location location;
 
     public LocationFragment() {
         // Required empty public constructor
     }
 
 
-    public static LocationFragment newInstance(Gems location) {
+    public static LocationFragment newInstance(Location location) {
         LocationFragment fragment = new LocationFragment();
         Bundle args = new Bundle();
         args.putSerializable("Location",location);
@@ -38,7 +34,7 @@ public class LocationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            location = (Gems)getArguments().getSerializable("Location");
+            location = (Location)getArguments().getSerializable("Location");
         }
     }
 
