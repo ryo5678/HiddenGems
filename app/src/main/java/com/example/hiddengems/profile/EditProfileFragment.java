@@ -73,7 +73,7 @@ public class EditProfileFragment extends Fragment {
                     missingInput(getActivity());
                 }
                 else {
-                    person.setName(name);
+                    person.setDisplayName(name);
                     person.setEmail(email);
                     //person.setProfilePic(profilePic);
                     action.profile(person);
