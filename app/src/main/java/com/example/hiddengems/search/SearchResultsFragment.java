@@ -17,8 +17,7 @@ import android.widget.TextView;
 
 import com.example.hiddengems.R;
 
-import com.example.hiddengems.dataModels.location;
-import com.example.hiddengems.databinding.FragmentProfileBinding;
+import com.example.hiddengems.dataModels.Location;
 import com.example.hiddengems.databinding.FragmentSearchResultsBinding;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ import java.util.ArrayList;
  */
 public class SearchResultsFragment extends Fragment {
 
-    ArrayList<location> locationList;
+    ArrayList<Location> locationList;
     FragmentSearchResultsBinding binding;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -41,10 +40,10 @@ public class SearchResultsFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static SearchResultsFragment newInstance(ArrayList<location> locations) {
+    public static SearchResultsFragment newInstance(ArrayList<Location> Locations) {
         SearchResultsFragment fragment = new SearchResultsFragment();
         Bundle args = new Bundle();
-        args.putSerializable("searchList",locations);
+        args.putSerializable("searchList", Locations);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +52,7 @@ public class SearchResultsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            locationList = (ArrayList<location>) getArguments().getSerializable("searchList");
+            locationList = (ArrayList<Location>) getArguments().getSerializable("searchList");
         }
     }
 
@@ -80,9 +79,9 @@ public class SearchResultsFragment extends Fragment {
     }
 
     public static class LocationRecyclerViewAdapter extends RecyclerView.Adapter<LocationRecyclerViewAdapter.LocationViewHolder> {
-        ArrayList<location> locations;
-        public LocationRecyclerViewAdapter(ArrayList<location> data) {
-            this.locations = data;
+        ArrayList<Location> Locations;
+        public LocationRecyclerViewAdapter(ArrayList<Location> data) {
+            this.Locations = data;
         }
         @NonNull
         @Override
@@ -94,14 +93,14 @@ public class SearchResultsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull LocationViewHolder holder, @SuppressLint("RecyclerView") int position) {
-            location location = locations.get(position);
+            Location location = Locations.get(position);
             holder.position = position;
 
         }
 
         @Override
         public int getItemCount() {
-            return this.locations.size();
+            return this.Locations.size();
         }
 
         public class LocationViewHolder extends RecyclerView.ViewHolder {

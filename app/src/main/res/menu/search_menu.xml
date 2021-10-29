@@ -14,7 +14,7 @@
 
                 <menu>
                     <item android:id="@+id/Resturant"
-                        android:title="Resturant"/>
+                        android:title="Restaurant"/>
                     <item android:id="@+id/Monument"
                         android:title="Monument"/>
                     <item android:id="@+id/Event"
