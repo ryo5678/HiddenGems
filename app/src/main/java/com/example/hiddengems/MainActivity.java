@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.hiddengems.account.LoginFragment;
+import com.example.hiddengems.account.RegisterFragment;
 import com.example.hiddengems.dataModels.location;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
@@ -16,15 +19,17 @@ import com.example.hiddengems.search.LocationView;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.example.hiddengems.dataModels.person.*;
+import com.example.hiddengems.dataModels.Person.*;
 
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener {
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, BottomNavigationView.OnNavigationItemSelectedListener, AddScreenFragment.add {
 
     ActivityMainBinding binding;
+    Users person2;
     HomeFragment homeFragment = new HomeFragment();
     SearchScreenFragment searchFragment = new SearchScreenFragment();
     AddScreenFragment addFragment = new AddScreenFragment();
-    ProfileFragment profileFragment = new ProfileFragment();
+    ProfileFragment profileFragment = ProfileFragment.newInstance(person2);
 
 
     @Override
@@ -32,15 +37,13 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setOnNavigationItemSelectedListener(this);
-        navView.setSelectedItemId(R.id.navigation_home);
 
+        navView.setVisibility(View.GONE);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainerView, new LoginFragment())
+                .commit();
 
-        /*getSupportFragmentManager().beginTransaction()
-                .add(R.id.rootView, new HomeFragment())
-                .commit();*/
 
     }
     @Override
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
             case R.id.navigation_map:
                 return true;
             case R.id.navigation_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, profileFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, ProfileFragment.newInstance(person2)).commit();
                 return true;
         }
         return false;
@@ -108,8 +111,33 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     @Override
     public void likedLocationsRequest() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rootView, LikedLocationsFragment.newInstance())
+                .replace(R.id.fragmentContainerView, LikedLocationsFragment.newInstance())
                 .addToBackStack("likedLocationsRequest")
+                .commit();
+    }
+
+    @Override
+    public void login(Users user) {
+        person2 = user;
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.VISIBLE);
+        navView.setOnNavigationItemSelectedListener(this);
+        navView.setSelectedItemId(R.id.navigation_home);
+    }
+
+    @Override
+    public void register() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, RegisterFragment.newInstance())
+                .addToBackStack("Register")
+                .commit();
+    }
+
+    @Override
+    public void profile(Users person) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, ProfileFragment.newInstance(person))
+                .addToBackStack("Profile")
                 .commit();
     }
 
