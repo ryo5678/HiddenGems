@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/locationRatingView"
         android:layout_width="93dp"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Rating View"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
     <TextView
         android:id="@+id/locationReview"
         android:layout_width="107dp"
-        android:layout_height="26dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Number Reviews"
         app:layout_constraintEnd_toEndOf="parent"

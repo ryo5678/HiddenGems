@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,13 +17,24 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hiddengems.R;
+import com.example.hiddengems.dataModels.Locations;
+import com.example.hiddengems.dataModels.Locations.*;
+import com.example.hiddengems.dataModels.Person;
 import com.example.hiddengems.databinding.FragmentSearchScreenBinding;
+import com.example.hiddengems.profile.ProfileFragment;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class SearchScreenFragment extends Fragment {
 
-    String SelectedFilter;
+    private final String TAG = "TAG";
+    String SelectedFilter = null;
     FragmentSearchScreenBinding binding;
     String text;
+    ArrayList<Location> allLocations = Locations.getLocations("Locations");
+    ArrayList<Location> foundLocations = new ArrayList<Location>();
+
 
     public SearchScreenFragment() {
         // Required empty public constructor
@@ -30,7 +42,7 @@ public class SearchScreenFragment extends Fragment {
 
 
 
-    public static SearchScreenFragment newInstance(String param1, String param2) {
+    public static SearchScreenFragment newInstance() {
         SearchScreenFragment fragment = new SearchScreenFragment();
         Bundle args = new Bundle();
         return fragment;
@@ -40,10 +52,6 @@ public class SearchScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-       // LocationView example = getView().findViewById(R.id.example_test);
-        //String[] check = {"Hello"};
-       // location textloc = new location("Big daddy","117 cheese drive", "Bar", check );
-        //example.setLocation(textloc,0.9);
     }
 
     @Override
@@ -67,7 +75,24 @@ public class SearchScreenFragment extends Fragment {
                 if (text.isEmpty()) {
                     missingInput(getActivity());
                 } else {
-                    //submitLocation(text);
+                    for(int x=0;x < allLocations.size(); x++) {
+                        Log.d(TAG, "in loop: " + x);
+                        if(allLocations.get(x).getName().contains(text)) {
+                            if (SelectedFilter != null && allLocations.get(x).equals(SelectedFilter)) {
+                                foundLocations.add(allLocations.get(x));
+                            } else {
+                                foundLocations.add(allLocations.get(x));
+                                Log.d(TAG, String.valueOf(foundLocations.size()));
+                            }
+                        }
+                    }
+                    if(foundLocations.size() != 0 || foundLocations != null) {
+                        Log.d(TAG, String.valueOf(foundLocations.size()));
+                        Log.d(TAG,foundLocations.get(0).toString());
+                        action.searchResults(foundLocations);
+                    } else {
+                        Toast.makeText(getActivity(), "No Matching Locations Found",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -106,12 +131,43 @@ public class SearchScreenFragment extends Fragment {
 
     }
 
-    public void submitLocation(String text){
-
+    /*
+    public void submitLocation (String text){
+        for(int x=0;x < allLocations.size(); x++) {
+            Log.d(TAG, "in loop: " + x);
+            if(allLocations.get(x).getName().contains(text)) {
+                if (SelectedFilter != null && allLocations.get(x).getCategory().equals(SelectedFilter)) {
+                    foundLocations.add(allLocations.get(x));
+               } else {
+                    foundLocations.add(allLocations.get(x));
+                    Log.d(TAG, String.valueOf(foundLocations.size()));
+                }
+            }
+        }
     }
+    */
+
+    //public void goToSearchResultsFragment() {
+
+   // }
 
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof results){
+            action = (results) context;
+        }
+    }
+
+    public static results action;
+
+    public interface results{
+        void searchResults(ArrayList<Location> locations);
+    }
+
 
 }

@@ -5,21 +5,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.hiddengems.account.LoginFragment;
 import com.example.hiddengems.account.RegisterFragment;
+import com.example.hiddengems.dataModels.Locations;
 import com.example.hiddengems.databinding.ActivityMainBinding;
 import com.example.hiddengems.profile.*;
 
 import com.example.hiddengems.home.*;
+import com.example.hiddengems.search.LocationFragment;
+import com.example.hiddengems.search.SearchResultsFragment;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.hiddengems.dataModels.Person.*;
+import com.example.hiddengems.dataModels.Locations.*;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, AddScreenFragment.add, SearchResultsFragment.location, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
 
     ActivityMainBinding binding;
     Users person2;
@@ -27,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     SearchScreenFragment searchFragment = new SearchScreenFragment();
     AddScreenFragment addFragment = new AddScreenFragment();
     ProfileFragment profileFragment = ProfileFragment.newInstance(person2);
+    Locations test = new Locations();
+    private final String TAG = "TAG";
 
 
     @Override
@@ -138,15 +147,22 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
 
-    /*
     @Override
-    public void reportPage() {
+    public void searchResults(ArrayList<Location> locations) {
+        Log.d(TAG,locations.get(0).toString());
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, ReportPageFragment.newInstance())
-                .addToBackStack("reportPage")
+                .replace(R.id.fragmentContainerView, SearchResultsFragment.newInstance(locations))
+                .addToBackStack("SearchResults")
                 .commit();
-    }*/
+    }
 
+    @Override
+    public void showLocation(Location location) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(location))
+                .addToBackStack("ShowLocation")
+                .commit();
+    }
     /*
     @Override
     public void search() {
@@ -156,4 +172,23 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
     */
+
+    @Override
+    public void addLocation(Location locations) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(locations))
+                .addToBackStack("addPage")
+                .commit();
+    }
+
+    /*
+    @Override
+    public void reportPage() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, ReportPageFragment.newInstance())
+                .addToBackStack("reportPage")
+                .commit();
+    }*/
+
+
 }
