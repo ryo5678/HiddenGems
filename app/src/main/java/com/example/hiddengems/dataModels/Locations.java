@@ -17,7 +17,7 @@ public class Locations {
             add(new Location("The Bacon Boys","1776 Merica Blv","Restaurant"));
             add(new Location("The White House"," 1600 Pennsylvania Avenue NW, Washington, DC 20500","Historical"));
         }});
-        put("Location", new ArrayList<Location>() {{
+        put("Gems", new ArrayList<Location>() {{
             add(new Location("Heist Brewery","2909 N Davidson St STE 200, Charlotte, NC 28205","Bar"));
             add(new Location("Neighborhood Theatre", "511 E 36th St, Charlotte, NC 28205", "Venue"));
         }});
