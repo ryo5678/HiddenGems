@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "966217993902",
+    "project_id": "hiddengems-de776",
+    "storage_bucket": "hiddengems-de776.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966217993902:android:cde5f458897ee49469e73f",
+        "android_client_info": {
+          "package_name": "com.example.hiddengems"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966217993902-716g04rhs9ve94r8nnbgerfehj424e09.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7LXnNNHxOUmf5jWolaLjrpc-2yp2EEEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966217993902-716g04rhs9ve94r8nnbgerfehj424e09.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
