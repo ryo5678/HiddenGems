@@ -23,6 +23,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.dataModels.Locations.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     ProfileFragment profileFragment = ProfileFragment.newInstance(person2);
     Locations test = new Locations();
     private final String TAG = "TAG";
+    FirebaseAuth mAuth;
 
 
     @Override
@@ -45,10 +48,18 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         setContentView(binding.getRoot());
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
-        navView.setVisibility(View.GONE);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainerView, new LoginFragment())
-                .commit();
+        mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getCurrentUser() == null){
+            navView.setVisibility(View.GONE);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainerView, new LoginFragment())
+                    .commit();
+        } else {
+            navView.setVisibility(View.VISIBLE);
+            navView.setOnNavigationItemSelectedListener(this);
+            navView.setSelectedItemId(R.id.navigation_home);
+        }
 
 
     }
@@ -133,8 +144,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
-    public void login(Users user) {
-        person2 = user;
+    public void login(FirebaseUser user) {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setVisibility(View.VISIBLE);
         navView.setOnNavigationItemSelectedListener(this);
@@ -192,8 +202,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
-    public void signUp(Users user) {
-        person2 = user;
+    public void signUp(FirebaseUser user) {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setVisibility(View.VISIBLE);
         navView.setOnNavigationItemSelectedListener(this);

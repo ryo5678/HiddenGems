@@ -2,6 +2,7 @@ package com.example.hiddengems.account;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,11 @@ import com.example.hiddengems.databinding.FragmentLoginBinding;
 import com.example.hiddengems.databinding.FragmentRegisterBinding;
 
 import com.example.hiddengems.dataModels.Person.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class RegisterFragment extends Fragment {
@@ -27,6 +33,8 @@ public class RegisterFragment extends Fragment {
     String password;
     String confirm;
     String email;
+    private FirebaseAuth mAuth;
+    private final String TAG = "TAG";
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -71,8 +79,22 @@ public class RegisterFragment extends Fragment {
                     missingInput(getActivity());
                 } else {
                     if (password.equals(confirm)) {
-                        user = new Users((firstName + lastName),(firstName + " " + lastName),email,password,"");
-                        action.signUp(user);
+                        mAuth = FirebaseAuth.getInstance();
+                        mAuth.createUserWithEmailAndPassword(email,password)
+                                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                        if (task.isSuccessful()) {
+                                            Log.d(TAG,"Account created.");
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            action.signUp(user);
+
+                                        } else {
+
+                                        }
+                                    }
+                                });
                     } else {
                         badPassword(getActivity());
                     }
@@ -91,7 +113,7 @@ public class RegisterFragment extends Fragment {
     public static register action;
 
     public interface register{
-        void signUp(Users user);
+        void signUp(FirebaseUser user);
     }
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.loginMissing),Toast.LENGTH_SHORT).show();
