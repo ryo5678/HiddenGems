@@ -60,6 +60,7 @@ public class SearchResultsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            locationList.clear();
             locationList = (ArrayList<Location>)getArguments().getSerializable("searchList");
         }
     }
@@ -71,6 +72,12 @@ public class SearchResultsFragment extends Fragment {
 
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //locationList.clear();
     }
 
     @Override

@@ -22,6 +22,11 @@ import com.example.hiddengems.databinding.FragmentProfileBinding;
 
 import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.profile.ProfileFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -36,9 +41,10 @@ public class LoginFragment extends Fragment {
     FragmentLoginBinding binding;
     String username;
     String password;
-    Users user;
+    FirebaseUser user;
     ArrayList<Users> users;
     String type;
+    private FirebaseAuth mAuth;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -73,6 +79,8 @@ public class LoginFragment extends Fragment {
 
         getActivity().setTitle("Login to Hidden Gems");
 
+        mAuth = FirebaseAuth.getInstance();
+
         binding.registerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,24 +97,19 @@ public class LoginFragment extends Fragment {
                 if (username.isEmpty() || password.isEmpty()) {
                     missingInput(getActivity());
                 } else {
-                    type = "Users";
-                    users = Person.getUsers(type);
-                    for (int i = 0; i < users.size(); i++) {
-                        user = users.get(i);
-                        Log.d(TAG,user.getEmail());
-                        Log.d(TAG,username);
-                        if (user.getEmail().equals(username)) {
-                            Log.d(TAG,"Passed Username check");
-                            if (user.getPassword().equals(password)) {
-                                Log.d(TAG,"Passed password check");
-                                action.login(user);
-                                return;
-                            } else {
-                                badPassword(getActivity());
-                            }
-                        }
-                    }
-                    badUsername(getActivity());
+                    mAuth.signInWithEmailAndPassword(username,password)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()) {
+                                        Log.d(TAG,"Login success");
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        action.login(user);
+                                    } else {
+
+                                    }
+                                }
+                            });
                 }
             }
         });
@@ -122,7 +125,7 @@ public class LoginFragment extends Fragment {
     public static login action;
 
     public interface login{
-        void login(Users user);
+        void login(FirebaseUser user);
         void register();
     }
 
