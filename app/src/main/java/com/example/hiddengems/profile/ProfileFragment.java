@@ -19,6 +19,9 @@ import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentProfileBinding;
 
 import com.example.hiddengems.dataModels.Person.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 
@@ -26,6 +29,8 @@ public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
     Users person;
+    FirebaseUser user;
+    private FirebaseAuth mAuth;
 
 
     public ProfileFragment() {
@@ -60,6 +65,10 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Profile");
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         binding.profileName.setText(person.getDisplayName());
         binding.profileEmail.setText(person.getEmail());
