@@ -54,6 +54,7 @@ public class Locations {
         public int numberofRatings;
         public ArrayList<String> Comments;
         public ArrayList<String> Reviews;
+        public Person.Users Creator;
 
         public Location() {
             this.Name = "";
@@ -191,6 +192,14 @@ public class Locations {
 
         public void setNumberofRatings(int numberofRatings) {
             this.numberofRatings = numberofRatings;
+        }
+
+        public Person.Users getCreator() {
+            return Creator;
+        }
+
+        public void setCreator(Person.Users creator) {
+            Creator = creator;
         }
 
         public void addComment(String comment) {

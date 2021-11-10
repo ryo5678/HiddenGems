@@ -133,25 +133,6 @@ public class SearchScreenFragment extends Fragment {
 
     }
 
-    /*
-    public void submitLocation (String text){
-        for(int x=0;x < allLocations.size(); x++) {
-            Log.d(TAG, "in loop: " + x);
-            if(allLocations.get(x).getName().contains(text)) {
-                if (SelectedFilter != null && allLocations.get(x).getCategory().equals(SelectedFilter)) {
-                    foundLocations.add(allLocations.get(x));
-               } else {
-                    foundLocations.add(allLocations.get(x));
-                    Log.d(TAG, String.valueOf(foundLocations.size()));
-                }
-            }
-        }
-    }
-    */
-
-    //public void goToSearchResultsFragment() {
-
-   // }
 
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
@@ -171,5 +152,9 @@ public class SearchScreenFragment extends Fragment {
         void searchResults(ArrayList<Location> locations);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        foundLocations.clear();
+    }
 }
