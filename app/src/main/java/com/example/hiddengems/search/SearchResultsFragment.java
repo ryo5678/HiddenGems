@@ -52,6 +52,7 @@ public class SearchResultsFragment extends Fragment {
         Bundle args = new Bundle();
         args.putSerializable("searchList",Locations);
         Log.d("TAG",Locations.get(0).toString());
+        Log.d("SIZE",String.valueOf(Locations.size()));
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,7 +61,7 @@ public class SearchResultsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            locationList.clear();
+            //locationList.clear();
             locationList = (ArrayList<Location>)getArguments().getSerializable("searchList");
         }
     }
@@ -77,14 +78,13 @@ public class SearchResultsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //locationList.clear();
+       // locationList.clear();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Search Results");
-
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -166,4 +166,7 @@ public class SearchResultsFragment extends Fragment {
     public interface location{
         void showLocation(Location location);
     }
+
+
+
 }
