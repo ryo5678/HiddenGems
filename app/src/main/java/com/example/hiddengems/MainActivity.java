@@ -31,11 +31,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
 
     ActivityMainBinding binding;
-    Users person2;
     HomeFragment homeFragment = new HomeFragment();
     SearchScreenFragment searchFragment = new SearchScreenFragment();
     AddScreenFragment addFragment = new AddScreenFragment();
-    ProfileFragment profileFragment = ProfileFragment.newInstance(person2);
     Locations test = new Locations();
     private final String TAG = "TAG";
     FirebaseAuth mAuth;
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
             case R.id.navigation_map:
                 return true;
             case R.id.navigation_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, ProfileFragment.newInstance(person2)).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new ProfileFragment()).commit();
                 return true;
         }
         return false;
@@ -118,9 +116,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
-    public void editProfile(Users person) {
+    public void editProfile() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, EditProfileFragment.newInstance(person))
+                .replace(R.id.fragmentContainerView, new EditProfileFragment())
                 .addToBackStack("editProfile")
                 .commit();
     }
@@ -160,9 +158,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
-    public void profile(Users person) {
+    public void profile() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, ProfileFragment.newInstance(person))
+                .replace(R.id.fragmentContainerView, new ProfileFragment())
                 .addToBackStack("Profile")
                 .commit();
     }

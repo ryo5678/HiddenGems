@@ -28,8 +28,7 @@ import java.io.File;
 public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
-    Users person;
-    FirebaseUser user;
+    FirebaseUser person;
     private FirebaseAuth mAuth;
 
 
@@ -37,10 +36,9 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance(Users person) {
+    public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
-        args.putSerializable("Person",person);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +47,6 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            person = (Users)getArguments().getSerializable("Person");
         }
     }
 
@@ -68,7 +65,7 @@ public class ProfileFragment extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+        person = mAuth.getCurrentUser();
 
         binding.profileName.setText(person.getDisplayName());
         binding.profileEmail.setText(person.getEmail());
@@ -116,7 +113,7 @@ public class ProfileFragment extends Fragment {
 
         binding.editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { action.editProfile(person); }
+            public void onClick(View view) { action.editProfile(); }
         });
 
         binding.LikedLocations.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +140,7 @@ public class ProfileFragment extends Fragment {
         void operatingHoursRequest();
         void contactUs();
         void locationRemovalRequest();
-        void editProfile(Users person);
+        void editProfile();
         void likedLocationsRequest();
         void logout();
     }
