@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 
 public class RegisterFragment extends Fragment {
@@ -88,6 +89,10 @@ public class RegisterFragment extends Fragment {
                                         if (task.isSuccessful()) {
                                             Log.d(TAG,"Account created.");
                                             FirebaseUser user = mAuth.getCurrentUser();
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(firstName + " " + lastName)
+                                                    .build();
+                                            user.updateProfile(profileUpdates);
                                             action.signUp(user);
 
                                         } else {

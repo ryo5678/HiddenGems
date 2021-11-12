@@ -25,6 +25,7 @@ import com.example.hiddengems.profile.ProfileFragment;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class SearchScreenFragment extends Fragment {
 
@@ -78,16 +79,16 @@ public class SearchScreenFragment extends Fragment {
                 } else {
                     for(int x=0;x < allLocations.size(); x++) {
                         Log.d(TAG, "in loop: " + x);
-                        if(allLocations.get(x).getName().contains(text)) {
-                            if (SelectedFilter != null && allLocations.get(x).equals(SelectedFilter)) {
+                        if(allLocations.get(x).getName().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
+                            if (SelectedFilter != null && allLocations.get(x).getCategory().equals(SelectedFilter)) {
                                 foundLocations.add(allLocations.get(x));
-                            } else {
+                            } else if (SelectedFilter == null){
                                 foundLocations.add(allLocations.get(x));
                                 Log.d(TAG, String.valueOf(foundLocations.size()));
                             }
                         }
                     }
-                    if(foundLocations.size() != 0 || foundLocations != null) {
+                    if(foundLocations.size() != 0 && foundLocations != null) {
                         Log.d(TAG, String.valueOf(foundLocations.size()));
                         Log.d(TAG,foundLocations.get(0).toString());
                         action.searchResults(foundLocations);
@@ -132,25 +133,6 @@ public class SearchScreenFragment extends Fragment {
 
     }
 
-    /*
-    public void submitLocation (String text){
-        for(int x=0;x < allLocations.size(); x++) {
-            Log.d(TAG, "in loop: " + x);
-            if(allLocations.get(x).getName().contains(text)) {
-                if (SelectedFilter != null && allLocations.get(x).getCategory().equals(SelectedFilter)) {
-                    foundLocations.add(allLocations.get(x));
-               } else {
-                    foundLocations.add(allLocations.get(x));
-                    Log.d(TAG, String.valueOf(foundLocations.size()));
-                }
-            }
-        }
-    }
-    */
-
-    //public void goToSearchResultsFragment() {
-
-   // }
 
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
@@ -170,5 +152,9 @@ public class SearchScreenFragment extends Fragment {
         void searchResults(ArrayList<Location> locations);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        foundLocations.clear();
+    }
 }

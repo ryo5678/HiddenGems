@@ -19,23 +19,26 @@ import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentProfileBinding;
 
 import com.example.hiddengems.dataModels.Person.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 
 public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
-    Users person;
+    FirebaseUser person;
+    private FirebaseAuth mAuth;
 
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance(Users person) {
+    public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
-        args.putSerializable("Person",person);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,7 +47,6 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            person = (Users)getArguments().getSerializable("Person");
         }
     }
 
@@ -60,6 +62,10 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Profile");
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        person = mAuth.getCurrentUser();
 
         binding.profileName.setText(person.getDisplayName());
         binding.profileEmail.setText(person.getEmail());
@@ -107,7 +113,7 @@ public class ProfileFragment extends Fragment {
 
         binding.editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { action.editProfile(person); }
+            public void onClick(View view) { action.editProfile(); }
         });
 
         binding.LikedLocations.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +140,7 @@ public class ProfileFragment extends Fragment {
         void operatingHoursRequest();
         void contactUs();
         void locationRemovalRequest();
-        void editProfile(Users person);
+        void editProfile();
         void likedLocationsRequest();
         void logout();
     }

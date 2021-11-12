@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,22 +19,27 @@ import com.example.hiddengems.R;
 import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.databinding.FragmentEditProfileBinding;
 import com.example.hiddengems.databinding.FragmentProfileBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Transaction;
 
 
 public class EditProfileFragment extends Fragment {
 
-    Users person;
     FragmentEditProfileBinding binding;
+    FirebaseAuth mAuth;
+    FirebaseUser person;
 
     public EditProfileFragment() {
         // Required empty public constructor
     }
 
 
-    public static EditProfileFragment newInstance(Users person) {
+    public static EditProfileFragment newInstance() {
         EditProfileFragment fragment = new EditProfileFragment();
         Bundle args = new Bundle();
-        args.putSerializable("Person",person);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,7 +48,6 @@ public class EditProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            person = (Users)getArguments().getSerializable("Person");
         }
     }
 
@@ -59,6 +64,9 @@ public class EditProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mAuth = FirebaseAuth.getInstance();
+        person = mAuth.getCurrentUser();
+
         binding.editName.setText(person.getDisplayName());
         binding.editEmail.setText(person.getEmail());
 
@@ -73,10 +81,13 @@ public class EditProfileFragment extends Fragment {
                     missingInput(getActivity());
                 }
                 else {
-                    person.setDisplayName(name);
-                    person.setEmail(email);
-                    //person.setProfilePic(profilePic);
-                    action.profile(person);
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(name)
+                            .build();
+                    person.updateProfile(profileUpdates);
+
+
+                    action.profile();
                 }
             }
         });
@@ -97,7 +108,7 @@ public class EditProfileFragment extends Fragment {
     public static profile action;
 
     public interface profile{
-        void profile(Users person);
+        void profile();
     }
 
 
