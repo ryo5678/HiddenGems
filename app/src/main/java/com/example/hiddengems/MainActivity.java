@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         if (mAuth.getCurrentUser() == null){
             navView.setVisibility(View.GONE);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragmentContainerView, new LoginFragment())
+                    .replace(R.id.fragmentContainerView, new LoginFragment())
                     .commit();
         } else {
             navView.setVisibility(View.VISIBLE);
@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     public void logout() {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setVisibility(View.GONE);
+        FirebaseAuth.getInstance().signOut();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, LoginFragment.newInstance())
                 .addToBackStack("Login")
