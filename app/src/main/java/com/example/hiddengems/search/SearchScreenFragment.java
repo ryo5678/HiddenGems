@@ -80,7 +80,7 @@ public class SearchScreenFragment extends Fragment {
                     for(int x=0;x < allLocations.size(); x++) {
                         Log.d(TAG, "in loop: " + x);
                         if(allLocations.get(x).getName().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
-                            if (SelectedFilter != null && allLocations.get(x).getCategory().equals(SelectedFilter)) {
+                            if (SelectedFilter != null && (allLocations.get(x).getCategory().equals(SelectedFilter) || checkTags() || checkSeason() || checkRating() )) {
                                 foundLocations.add(allLocations.get(x));
                             } else if (SelectedFilter == null){
                                 foundLocations.add(allLocations.get(x));
@@ -98,6 +98,21 @@ public class SearchScreenFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private boolean checkRating() {
+
+        return false;
+    }
+
+    private boolean checkSeason() {
+
+        return false;
+    }
+
+    private boolean checkTags() {
+
+        return false;
     }
 
     @Override
