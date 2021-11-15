@@ -39,50 +39,49 @@ public class Locations {
         public String Name;
         public String Address;
         public String Category;
+        public String Description;
         public ArrayList<String> Tags;
-        //operatinghours[] Hours;
-        public int startTime;
-        public int endTime;
+        public String Hours;
         public ArrayList<menuItem> Menu;
         public ArrayList<Image> Images;
         public boolean isEvent;
         public int startDate;
         public int endDate;
         public String Season;
-        public int Likes;
         public int currentRating;
         public int numberofRatings;
-        public ArrayList<String> Comments;
         public ArrayList<String> Reviews;
         public Person.Users Creator;
+        public Boolean Verified;
+        public Boolean isHiddenGem;
+        public int Views;
 
         public Location() {
             this.Name = "";
             this.Address = "";
             this.Category = "";
-            this.startTime = 0;
-            this.endTime = 0;
+            this.Hours = "";
             this.isEvent = false;
             this.startDate = 0;
             this.endDate = 0;
             this.Season = "";
-            this.Likes = 0;
             this.currentRating = 0;
             this.numberofRatings = 0;
             this.Tags = new ArrayList<>();
+            this.Verified = false;
+            this.isHiddenGem = false;
+            this.Views = 0;
+            this.Description = "";
         }
 
         public Location(String Name, String Address, String Category) {
             this.Name = Name;
             this.Address = Address;
             this.Category = Category;
-            startTime = 0;
-            endTime = 0;
             isEvent = false;
             startDate = 0;
             endDate = 0;
             Season = "";
-            Likes = 0;
             currentRating = 0;
             numberofRatings = 0;
         }
@@ -94,18 +93,14 @@ public class Locations {
                     ", Address='" + Address + '\'' +
                     ", Category='" + Category + '\'' +
                     ", Tags=" + Tags +
-                    ", startTime=" + startTime +
-                    ", endTime=" + endTime +
                     ", Menu=" + Menu +
                     ", Images=" + Images +
                     ", isEvent=" + isEvent +
                     ", startDate=" + startDate +
                     ", endDate=" + endDate +
                     ", Season='" + Season + '\'' +
-                    ", Likes=" + Likes +
                     ", currentRating=" + currentRating +
                     ", numberofRatings=" + numberofRatings +
-                    ", Comments=" + Comments +
                     ", Reviews=" + Reviews +
                     '}';
         }
@@ -138,13 +133,7 @@ public class Locations {
             this.Tags.add(Tag);
         }
 
-        public void setStartTime(int startTime) {
-            this.startTime = startTime;
-        }
 
-        public void setEndTime(int endTime) {
-            this.endTime = endTime;
-        }
 
         public void addImage(Image pic) {
             this.Images.add(pic);
@@ -168,14 +157,6 @@ public class Locations {
 
         public void setSeason(String Season) {
             this.Season = Season;
-        }
-
-        public int getLikes() {
-            return this.Likes;
-        }
-
-        public void setLikes(int Likes) {
-            this.Likes = Likes;
         }
 
         public int getCurrentRating() {
@@ -202,13 +183,44 @@ public class Locations {
             Creator = creator;
         }
 
-        public void addComment(String comment) {
-            this.Comments.add(comment);
-        }
-
         public void addReview(String review) {
             this.Reviews.add(review);
         }
+
+        public boolean getVerified() {
+            return Verified;
+        }
+
+        public void setVerified(boolean verified) {
+            Verified = verified;
+        }
+
+        public Boolean getHiddenGem() {
+            return isHiddenGem;
+        }
+
+        public void setHiddenGem(Boolean hiddenGem) {
+            isHiddenGem = hiddenGem;
+        }
+
+        public int getViews() {
+            return Views;
+        }
+
+        public void setViews(int views) {
+            Views = views;
+        }
+
+
+        public String getDescription() {
+            return Description;
+        }
+
+        public void setDescription(String description) {
+            Description = description;
+        }
+
+
     }
 
 
