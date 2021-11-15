@@ -2,40 +2,41 @@ package com.example.hiddengems;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.hiddengems.dataModels.location;
+import com.example.hiddengems.account.LoginFragment;
+import com.example.hiddengems.account.RegisterFragment;
+import com.example.hiddengems.dataModels.Locations;
 import com.example.hiddengems.databinding.ActivityMainBinding;
-import com.example.hiddengems.map.MapsActivity;
 import com.example.hiddengems.profile.*;
 
 import com.example.hiddengems.home.*;
+import com.example.hiddengems.search.LocationFragment;
+import com.example.hiddengems.search.SearchResultsFragment;
 import com.example.hiddengems.search.SearchScreenFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import com.example.hiddengems.dataModels.Person.*;
+import com.example.hiddengems.dataModels.Locations.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
     SearchScreenFragment searchFragment = new SearchScreenFragment();
     AddScreenFragment addFragment = new AddScreenFragment();
-    ProfileFragment profileFragment = new ProfileFragment();
+    Locations test = new Locations();
+    private final String TAG = "TAG";
+    FirebaseAuth mAuth;
 
 
     @Override
@@ -43,15 +44,21 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setOnNavigationItemSelectedListener(this);
-        navView.setSelectedItemId(R.id.navigation_home);
 
+        mAuth = FirebaseAuth.getInstance();
 
-        /*getSupportFragmentManager().beginTransaction()
-                .add(R.id.rootView, new HomeFragment())
-                .commit();*/
+        if (mAuth.getCurrentUser() == null){
+            navView.setVisibility(View.GONE);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainerView, new LoginFragment())
+                    .commit();
+        } else {
+            navView.setVisibility(View.VISIBLE);
+            navView.setOnNavigationItemSelectedListener(this);
+            navView.setSelectedItemId(R.id.navigation_home);
+        }
+
 
     }
     @Override
@@ -70,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
             case R.id.navigation_map:
                 return true;
             case R.id.navigation_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, profileFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new ProfileFragment()).commit();
                 return true;
         }
         return false;
@@ -99,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("contactUs")
                 .commit();
     }
+
     @Override
     public void locationRemovalRequest() {
         getSupportFragmentManager().beginTransaction()
@@ -108,11 +116,96 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
+    public void editProfile() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new EditProfileFragment())
+                .addToBackStack("editProfile")
+                .commit();
+    }
+
+    @Override
     public void likedLocationsRequest() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rootView, LikedLocationsFragment.newInstance())
+                .replace(R.id.fragmentContainerView, LikedLocationsFragment.newInstance())
                 .addToBackStack("likedLocationsRequest")
                 .commit();
+    }
+
+    @Override
+    public void logout() {
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.GONE);
+        FirebaseAuth.getInstance().signOut();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LoginFragment.newInstance())
+                .addToBackStack("Login")
+                .commit();
+    }
+
+    @Override
+    public void login(FirebaseUser user) {
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.VISIBLE);
+        navView.setOnNavigationItemSelectedListener(this);
+        navView.setSelectedItemId(R.id.navigation_home);
+    }
+
+    @Override
+    public void register() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, RegisterFragment.newInstance())
+                .addToBackStack("Register")
+                .commit();
+    }
+
+    @Override
+    public void profile() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new ProfileFragment())
+                .addToBackStack("Profile")
+                .commit();
+    }
+
+    @Override
+    public void searchResults(ArrayList<Location> locations) {
+        Log.d(TAG,locations.get(0).toString());
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, SearchResultsFragment.newInstance(locations))
+                .addToBackStack("SearchResults")
+                .commit();
+    }
+
+    @Override
+    public void showLocation(Location location) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(location))
+                .addToBackStack("ShowLocation")
+                .commit();
+    }
+    /*
+    @Override
+    public void search() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, SearchScreenFragment.newInstance())
+                .addToBackStack("Search")
+                .commit();
+    }
+    */
+
+    @Override
+    public void addLocation(Location locations) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(locations))
+                .addToBackStack("addPage")
+                .commit();
+    }
+
+    @Override
+    public void signUp(FirebaseUser user) {
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.VISIBLE);
+        navView.setOnNavigationItemSelectedListener(this);
+        navView.setSelectedItemId(R.id.navigation_home);
     }
 
     /*
@@ -124,13 +217,5 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }*/
 
-    /*
-    @Override
-    public void search() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, SearchScreenFragment.newInstance())
-                .addToBackStack("Search")
-                .commit();
-    }
-    */
+
 }

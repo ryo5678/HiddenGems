@@ -107,8 +107,24 @@
     <string name="addEndTime">End Time: </string>
     <string name="addImageUpload">Image Upload:\n(max of 5)</string>
 
+    <string name="profileName">John Doe</string>
+    <string name="profileEmail">johndoe@gmail.com</string>
+    <string name="editProfileButton">Edit</string>
+    <string name="saveProfileButton">Save</string>
 
-
+    <!-- Login page -->
+    <string name="userView">Username:</string>
+    <string name="passView">Password:</string>
+    <string name="regView"><u>Register?</u></string>
+    <string name="loginView">Login</string>
+    <string name="forgotView">Forgot password?</string>
+    <string name="userHint">Please enter your username</string>
+    <string name="passHint">Please enter your password</string>
+    <string name="loginMissing">One or more fields are empty. Please fill in
+        both the username and password.</string>
+    <string name="badPassword">The password for this account is incorrect. Please try again.</string>
+    <string name="badUsername">The username/password is incorrect. Please try again or sign-up for
+    an account if you have not already.</string>
 
 
 </resources>

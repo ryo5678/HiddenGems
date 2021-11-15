@@ -1,6 +1,7 @@
 package com.example.hiddengems.search;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +19,13 @@ import android.widget.TextView;
 
 import com.example.hiddengems.R;
 
-import com.example.hiddengems.dataModels.location;
-import com.example.hiddengems.databinding.FragmentProfileBinding;
+import com.example.hiddengems.account.LoginFragment;
+import com.example.hiddengems.dataModels.Locations;
+import com.example.hiddengems.dataModels.Locations.*;
+import com.example.hiddengems.dataModels.Person;
 import com.example.hiddengems.databinding.FragmentSearchResultsBinding;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -30,7 +35,8 @@ import java.util.ArrayList;
  */
 public class SearchResultsFragment extends Fragment {
 
-    ArrayList<location> locationList;
+    private final String TAG = "TAG";
+    ArrayList<Location> locationList = new ArrayList<>();
     FragmentSearchResultsBinding binding;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -41,10 +47,12 @@ public class SearchResultsFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static SearchResultsFragment newInstance(ArrayList<location> locations) {
+    public static SearchResultsFragment newInstance(ArrayList<Location> Locations) {
         SearchResultsFragment fragment = new SearchResultsFragment();
         Bundle args = new Bundle();
-        args.putSerializable("searchList",locations);
+        args.putSerializable("searchList",Locations);
+        Log.d("TAG",Locations.get(0).toString());
+        Log.d("SIZE",String.valueOf(Locations.size()));
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +61,8 @@ public class SearchResultsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            locationList = (ArrayList<location>) getArguments().getSerializable("searchList");
+            //locationList.clear();
+            locationList = (ArrayList<Location>)getArguments().getSerializable("searchList");
         }
     }
 
@@ -67,9 +76,15 @@ public class SearchResultsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+       // locationList.clear();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getActivity().setTitle("Search Results");
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -80,9 +95,9 @@ public class SearchResultsFragment extends Fragment {
     }
 
     public static class LocationRecyclerViewAdapter extends RecyclerView.Adapter<LocationRecyclerViewAdapter.LocationViewHolder> {
-        ArrayList<location> locations;
-        public LocationRecyclerViewAdapter(ArrayList<location> data) {
-            this.locations = data;
+        ArrayList<Location> Locations;
+        public LocationRecyclerViewAdapter(ArrayList<Location> data) {
+            this.Locations = data;
         }
         @NonNull
         @Override
@@ -94,14 +109,19 @@ public class SearchResultsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull LocationViewHolder holder, @SuppressLint("RecyclerView") int position) {
-            location location = locations.get(position);
+            Location location = Locations.get(position);
             holder.position = position;
+            holder.nameView.setText(location.getName());
+            holder.rateView.setText("Current rating: " + location.getCurrentRating());
+            holder.reView.setText("Total ratings: " + location.getNumberofRatings());
+            // Not working yet for images, holder.preView.set
+
 
         }
 
         @Override
         public int getItemCount() {
-            return this.locations.size();
+            return this.Locations.size();
         }
 
         public class LocationViewHolder extends RecyclerView.ViewHolder {
@@ -124,8 +144,7 @@ public class SearchResultsFragment extends Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // Go to some another view with just this location
-                        // Get location with this locations.get(position).locationID
+                        action.showLocation(Locations.get(position));
                     }
                 });
 
@@ -134,4 +153,20 @@ public class SearchResultsFragment extends Fragment {
 
         }
     }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof location){
+            action = (location) context;
+        }
+    }
+
+    public static location action;
+
+    public interface location{
+        void showLocation(Location location);
+    }
+
+
+
 }
