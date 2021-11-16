@@ -220,6 +220,15 @@ public class Locations {
             Description = description;
         }
 
+        public void setTags(ArrayList<String> tags) {
+            Tags = tags;
+        }
+
+        public String getSeason() {
+            return Season;
+        }
+
+
 
     }
 
