@@ -81,6 +81,18 @@ public class SearchScreenFragment extends Fragment {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         allLocations.clear();
                         for(QueryDocumentSnapshot document : value) {
+                            /*
+                            ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
+                            for (int i = 0; i < ratings.size(); i++){
+                                if (i == 0) {
+
+                                }else if (i%2 == 0) {
+
+                                } else {
+                                    ratings.add(Integer.parseInt(tempList.get(i)));
+                                }
+                             */
+
                             Location newPlace = new Location(document.getString("Name"),document.getString("Address"),document.getString("Category"));
                             newPlace.setTags((ArrayList<String>) document.get("Tags"));
                             newPlace.setSeason(document.getString("Season"));
