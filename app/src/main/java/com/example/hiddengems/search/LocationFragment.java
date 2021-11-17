@@ -20,16 +20,17 @@ public class LocationFragment extends Fragment {
 
     FragmentLocationBinding binding;
     Location location;
+    String id;
 
     public LocationFragment() {
         // Required empty public constructor
     }
 
 
-    public static LocationFragment newInstance(Location location) {
+    public static LocationFragment newInstance(String id) {
         LocationFragment fragment = new LocationFragment();
         Bundle args = new Bundle();
-        args.putSerializable("Location",location);
+        args.putString("Location",id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,7 +39,7 @@ public class LocationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            location = (Location) getArguments().getSerializable("Location");
+            id = getArguments().getString("Location");
         }
     }
 
