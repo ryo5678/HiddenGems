@@ -55,6 +55,7 @@ public class Locations {
         public Boolean Verified;
         public Boolean isHiddenGem;
         public int Views;
+        public String docID;
 
         public Location() {
             this.Name = "";
@@ -72,6 +73,7 @@ public class Locations {
             this.isHiddenGem = false;
             this.Views = 0;
             this.Description = "";
+            this.docID = "";
         }
 
         public Location(String Name, String Address, String Category) {
@@ -226,6 +228,14 @@ public class Locations {
 
         public String getSeason() {
             return Season;
+        }
+
+        public String getDocID() {
+            return docID;
+        }
+
+        public void setDocID(String docID) {
+            this.docID = docID;
         }
 
 

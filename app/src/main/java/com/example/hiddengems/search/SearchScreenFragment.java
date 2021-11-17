@@ -40,7 +40,7 @@ public class SearchScreenFragment extends Fragment {
     FragmentSearchScreenBinding binding;
     String text;
     //ArrayList<Location> allLocations = Locations.getLocations("Locations");
-    ArrayList<Location> allLocations;
+    ArrayList<Location> allLocations = new ArrayList<>();
     ArrayList<Location> foundLocations = new ArrayList<Location>();
 
     public SearchScreenFragment() {
@@ -79,11 +79,12 @@ public class SearchScreenFragment extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        //allLocations.clear();
+                        allLocations.clear();
                         for(QueryDocumentSnapshot document : value) {
                             Location newPlace = new Location(document.getString("Name"),document.getString("Address"),document.getString("Category"));
                             newPlace.setTags((ArrayList<String>) document.get("Tags"));
                             newPlace.setSeason(document.getString("Season"));
+                            newPlace.setDocID(document.getId());
                             Log.d("Check","Adding Location");
                             allLocations.add(newPlace);
                         }
@@ -99,7 +100,7 @@ public class SearchScreenFragment extends Fragment {
                     missingInput(getActivity());
                 } else {
                     for(int x=0;x < allLocations.size(); x++) {
-                        Log.d(TAG, "in loop: " + x);
+                       // Log.d(TAG, "in loop: " + x);
                         if(allLocations.get(x).getName().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
                             if (SelectedFilter != null &&   (allLocations.get(x).getCategory().equals(SelectedFilter) ||
                                                             checkTags(SelectedFilter, allLocations.get(x)) ||
@@ -108,17 +109,18 @@ public class SearchScreenFragment extends Fragment {
                                 foundLocations.add(allLocations.get(x));
                             } else if (SelectedFilter == null){
                                 foundLocations.add(allLocations.get(x));
-                                Log.d(TAG, String.valueOf(foundLocations.size()));
+                              //  Log.d(TAG, String.valueOf(foundLocations.size()));
                             }
                         }
                     }
-                    if(foundLocations.size() != 0 && foundLocations != null) {
-                        Log.d(TAG, String.valueOf(foundLocations.size()));
-                        Log.d(TAG,foundLocations.get(0).toString());
-                        action.searchResults(foundLocations);
-                    } else {
-                        Toast.makeText(getActivity(), "No Matching Locations Found",Toast.LENGTH_SHORT).show();
-                    }
+                }
+                if(foundLocations.size() != 0) {
+                    Log.d(TAG, String.valueOf(foundLocations.size()));
+                    Log.d(TAG,foundLocations.get(0).toString());
+                    action.searchResults(foundLocations);
+                } else {
+                    Log.d("No result", "no results");
+                    Toast.makeText(getActivity(), "No Matching Locations Found",Toast.LENGTH_SHORT).show();
                 }
             }
         });
