@@ -27,6 +27,7 @@ import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.dataModels.Locations.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
