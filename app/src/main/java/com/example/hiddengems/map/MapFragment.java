@@ -31,30 +31,24 @@ public class MapFragment extends Fragment {
 
        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
            @Override
-           public void onMapReady(@NonNull GoogleMap googleMap) {
+           public void onMapReady(@NonNull GoogleMap maps) {
                LatLng UNCC = new LatLng(35.303555, -80.73238);
-               googleMap.addMarker(new MarkerOptions()
+               maps.addMarker(new MarkerOptions()
                     .position(UNCC)
                     .title("UNCC Marker"));
-               googleMap.moveCamera(CameraUpdateFactory.newLatLng(UNCC));
+               maps.moveCamera(CameraUpdateFactory.newLatLng(UNCC));
 
 
-               googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+               maps.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                    @Override
-                   public void onMapClick(@NonNull LatLng latLng) {
-                       MarkerOptions markerOptions = new MarkerOptions();
-                       markerOptions.position(latLng);
-                       markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-                       googleMap.clear();
-                       googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                               latLng, 10
+                   public void onMapClick(@NonNull LatLng coordinates) {
+                       maps.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                               coordinates, 10
                        ));
-                       googleMap.addMarker(markerOptions);
                    }
                });
            }
        });
-
         return view;
 
     }
