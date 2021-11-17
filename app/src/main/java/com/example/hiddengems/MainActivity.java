@@ -27,6 +27,7 @@ import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.dataModels.Locations.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -197,9 +198,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     */
 
     @Override
-    public void addLocation(Location locations) {
+    public void addLocation(FirebaseFirestore locations) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(locations))
+                .replace(R.id.fragmentContainerView, AddScreenFragment.newInstance())
                 .addToBackStack("addPage")
                 .commit();
     }

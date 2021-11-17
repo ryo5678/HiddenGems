@@ -134,6 +134,14 @@ public class Locations {
             this.Category = Category;
         }
 
+        public String getHours() {
+            return Hours;
+        }
+
+        public void setHours(String Hours) {
+            this.Hours = Hours;
+        }
+
         public void addTag(String Tag) {
             this.Tags.add(Tag);
         }
