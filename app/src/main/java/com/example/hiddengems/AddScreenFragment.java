@@ -47,6 +47,7 @@ public class AddScreenFragment extends Fragment {
     ArrayList<Integer> tagList = new ArrayList<>();
     String[] tagArray;
     List<String> tagData = new ArrayList<>();
+    String id;
 
 
     public AddScreenFragment() {
@@ -189,22 +190,24 @@ public class AddScreenFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        HashMap<String, Object> comment = new HashMap<>();
-                        comment.put("creator", creator);
-                        comment.put("timeCreated", Timestamp.now());
 
-                        documentReference.collection("Comments")
-                                .add(comment)
+                        id = documentReference.getId();
+                        HashMap<String, Object> menu = new HashMap<>();
+                        /* Put menu items here
+                         menu.put("option",option)
+
+                        documentReference.collection("Menu")
+                                .add(menu)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
 
                                     }
-                                });
+                                });*/
                     }
                 });
 
-        action.addLocation(db);
+        action.addLocation(id);
     }
 
     public void missingInput(Context context){
@@ -256,6 +259,6 @@ public class AddScreenFragment extends Fragment {
     public static add action;
 
     public interface add{
-        void addLocation(FirebaseFirestore locations);
+        void addLocation(String id);
     }
 }
