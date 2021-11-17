@@ -21,7 +21,7 @@
     <string name="CUPromtp">Please type message here</string>
     <string name="ltag">Looking for more tags?</string>
     <string name="dtag">Enter the tags that you would like us to add into the textbox below.
-    We will review them and do our best to make them happen. Please seperate each tag with a comma.
+    We will review them and do our best to make them happen. Please separate each tag with a comma.
         (tag, tag2, etc.)</string>
     <string name="enterTags">Enter your tags here.</string>
     <string name="submit">Submit</string>
@@ -102,6 +102,7 @@
     <string name="addAddress">Address: </string>
     <string name="addCategory">Category: </string>
     <string name="addTags">Tags: </string>
+    <string name="addTagHint">Select Tags</string>
     <string name="addOperatingHours">Operating Hours </string>
     <string name="addStartTime">Start Time: </string>
     <string name="addEndTime">End Time: </string>
