@@ -2,6 +2,7 @@ package com.example.hiddengems;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import com.example.hiddengems.account.LoginFragment;
 import com.example.hiddengems.account.RegisterFragment;
 import com.example.hiddengems.dataModels.Locations;
 import com.example.hiddengems.databinding.ActivityMainBinding;
+import com.example.hiddengems.map.MapFragment;
 import com.example.hiddengems.profile.*;
 
 import com.example.hiddengems.home.*;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     Locations test = new Locations();
     private final String TAG = "TAG";
     FirebaseAuth mAuth;
+    MapFragment mapFragment = new MapFragment();
 
 
     @Override
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, addFragment).commit();
                 return true;
             case R.id.navigation_map:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new MapFragment()).commit();
                 return true;
             case R.id.navigation_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, new ProfileFragment()).commit();
