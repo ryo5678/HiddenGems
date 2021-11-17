@@ -112,7 +112,7 @@ public class AddScreenFragment extends Fragment {
         locations.setCategory(category);
         locations.addTag(tags);
         //locations.setStartTime(startTime);
-       // locations.setEndTime(endTime);
+        //locations.setEndTime(endTime);
 
         action.addLocation(locations);
     }
