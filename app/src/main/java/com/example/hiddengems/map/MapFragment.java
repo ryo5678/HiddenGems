@@ -42,14 +42,9 @@ public class MapFragment extends Fragment {
                maps.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                    @Override
                    public void onMapClick(@NonNull LatLng coordinates) {
-                       MarkerOptions marker = new MarkerOptions();
-                       marker.position(coordinates);
-                       marker.title(coordinates.latitude + " : " + coordinates.longitude);
-                       maps.clear();
                        maps.animateCamera(CameraUpdateFactory.newLatLngZoom(
                                coordinates, 10
                        ));
-                       maps.addMarker(marker);
                    }
                });
            }
