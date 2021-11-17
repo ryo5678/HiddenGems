@@ -144,7 +144,8 @@ public class SearchResultsFragment extends Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        action.showLocation(Locations.get(position));
+
+                        action.showLocation(Locations.get(position).docID);
                     }
                 });
 
@@ -164,7 +165,7 @@ public class SearchResultsFragment extends Fragment {
     public static location action;
 
     public interface location{
-        void showLocation(Location location);
+        void showLocation(String id);
     }
 
 

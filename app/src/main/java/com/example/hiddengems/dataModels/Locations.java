@@ -1,6 +1,7 @@
 package com.example.hiddengems.dataModels;
 
 import android.media.Image;
+import android.nfc.Tag;
 import android.os.Parcelable;
 
 import java.io.Serializable;
@@ -55,6 +56,7 @@ public class Locations {
         public Boolean Verified;
         public Boolean isHiddenGem;
         public int Views;
+        public String docID;
 
         public Location() {
             this.Name = "";
@@ -72,6 +74,7 @@ public class Locations {
             this.isHiddenGem = false;
             this.Views = 0;
             this.Description = "";
+            this.docID = "";
         }
 
         public Location(String Name, String Address, String Category) {
@@ -84,6 +87,19 @@ public class Locations {
             Season = "";
             currentRating = 0;
             numberofRatings = 0;
+        }
+
+        public Location(String Name, String Address, String Category, String Description,
+                        String Hours, int currentRating, int numberofRatings, ArrayList<String> Tags){
+            this.Name = Name;
+            this.Address = Address;
+            this.Category = Category;
+            this.Description = Description;
+            this.Hours = Hours;
+            this.currentRating = currentRating;
+            this.numberofRatings = numberofRatings;
+            this.Tags = Tags;
+
         }
 
         @Override
@@ -129,11 +145,13 @@ public class Locations {
             this.Category = Category;
         }
 
-        public void addTag(String Tag) {
-            this.Tags.add(Tag);
+        public String getHours() {
+            return Hours;
         }
 
-
+        public void setHours(String Hours) {
+            this.Hours = Hours;
+        }
 
         public void addImage(Image pic) {
             this.Images.add(pic);
@@ -219,6 +237,23 @@ public class Locations {
         public void setDescription(String description) {
             Description = description;
         }
+
+        public void setTags(ArrayList<String> tags) {
+            Tags = tags;
+        }
+
+        public String getSeason() {
+            return Season;
+        }
+
+        public String getDocID() {
+            return docID;
+        }
+
+        public void setDocID(String docID) {
+            this.docID = docID;
+        }
+
 
 
     }
