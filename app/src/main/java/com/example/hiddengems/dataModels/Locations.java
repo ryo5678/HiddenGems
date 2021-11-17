@@ -3,6 +3,8 @@ package com.example.hiddengems.dataModels;
 import android.media.Image;
 import android.os.Parcelable;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +58,7 @@ public class Locations {
         public Boolean isHiddenGem;
         public int Views;
         public String docID;
+        public LatLng Coordinates;
 
         public Location() {
             this.Name = "";
@@ -236,6 +239,14 @@ public class Locations {
 
         public void setDocID(String docID) {
             this.docID = docID;
+        }
+
+        public LatLng getCoordinates() {
+            return Coordinates;
+        }
+
+        public void setCoordinates(LatLng coordinates) {
+            Coordinates = coordinates;
         }
 
 

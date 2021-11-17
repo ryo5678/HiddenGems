@@ -2,6 +2,8 @@ package com.example.hiddengems;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -17,8 +19,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hiddengems.dataModels.Locations.Location;
 import com.example.hiddengems.databinding.FragmentAddScreenBinding;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class AddScreenFragment extends Fragment {
@@ -27,6 +32,7 @@ public class AddScreenFragment extends Fragment {
     TimePickerDialog picker;
     EditText startTime, endTime;
     Location locations;
+    Geocoder geocoder;
 
     public AddScreenFragment() {
         // Required empty public constructor
@@ -43,6 +49,7 @@ public class AddScreenFragment extends Fragment {
         if (getArguments() != null) {
             locations = (Location) getArguments().getSerializable("Location");
         }
+        geocoder = new Geocoder(getActivity());
     }
 
     @Override

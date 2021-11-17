@@ -43,6 +43,8 @@ public class SearchScreenFragment extends Fragment {
     ArrayList<Location> allLocations = new ArrayList<>();
     ArrayList<Location> foundLocations = new ArrayList<Location>();
 
+
+
     public SearchScreenFragment() {
         // Required empty public constructor
     }
@@ -100,7 +102,7 @@ public class SearchScreenFragment extends Fragment {
                     missingInput(getActivity());
                 } else {
                     for(int x=0;x < allLocations.size(); x++) {
-                       // Log.d(TAG, "in loop: " + x);
+                        Log.d(TAG, "in loop: " + x);
                         if(allLocations.get(x).getName().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
                             if (SelectedFilter != null &&   (allLocations.get(x).getCategory().equals(SelectedFilter) ||
                                                             checkTags(SelectedFilter, allLocations.get(x)) ||
@@ -109,7 +111,7 @@ public class SearchScreenFragment extends Fragment {
                                 foundLocations.add(allLocations.get(x));
                             } else if (SelectedFilter == null){
                                 foundLocations.add(allLocations.get(x));
-                              //  Log.d(TAG, String.valueOf(foundLocations.size()));
+                                Log.d(TAG, String.valueOf(foundLocations.size()));
                             }
                         }
                     }
