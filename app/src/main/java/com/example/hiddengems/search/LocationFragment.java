@@ -34,6 +34,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -126,21 +128,22 @@ public class LocationFragment extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        reviews.clear();
                         for(QueryDocumentSnapshot document : value){
                             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd h:mm a");
-                            reviews.add(new Review(document.getString("Creator"), document.getString("review"),
+                            reviews.add(new Review(document.getString("creator"), document.getString("review"),
                                     dateFormat.format(document.getTimestamp("time_created").toDate()), document.getId()));
                         }
-                         //adapter.notifyDataSetChanged();
+                         adapter.notifyDataSetChanged();
                     }
                 });
 
-        /*adapter = new LocationRecyclerViewAdapter(location);
-        recyclerView = binding.locationRecycler;
+        adapter = new ReviewRecyclerViewAdapter(reviews);
+        recyclerView = binding.reviewRecycler;
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);*/
+        recyclerView.setAdapter(adapter);
 
         /* Code for submitting a review
         HashMap<String, Object> review = new HashMap<>();
@@ -172,24 +175,34 @@ public class LocationFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ReviewViewHolder holder, @SuppressLint("RecyclerView") int position) {
-            //Location location = item;
+            Review review = items.get(position);
 
             holder.position = position;
+            holder.nameView.setText(review.creator);
+            holder.reviewView.setText(review.review);
+            holder.dateView.setText(review.date);
         }
 
         @Override
         public int getItemCount() {
-            return 1;
+            return this.items.size();
         }
 
         public class ReviewViewHolder extends RecyclerView.ViewHolder {
             int position;
             View rootView;
+            TextView nameView;
+            TextView reviewView;
+            TextView dateView;
 
 
             public ReviewViewHolder(@NonNull View itemView) {
                 super(itemView);
                 rootView = itemView;
+                nameView = itemView.findViewById(R.id.reviewName);
+                reviewView = itemView.findViewById(R.id.reviewDesc);
+                dateView = itemView.findViewById(R.id.reviewDate);
+
             }
         }
     }

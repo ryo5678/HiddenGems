@@ -132,6 +132,7 @@
     <string name="locationTag">Tags:</string>
     <string name="locationCategory">Category:</string>
     <string name="locationAddress">Address:</string>
+    <string name="locationReview">Reviews:</string>
 
 
 </resources>
