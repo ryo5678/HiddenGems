@@ -128,4 +128,10 @@
     an account if you have not already.</string>
 
 
+    <!-- Location View Page -->
+    <string name="locationTag">Tags:</string>
+    <string name="locationCategory">Category:</string>
+    <string name="locationAddress">Address:</string>
+
+
 </resources>
