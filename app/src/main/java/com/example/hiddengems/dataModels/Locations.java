@@ -1,6 +1,7 @@
 package com.example.hiddengems.dataModels;
 
 import android.media.Image;
+import android.nfc.Tag;
 import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -91,6 +92,19 @@ public class Locations {
             numberofRatings = 0;
         }
 
+        public Location(String Name, String Address, String Category, String Description,
+                        String Hours, int currentRating, int numberofRatings, ArrayList<String> Tags){
+            this.Name = Name;
+            this.Address = Address;
+            this.Category = Category;
+            this.Description = Description;
+            this.Hours = Hours;
+            this.currentRating = currentRating;
+            this.numberofRatings = numberofRatings;
+            this.Tags = Tags;
+
+        }
+
         @Override
         public String toString() {
             return "Gems{" +
@@ -109,6 +123,8 @@ public class Locations {
                     ", Reviews=" + Reviews +
                     '}';
         }
+
+        public ArrayList<String> getTags() { return Tags;}
 
         public String getName() {
             return Name;
@@ -141,12 +157,6 @@ public class Locations {
         public void setHours(String Hours) {
             this.Hours = Hours;
         }
-
-        public void addTag(String Tag) {
-            this.Tags.add(Tag);
-        }
-
-
 
         public void addImage(Image pic) {
             this.Images.add(pic);
