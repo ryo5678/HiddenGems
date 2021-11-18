@@ -57,9 +57,53 @@ public class MapFragment extends Fragment {
         SelectedFilter = (String) item.getTitle();
         if (notTitle(SelectedFilter)) {
             getActivity().setTitle("Filter Markers by: " + SelectedFilter);
+            for(int x=0; x < markers.size(); x++) {
+                for(int y=0; y < allLocations.size(); y++){
+                    if(allLocations.get(y).getName().equals(markers.get(x).getTitle())) {
+                        if(allLocations.get(y).getCategory().equals(SelectedFilter) ||
+                                checkRating(SelectedFilter, allLocations.get(y)) ||
+                                checkSeason(SelectedFilter,allLocations.get(y)) ||
+                                checkTags(SelectedFilter, allLocations.get(y))) {
+
+                            markers.get(x).setVisible(true);
+                        } else {
+                            markers.get(x).setVisible(false);
+                        }
+                    }
+                }
+            }
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    private boolean checkRating(String filter, Locations.Location location) {
+
+        return false;
+    }
+
+    private boolean checkSeason(String filter, Locations.Location location) {
+
+        if (location.getSeason().equals(filter)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private boolean checkTags(String filter, Locations.Location location) {
+
+        for(int x=0; x < location.Tags.size(); x++) {
+            if (location.Tags.get(x).equals(filter)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     public boolean notTitle(String selectedItem) {
 
@@ -97,17 +141,19 @@ public class MapFragment extends Fragment {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         allLocations.clear();
                         for(QueryDocumentSnapshot document : value) {
-                            Locations.Location newPlace = new Locations.Location(document.getString("Name"),document.getString("Address"),document.getString("Category"));
-                            newPlace.setDocID(document.getId());
-                            GeoPoint geoPoint = document.getGeoPoint("Coordinates");
-                            LatLng latLng = new LatLng((double) geoPoint.getLatitude(), (double) geoPoint.getLongitude());
-                            newPlace.setCoordinates(latLng);
-                            Random random = new Random();
-                            int randnum = random.nextInt(5 + 1) + 1;
-                            newPlace.setCurrentRating(randnum);
-                            Log.d("Maps","Adding Location");
-                            Log.d("Maps",("Coordinates: " + newPlace.getCoordinates().toString()));
-                            allLocations.add(newPlace);
+                            if (document.getGeoPoint("Coordinates") != null) {
+                                Locations.Location newPlace = new Locations.Location(document.getString("Name"), document.getString("Address"), document.getString("Category"));
+                                newPlace.setDocID(document.getId());
+                                GeoPoint geoPoint = document.getGeoPoint("Coordinates");
+                                LatLng latLng = new LatLng((double) geoPoint.getLatitude(), (double) geoPoint.getLongitude());
+                                newPlace.setCoordinates(latLng);
+                                Random random = new Random();
+                                int randnum = random.nextInt(5 + 1) + 1;
+                                newPlace.setCurrentRating(randnum);
+                                Log.d("Maps", "Adding Location");
+                                Log.d("Maps", ("Coordinates: " + newPlace.getCoordinates().toString()));
+                                allLocations.add(newPlace);
+                            }
                         }
                     }
                 });
@@ -130,11 +176,12 @@ public class MapFragment extends Fragment {
                Log.d("Maps", String.valueOf(allLocations.size()));
                for (int x=0; x<allLocations.size(); x++) {
                    Log.d("Maps","Adding Location to Map");
-                   ourMaps.addMarker(new MarkerOptions()
-                           .position(allLocations.get(x).getCoordinates())
-                           .title(allLocations.get(x).getName())
-                           .snippet("Rating: " + allLocations.get(x).getCurrentRating() + " / 5")
-                           .alpha(allLocations.get(x).getCurrentRating()/5));
+                  Marker newMarker = ourMaps.addMarker(new MarkerOptions()
+                                     .position(allLocations.get(x).getCoordinates())
+                                     .title(allLocations.get(x).getName())
+                                     .snippet("Rating: " + allLocations.get(x).getCurrentRating() + " / 5")
+                                     .alpha(allLocations.get(x).getCurrentRating()/5));
+                  markers.add(newMarker);
                }
 
                ourMaps.moveCamera(CameraUpdateFactory.newLatLng(UNCC));
