@@ -1,6 +1,9 @@
 package com.example.hiddengems.search;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,22 +12,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.hiddengems.AddScreenFragment;
 import com.example.hiddengems.R;
 
 import com.example.hiddengems.dataModels.Locations.*;
-import com.example.hiddengems.databinding.FragmentAddScreenBinding;
 import com.example.hiddengems.databinding.FragmentLocationBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -53,6 +61,7 @@ public class LocationFragment extends Fragment {
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     ReviewRecyclerViewAdapter adapter;
+    FirebaseAuth mAuth;
 
 
     public LocationFragment() {
@@ -75,7 +84,6 @@ public class LocationFragment extends Fragment {
             id = getArguments().getString("Location");
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -144,6 +152,56 @@ public class LocationFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        binding.addReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Add a review!");
+
+
+                final EditText input = new EditText(getActivity());
+
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+
+                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String reviewText;
+                        reviewText = input.getText().toString();
+
+                        HashMap<String, Object> review = new HashMap<>();
+                        mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                        review.put("creator",user.getDisplayName());
+                        review.put("review",reviewText);
+                        review.put("time_created", Timestamp.now());
+
+                        docRef.collection("reviews")
+                                .add(review)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
+
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+            }
+        });
 
         /* Code for submitting a review
         HashMap<String, Object> review = new HashMap<>();

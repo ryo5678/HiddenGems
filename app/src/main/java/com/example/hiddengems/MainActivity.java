@@ -31,7 +31,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile,
+        RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location,
+        EditProfileFragment.profile, LoginFragment.login,
+        BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -212,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         navView.setOnNavigationItemSelectedListener(this);
         navView.setSelectedItemId(R.id.navigation_home);
     }
+
+
 
     /*
     @Override
