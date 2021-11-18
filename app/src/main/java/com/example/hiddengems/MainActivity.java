@@ -177,9 +177,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
-    public void showLocation(Location location) {
+    public void showLocation(String id) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(location))
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
                 .addToBackStack("ShowLocation")
                 .commit();
     }
@@ -194,9 +194,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     */
 
     @Override
-    public void addLocation(FirebaseFirestore locations) {
+    public void addLocation(String id) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, AddScreenFragment.newInstance())
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
                 .addToBackStack("addPage")
                 .commit();
     }

@@ -55,6 +55,7 @@ public class Locations {
         public Boolean Verified;
         public Boolean isHiddenGem;
         public int Views;
+        public String docID;
 
         public Location() {
             this.Name = "";
@@ -86,6 +87,19 @@ public class Locations {
             numberofRatings = 0;
         }
 
+        public Location(String Name, String Address, String Category, String Description,
+                        String Hours, int currentRating, int numberofRatings, ArrayList<String> Tags){
+            this.Name = Name;
+            this.Address = Address;
+            this.Category = Category;
+            this.Description = Description;
+            this.Hours = Hours;
+            this.currentRating = currentRating;
+            this.numberofRatings = numberofRatings;
+            this.Tags = Tags;
+
+        }
+
         @Override
         public String toString() {
             return "Gems{" +
@@ -103,6 +117,10 @@ public class Locations {
                     ", numberofRatings=" + numberofRatings +
                     ", Reviews=" + Reviews +
                     '}';
+        }
+
+        public ArrayList<String> getTags() {
+            return Tags;
         }
 
         public String getName() {
@@ -226,6 +244,14 @@ public class Locations {
 
         public void setDescription(String description) {
             Description = description;
+        }
+
+        public String getDocID() {
+            return docID;
+        }
+
+        public void setDocID(String docID) {
+            this.docID = docID;
         }
 
 
