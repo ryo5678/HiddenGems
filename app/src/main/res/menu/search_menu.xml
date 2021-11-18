@@ -103,6 +103,9 @@
 
             </item>
 
+            <item android:id="@+id/Reset"
+                android:title="Reset"/>
+
         </menu>
 
     </item>
