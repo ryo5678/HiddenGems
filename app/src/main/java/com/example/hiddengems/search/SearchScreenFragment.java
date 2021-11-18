@@ -193,7 +193,11 @@ public class SearchScreenFragment extends Fragment {
             return false;
         }else if (selectedItem.equals("Seasons")) {
             return false;
-        }else  {
+        } else if (selectedItem.equals("Reset")) {
+            SelectedFilter = null;
+            getActivity().setTitle("Search");
+            return false;
+        } else  {
             return true;
         }
 

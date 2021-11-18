@@ -117,7 +117,13 @@ public class MapFragment extends Fragment {
             return false;
         }else if (selectedItem.equals("Seasons")) {
             return false;
-        }else  {
+        }else if (selectedItem.equals("Reset")) {
+            for (int x=0; x < markers.size(); x++) {
+                markers.get(x).setVisible(true);
+            }
+            getActivity().setTitle("Map");
+            return false;
+        } else {
             return true;
         }
 
@@ -181,7 +187,7 @@ public class MapFragment extends Fragment {
                                      .position(allLocations.get(x).getCoordinates())
                                      .title(allLocations.get(x).getName())
                                      .snippet("Rating: " + allLocations.get(x).getCurrentRating() + " / 5")
-                                     .alpha(allLocations.get(x).getCurrentRating()/5));
+                                     .alpha(1));
                   markers.add(newMarker);
                }
 
