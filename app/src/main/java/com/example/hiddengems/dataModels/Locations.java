@@ -121,6 +121,8 @@ public class Locations {
                     '}';
         }
 
+        public ArrayList<String> getTags() { return Tags;}
+
         public String getName() {
             return Name;
         }
