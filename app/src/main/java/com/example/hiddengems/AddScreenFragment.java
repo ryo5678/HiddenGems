@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +35,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class AddScreenFragment extends Fragment {
 
@@ -117,36 +120,41 @@ public class AddScreenFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         HashMap<String,Object> location = new HashMap<>();
 
+        // Generate id first
+        id = db.collection("locations").document().getId();
+        DocumentReference reference = db.collection("locations").document(id);
+
         String creator = user.getUid();
 
-        location.put("Creator", creator);
-        location.put("Name", name);
         location.put("Address", address);
         location.put("Category", category);
+        location.put("Creator", creator);
+        location.put("Description", "");
+        location.put("Image", new ArrayList<String>());
+        location.put("Name", name);
+        location.put("Season", "");
         location.put("Tags", tags);
         location.put("Time", time);
+        location.put("Verified", false);
+        location.put("Views", 0);
+        location.put("is_Event", false);
+        location.put("is_HiddenGem", false);
+        location.put("ratings", new ArrayList<String>());
+        location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
 
-        db.collection("locations")
-                .add(location)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
+        reference.set(location).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
 
-                        id = documentReference.getId();
-                        HashMap<String, Object> menu = new HashMap<>();
-                        /* Put menu items here
-                         menu.put("option",option)
+            }
+        });
 
-                        documentReference.collection("Menu")
-                                .add(menu)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-
-                                    }
-                                });*/
-                    }
-                });
+        binding.editAddName.getText().clear();
+        binding.editAddName.getText().clear();
+        binding.editAddAddress.getText().clear();
+        binding.editAddStartTime.getText().clear();
+        binding.editAddEndTime.getText().clear();
+        binding.spinnerAddTags.setText(null);
 
         action.addLocation(id);
     }
