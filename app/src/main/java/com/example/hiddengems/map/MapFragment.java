@@ -144,11 +144,12 @@ public class MapFragment extends Fragment {
                             if (document.getGeoPoint("Coordinates") != null) {
                                 Locations.Location newPlace = new Locations.Location(document.getString("Name"), document.getString("Address"), document.getString("Category"));
                                 newPlace.setDocID(document.getId());
+                                newPlace.setTags((ArrayList<String>) document.get("Tags"));
                                 GeoPoint geoPoint = document.getGeoPoint("Coordinates");
                                 LatLng latLng = new LatLng((double) geoPoint.getLatitude(), (double) geoPoint.getLongitude());
                                 newPlace.setCoordinates(latLng);
                                 Random random = new Random();
-                                int randnum = random.nextInt(5 + 1) + 1;
+                                int randnum = random.nextInt(5 + 1);
                                 newPlace.setCurrentRating(randnum);
                                 Log.d("Maps", "Adding Location");
                                 Log.d("Maps", ("Coordinates: " + newPlace.getCoordinates().toString()));
