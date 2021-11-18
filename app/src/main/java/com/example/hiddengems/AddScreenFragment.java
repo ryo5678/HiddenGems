@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.example.hiddengems.dataModels.Locations.Location;
 import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.databinding.FragmentAddScreenBinding;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -47,6 +51,7 @@ public class AddScreenFragment extends Fragment {
     ArrayList<Integer> tagList = new ArrayList<>();
     String[] tagArray;
     List<String> tagData = new ArrayList<>();
+    Geocoder geocoder;
 
 
     public AddScreenFragment() {
@@ -65,6 +70,7 @@ public class AddScreenFragment extends Fragment {
         if (getArguments() != null) {
             locations = (Location) getArguments().getSerializable("Location");
         }
+        geocoder = new Geocoder(getActivity());
     }
 
     @Override
@@ -183,6 +189,15 @@ public class AddScreenFragment extends Fragment {
         location.put("Category", category);
         location.put("Tags", tags);
         location.put("Time", time);
+
+        try {
+            List<Address> addressList = geocoder.getFromLocationName(address,1);
+            Address newAddress = addressList.get(0);
+            LatLng newCoordinates = new LatLng(newAddress.getLatitude(),newAddress.getLongitude());
+            location.put("Coordinates",newCoordinates);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         db.collection("locations")
                 .add(location)
