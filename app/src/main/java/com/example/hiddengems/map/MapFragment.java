@@ -1,5 +1,6 @@
 package com.example.hiddengems.map;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.hiddengems.R;
 import com.example.hiddengems.dataModels.Locations;
+import com.example.hiddengems.search.SearchResultsFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,6 +36,20 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MapFragment extends Fragment {
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof SearchResultsFragment.location){
+            action = (SearchResultsFragment.location) context;
+        }
+    }
+
+    public static SearchResultsFragment.location action;
+
+    public interface location{
+        void showLocation(String id);
+    }
 
     ArrayList<Locations.Location> allLocations = new ArrayList<>();
     String SelectedFilter = null;
@@ -199,6 +215,22 @@ public class MapFragment extends Fragment {
                        ourMaps.animateCamera(CameraUpdateFactory.newLatLngZoom(
                                coordinates, 10
                        ));
+                   }
+               });
+
+               ourMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                   @Override
+                   public boolean onMarkerClick(@NonNull Marker marker) {
+                       boolean check = true;
+                       for(int y=0; y < allLocations.size(); y++) {
+                           if (allLocations.get(y).getName().equals(marker.getTitle())) {
+                               action.showLocation(allLocations.get(y).docID);
+                               check = true;
+                           } else
+                               check = false;
+                       }
+
+                       return check;
                    }
                });
            }
