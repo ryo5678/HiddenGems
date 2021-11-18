@@ -1,6 +1,7 @@
 package com.example.hiddengems.dataModels;
 
 import android.media.Image;
+import android.nfc.Tag;
 import android.os.Parcelable;
 
 import java.io.Serializable;
@@ -73,6 +74,7 @@ public class Locations {
             this.isHiddenGem = false;
             this.Views = 0;
             this.Description = "";
+            this.docID = "";
         }
 
         public Location(String Name, String Address, String Category) {
@@ -119,9 +121,7 @@ public class Locations {
                     '}';
         }
 
-        public ArrayList<String> getTags() {
-            return Tags;
-        }
+        public ArrayList<String> getTags() { return Tags;}
 
         public String getName() {
             return Name;
@@ -154,12 +154,6 @@ public class Locations {
         public void setHours(String Hours) {
             this.Hours = Hours;
         }
-
-        public void addTag(String Tag) {
-            this.Tags.add(Tag);
-        }
-
-
 
         public void addImage(Image pic) {
             this.Images.add(pic);
@@ -246,6 +240,14 @@ public class Locations {
             Description = description;
         }
 
+        public void setTags(ArrayList<String> tags) {
+            Tags = tags;
+        }
+
+        public String getSeason() {
+            return Season;
+        }
+
         public String getDocID() {
             return docID;
         }
@@ -253,6 +255,7 @@ public class Locations {
         public void setDocID(String docID) {
             this.docID = docID;
         }
+
 
 
     }

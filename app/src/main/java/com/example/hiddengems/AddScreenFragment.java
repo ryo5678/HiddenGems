@@ -125,15 +125,26 @@ public class AddScreenFragment extends Fragment {
         location.put("Category", category);
         location.put("Tags", tags);
         location.put("Time", time);
-        location.put("Coordinates", "[35.312666 N, 80.741917 W]");
 
         db.collection("locations")
                 .add(location)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+
                         id = documentReference.getId();
                         HashMap<String, Object> menu = new HashMap<>();
+                        /* Put menu items here
+                         menu.put("option",option)
+
+                        documentReference.collection("Menu")
+                                .add(menu)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+
+                                    }
+                                });*/
                     }
                 });
 
