@@ -133,9 +133,25 @@ tools:context=".search.LocationFragment">
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationAddress"
-        app:layout_constraintVertical_bias="0.599" />
+        app:layout_constraintVertical_bias="0.04" />
+
+    <Button
+        android:id="@+id/addReview"
+        android:layout_width="179dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="4dp"
+        android:minHeight="10dp"
+        android:text="@string/locationAddReview"
+        android:textSize="12sp"
+        app:iconPadding="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationAddress"
+        app:layout_constraintVertical_bias="0.03" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

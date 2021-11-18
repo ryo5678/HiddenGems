@@ -133,6 +133,7 @@
     <string name="locationCategory">Category:</string>
     <string name="locationAddress">Address:</string>
     <string name="locationReview">Reviews:</string>
+    <string name="locationAddReview">Write a review!</string>
 
 
 </resources>
