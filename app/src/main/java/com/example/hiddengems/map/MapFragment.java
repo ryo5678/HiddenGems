@@ -3,13 +3,19 @@ package com.example.hiddengems.map;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hiddengems.R;
+import com.example.hiddengems.dataModels.Locations;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,12 +23,149 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MapFragment extends Fragment {
 
-       @Override
+    ArrayList<Locations.Location> allLocations = new ArrayList<>();
+    String SelectedFilter = null;
+    GoogleMap ourMaps;
+    ArrayList<Marker> markers = new ArrayList<>();
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.search_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        SelectedFilter = (String) item.getTitle();
+        if (notTitle(SelectedFilter)) {
+            getActivity().setTitle("Filter Markers by: " + SelectedFilter);
+            for(int x=0; x < markers.size(); x++) {
+                for(int y=0; y < allLocations.size(); y++){
+                    if(allLocations.get(y).getName().equals(markers.get(x).getTitle())) {
+                        if(allLocations.get(y).getCategory().equals(SelectedFilter) ||
+                                checkRating(SelectedFilter, allLocations.get(y)) ||
+                                checkSeason(SelectedFilter,allLocations.get(y)) ||
+                                checkTags(SelectedFilter, allLocations.get(y))) {
+
+                            markers.get(x).setVisible(true);
+                        } else {
+                            markers.get(x).setVisible(false);
+                        }
+                    }
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+    private boolean checkRating(String filter, Locations.Location location) {
+
+        return false;
+    }
+
+    private boolean checkSeason(String filter, Locations.Location location) {
+
+        if (location.getSeason().equals(filter)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private boolean checkTags(String filter, Locations.Location location) {
+
+        for(int x=0; x < location.Tags.size(); x++) {
+            if (location.Tags.get(x).equals(filter)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public boolean notTitle(String selectedItem) {
+
+        if (selectedItem.equals("Start Menu")) {
+            return false;
+        } else if (selectedItem.equals("Categories")) {
+            return false;
+        } else if (selectedItem.equals("Tags")) {
+            return false;
+        }else if (selectedItem.equals("Ratings")) {
+            return false;
+        }else if (selectedItem.equals("Seasons")) {
+            return false;
+        }else if (selectedItem.equals("Reset")) {
+            for (int x=0; x < markers.size(); x++) {
+                markers.get(x).setVisible(true);
+            }
+            getActivity().setTitle("Map");
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle("Map");
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("locations")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        allLocations.clear();
+                        for(QueryDocumentSnapshot document : value) {
+                            if (document.getGeoPoint("Coordinates") != null) {
+                                Locations.Location newPlace = new Locations.Location(document.getString("Name"), document.getString("Address"), document.getString("Category"));
+                                newPlace.setDocID(document.getId());
+                                newPlace.setTags((ArrayList<String>) document.get("Tags"));
+                                GeoPoint geoPoint = document.getGeoPoint("Coordinates");
+                                LatLng latLng = new LatLng((double) geoPoint.getLatitude(), (double) geoPoint.getLongitude());
+                                newPlace.setCoordinates(latLng);
+                                Random random = new Random();
+                                int randnum = random.nextInt(5 + 1);
+                                newPlace.setCurrentRating(randnum);
+                                Log.d("Maps", "Adding Location");
+                                Log.d("Maps", ("Coordinates: " + newPlace.getCoordinates().toString()));
+                                allLocations.add(newPlace);
+                            }
+                        }
+                    }
+                });
+
+
         //view
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
@@ -32,17 +175,28 @@ public class MapFragment extends Fragment {
        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
            @Override
            public void onMapReady(@NonNull GoogleMap maps) {
+               ourMaps = maps;
                LatLng UNCC = new LatLng(35.303555, -80.73238);
-               maps.addMarker(new MarkerOptions()
+               ourMaps.addMarker(new MarkerOptions()
                     .position(UNCC)
                     .title("UNCC Marker"));
-               maps.moveCamera(CameraUpdateFactory.newLatLng(UNCC));
+               Log.d("Maps", String.valueOf(allLocations.size()));
+               for (int x=0; x<allLocations.size(); x++) {
+                   Log.d("Maps","Adding Location to Map");
+                  Marker newMarker = ourMaps.addMarker(new MarkerOptions()
+                                     .position(allLocations.get(x).getCoordinates())
+                                     .title(allLocations.get(x).getName())
+                                     .snippet("Rating: " + allLocations.get(x).getCurrentRating() + " / 5")
+                                     .alpha(1));
+                  markers.add(newMarker);
+               }
 
+               ourMaps.moveCamera(CameraUpdateFactory.newLatLng(UNCC));
 
-               maps.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+               ourMaps.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                    @Override
                    public void onMapClick(@NonNull LatLng coordinates) {
-                       maps.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                       ourMaps.animateCamera(CameraUpdateFactory.newLatLngZoom(
                                coordinates, 10
                        ));
                    }
