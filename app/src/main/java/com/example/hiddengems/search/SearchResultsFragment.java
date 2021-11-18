@@ -78,7 +78,7 @@ public class SearchResultsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-       // locationList.clear();
+        // locationList.clear();
     }
 
     @Override

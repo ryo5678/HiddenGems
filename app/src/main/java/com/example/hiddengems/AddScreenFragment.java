@@ -4,15 +4,13 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -22,37 +20,35 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.hiddengems.dataModels.Locations.Location;
-import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.databinding.FragmentAddScreenBinding;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class AddScreenFragment extends Fragment {
 
     FragmentAddScreenBinding binding;
     TimePickerDialog picker;
+    TextView spinner;
     EditText startTime, endTime;
     Location locations;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    ArrayList<Integer> tagList = new ArrayList<>();
+    ArrayList<Integer> tagSelect = new ArrayList<>();
     String[] tagArray;
     List<String> tagData = new ArrayList<>();
     String id;
-    Geocoder geocoder;
 
 
     public AddScreenFragment() {
@@ -71,7 +67,6 @@ public class AddScreenFragment extends Fragment {
         if (getArguments() != null) {
             locations = (Location) getArguments().getSerializable("Location");
         }
-        geocoder = new Geocoder(getActivity());
     }
 
     @Override
@@ -87,65 +82,9 @@ public class AddScreenFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Add Location");
 
-        TextView spinner = binding.spinnerAddTags;
+        spinner = binding.spinnerAddTags;
 
-        boolean[] selectedTags = new boolean[tagArray.length];
-
-        spinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                builder.setTitle("Select Tags");
-                builder.setCancelable(false);
-                builder.setMultiChoiceItems(tagArray, selectedTags, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        if(b) {
-                            tagList.add(i);
-                            tagData.add(tagArray[i]);
-                            Collections.sort(tagList);
-                        }
-                        else {
-                            tagData.remove(tagArray[i]);
-                            for(int j=0; j<tagList.size(); j++){
-                                if(tagList.get(j) == i){
-                                    tagList.remove(j);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                });
-
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for(int j = 0; j < tagList.size(); j++) {
-                            stringBuilder.append(tagArray[tagList.get(j)]);
-                            if(j != tagList.size() - 1) {
-                                stringBuilder.append(", ");
-                            }
-                        }
-                        spinner.setText(stringBuilder.toString());
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        for(int j = 0; j < selectedTags.length; j++) {
-                            selectedTags[j] = false;
-                            tagList.clear();
-                            spinner.setText("");
-                        }
-                    }
-                });
-
-                builder.show();
-            }
-        });
+        getTagList(spinner);
 
         startTime = binding.editAddStartTime;
         getTime(startTime);
@@ -156,7 +95,6 @@ public class AddScreenFragment extends Fragment {
         binding.addSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int sHour, sMinute, startHour, eHour, eMinute, endHour;
 
                 String name = binding.editAddName.getText().toString();
                 String address = binding.editAddAddress.getText().toString();
@@ -182,45 +120,41 @@ public class AddScreenFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         HashMap<String,Object> location = new HashMap<>();
 
+        // Generate id first
+        id = db.collection("locations").document().getId();
+        DocumentReference reference = db.collection("locations").document(id);
+
         String creator = user.getUid();
 
-        location.put("Creator", creator);
-        location.put("Name", name);
         location.put("Address", address);
         location.put("Category", category);
+        location.put("Creator", creator);
+        location.put("Description", "");
+        location.put("Image", new ArrayList<String>());
+        location.put("Name", name);
+        location.put("Season", "");
         location.put("Tags", tags);
         location.put("Time", time);
+        location.put("Verified", false);
+        location.put("Views", 0);
+        location.put("is_Event", false);
+        location.put("is_HiddenGem", false);
+        location.put("ratings", new ArrayList<String>());
+        location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
 
-        try {
-            List<Address> addressList = geocoder.getFromLocationName(address,1);
-            Address newAddress = addressList.get(0);
-            LatLng newCoordinates = new LatLng(newAddress.getLatitude(),newAddress.getLongitude());
-            location.put("Coordinates",newCoordinates);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        reference.set(location).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
 
-        db.collection("locations")
-                .add(location)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
+            }
+        });
 
-                        id = documentReference.getId();
-                        HashMap<String, Object> menu = new HashMap<>();
-                        /* Put menu items here
-                         menu.put("option",option)
-
-                        documentReference.collection("Menu")
-                                .add(menu)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-
-                                    }
-                                });*/
-                    }
-                });
+        binding.editAddName.getText().clear();
+        binding.editAddName.getText().clear();
+        binding.editAddAddress.getText().clear();
+        binding.editAddStartTime.getText().clear();
+        binding.editAddEndTime.getText().clear();
+        binding.spinnerAddTags.setText(null);
 
         action.addLocation(id);
     }
@@ -259,6 +193,69 @@ public class AddScreenFragment extends Fragment {
                             }
                         }, hour, minutes, false);
                 picker.show();
+            }
+        });
+    }
+
+    public void getTagList(TextView spinner) {
+        // Clearing so when you switch pages through nav bar it doesn't save tags selected
+        tagSelect.clear();
+
+        boolean[] selectedTags = new boolean[tagArray.length];
+
+        spinner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("Select Tags");
+                builder.setCancelable(false);
+                builder.setMultiChoiceItems(tagArray, selectedTags, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                        if(b) {
+                            tagSelect.add(i);
+                            tagData.add(tagArray[i]);
+                            Collections.sort(tagSelect);
+                        }
+                        else {
+                            tagData.remove(tagArray[i]);
+                            for(int j=0; j < tagSelect.size(); j++){
+                                if(tagSelect.get(j) == i){
+                                    tagSelect.remove(j);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for(int j = 0; j < tagSelect.size(); j++) {
+                            stringBuilder.append(tagArray[tagSelect.get(j)]);
+                            if(j != tagSelect.size() - 1) {
+                                stringBuilder.append(", ");
+                            }
+                        }
+                        spinner.setText(stringBuilder.toString());
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        for(int j = 0; j < selectedTags.length; j++) {
+                            selectedTags[j] = false;
+                            tagSelect.clear();
+                            spinner.setText("");
+                        }
+                    }
+                });
+
+                builder.show();
             }
         });
     }
