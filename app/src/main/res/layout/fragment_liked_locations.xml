@@ -19,7 +19,8 @@
         android:layout_marginTop="36dp"
         android:background="#7C7979"
         android:backgroundTint="#888888"
-        android:text="example 1"
+        android:text="@string/example_1"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,12 +32,40 @@
         android:layout_marginTop="56dp"
         android:background="#7C7979"
         android:backgroundTint="#888888"
-        android:text="example 2"
+        android:text="@string/example_2"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="submit rating"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="222dp"
+        tools:layout_editor_absoluteY="655dp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="428dp"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:progressTint="#414871"
+        android:rating="3"
+        android:stepSize="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/rating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
