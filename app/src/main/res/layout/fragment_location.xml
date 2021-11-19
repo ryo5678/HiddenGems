@@ -88,6 +88,21 @@ tools:context=".search.LocationFragment">
         app:layout_constraintTop_toBottomOf="@+id/locationTags"
         app:layout_constraintVertical_bias="0.01" />
 
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="239dp"
+        android:layout_height="51dp"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.598"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <TextView
         android:id="@+id/locationDescription"
         android:layout_width="0dp"
@@ -114,14 +129,14 @@ tools:context=".search.LocationFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviewRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="407dp"
+        android:layout_height="420dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView7"
@@ -133,10 +148,10 @@ tools:context=".search.LocationFragment">
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationAddress"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.113" />
 
     <Button
         android:id="@+id/addReview"
@@ -152,6 +167,7 @@ tools:context=".search.LocationFragment">
         app:layout_constraintHorizontal_bias="0.965"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationAddress"
-        app:layout_constraintVertical_bias="0.03" />
+        app:layout_constraintVertical_bias="0.107"
+        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
