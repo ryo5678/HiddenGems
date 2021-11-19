@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -48,6 +49,10 @@ public class MyGemsFragment extends Fragment {
     FirebaseAuth mAuth;
     ArrayList<Location> allLocations = new ArrayList<>();
     ArrayList<Location> finalLocations = new ArrayList<>();
+
+    RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
+    GemsRecyclerViewAdapter adapter;
 
     public MyGemsFragment() {
         // Required empty public constructor
@@ -88,12 +93,12 @@ public class MyGemsFragment extends Fragment {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         allLocations.clear();
-                        for(QueryDocumentSnapshot document : value) {
+                        for (QueryDocumentSnapshot document : value) {
 
 
-                            Location newPlace = new Location(document.getId(), document.getString("Creator"), document.getString("Name"), document.getString("Category"), document.get(ArrayList<String> Tags));
+                            Location newPlace = new Location(document.getId(), document.getString("Creator"), document.getString("Name"), document.getString("Category"), (ArrayList<String>) document.get("Tags"));
 
-                            Log.d("Check","Adding Location");
+                            Log.d("Check", "Adding Location");
                             allLocations.add(newPlace);
 
 
@@ -111,25 +116,7 @@ public class MyGemsFragment extends Fragment {
         }
 
 
-
-
-
-
         getActivity().setTitle("My Gems");
-
-        binding.myGems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                text = binding.gemss.getText().toString();
-                if (text.isEmpty()) {
-                    missingInput(getActivity());
-                } else {
-                    submitGems(text);
-                }
-            }
-        });
-
-
 
     }
 
@@ -137,6 +124,15 @@ public class MyGemsFragment extends Fragment {
 
         FragmentManager fm = getActivity()
                 .getSupportFragmentManager();
+
+        recyclerView = binding.myGemsRecycler;
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new GemsRecyclerViewAdapter(finalLocations);
+        recyclerView.setAdapter(adapter);
+//binding
+
         fm.popBackStack("gems", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 /*}
             }
@@ -151,7 +147,7 @@ public class MyGemsFragment extends Fragment {
         @NonNull
         @Override
         public GemsRecyclerViewAdapter.GemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.locations_row_list,parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mygems_view,parent, false);
             GemsRecyclerViewAdapter.GemsViewHolder viewHolder = new GemsRecyclerViewAdapter.GemsViewHolder(view);
             return viewHolder;
         }
@@ -161,8 +157,8 @@ public class MyGemsFragment extends Fragment {
             Location location = Locations.get(position);
             holder.position = position;
             holder.nameView.setText(location.getName());
-            holder.rateView.setText("Current rating: " + location.getCurrentRating());
-            holder.reView.setText("Total ratings: " + location.getNumberofRatings());
+            holder.categoryView.setText(location.getCategory());
+            holder.tagsView.setText(location.getTags().toString());
             // Not working yet for images, holder.preView.set
 
 
@@ -177,18 +173,18 @@ public class MyGemsFragment extends Fragment {
             int position;
             View rootView;
             TextView nameView;
-            TextView rateView;
-            TextView reView;
-            ImageView preView;
+            TextView categoryView;
+            TextView tagsView;
+
 
 
             public GemsViewHolder(@NonNull View itemView) {
                 super(itemView);
                 rootView = itemView;
-                nameView = itemView.findViewById(R.id.locationNameView);
-                rateView = itemView.findViewById(R.id.locationRatingView);
-                reView = itemView.findViewById(R.id.locationReview);
-                preView = itemView.findViewById(R.id.locationPreview);
+                nameView = itemView.findViewById(R.id.textView16);
+                categoryView = itemView.findViewById(R.id.textView17);
+                tagsView = itemView.findViewById(R.id.textView18);
+
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -208,4 +204,6 @@ public class MyGemsFragment extends Fragment {
     public void missingInput(Context context) {
         Toast.makeText(context, getString(R.string.missing), Toast.LENGTH_SHORT).show();
     }
+
+
 }

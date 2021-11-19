@@ -111,7 +111,8 @@
     <string name="profileName">John Doe</string>
     <string name="profileEmail">johndoe@gmail.com</string>
     <string name="editProfileButton">Edit</string>
-    <string name="editButtonGem">Edit</string>
+    <string name="editButtonGem">Return To Profile</string>
+    <string name="textView15">My Gems</string>
     <string name="saveButtonGem">Save</string>
     <string name="saveProfileButton">Save</string>
 
