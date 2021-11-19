@@ -64,7 +64,7 @@ public class LocationFragment extends Fragment {
     FirebaseAuth mAuth;
     String reviewID;
     FirebaseUser user;
-
+    int total = 0;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -110,16 +110,18 @@ public class LocationFragment extends Fragment {
                     if (document.exists()) {
 
                         ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
-                        for (int i = 0; i < ratings.size(); i++){
-                            if (i == 0) {
-
-                            }else if (i%2 == 0) {
-
-                            } else {
+                        for (int i = 0; i < tempList.size(); i++){
+                            if (i%2 == 1) {
                                 ratings.add(Integer.parseInt(tempList.get(i)));
                             }
 
                         }
+                        for (int j = 0; j< ratings.size(); j++) {
+                            total += ratings.get(j);
+                        }
+
+                        total /= ratings.size();
+
                         location = new Location(document.getString("Name"),document.getString("Address")
                                 ,document.getString("Category"),document.getString("Description"),
                                 document.getString("time"),rating,ratings.size(),
@@ -131,6 +133,7 @@ public class LocationFragment extends Fragment {
                         binding.locationCategory.setText(location.getCategory());
                         binding.locationTags.setText(location.getTags().toString());
                         binding.locationAddress.setText(location.getAddress());
+                        binding.ratingAverageOutput.setText(String.valueOf(total));
 
                     } else {
                     }
