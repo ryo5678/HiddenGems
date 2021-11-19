@@ -161,7 +161,7 @@ public class LocationFragment extends Fragment {
 
                 DocumentReference docRef = db.collection("locations").document(id);
 
-                docRef.update("ratings",FieldValue.arrayUnion(user.getUid().toString()));
+                docRef.update("ratings",FieldValue.arrayUnion(user.getUid()));
                 docRef.update("ratings",FieldValue.arrayUnion(String.valueOf(rating)));
                 binding.ratingAverageOutput.setText(String.valueOf(total));
             }

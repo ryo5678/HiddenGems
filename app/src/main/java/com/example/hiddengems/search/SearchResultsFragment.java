@@ -125,6 +125,8 @@ public class SearchResultsFragment extends Fragment {
         public void onBindViewHolder(@NonNull LocationViewHolder holder, @SuppressLint("RecyclerView") int position) {
             Location location = Locations.get(position);
 
+            total = 0;
+            count = 0;
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("locations").document(location.docID).collection("reviews")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -157,6 +159,10 @@ public class SearchResultsFragment extends Fragment {
                             total /= ratings.size();
                             location.setCurrentRating(total);
                             location.setNumberofRatings(ratings.size());
+
+                            holder.nameView.setText(location.getName());
+                            holder.rateView.setText("Current rating: " + location.getCurrentRating());
+                            holder.reView.setText("Total reviews: " + String.valueOf(count));
                         } else {
                         }
                     } else {
@@ -165,9 +171,6 @@ public class SearchResultsFragment extends Fragment {
             });
 
             holder.position = position;
-            holder.nameView.setText(location.getName());
-            holder.rateView.setText("Current rating: " + location.getCurrentRating());
-            holder.reView.setText("Total reviews: " + count);
             // Not working yet for images, holder.preView.set
 
 

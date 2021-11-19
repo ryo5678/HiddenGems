@@ -81,6 +81,7 @@ public class OurPicksFragment extends Fragment {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         allLocations.clear();
+                        finalLocations.clear();
                         for(QueryDocumentSnapshot document : value) {
 
 
