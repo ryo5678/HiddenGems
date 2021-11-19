@@ -64,6 +64,8 @@ public class LocationFragment extends Fragment {
     FirebaseAuth mAuth;
     String reviewID;
     FirebaseUser user;
+    int total=0;
+
 
 
     public LocationFragment() {
@@ -107,18 +109,25 @@ public class LocationFragment extends Fragment {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
+
+                    Log.d("tags", "ratings for this location: " + document.get("ratings"));
+
                     if (document.exists()) {
                         ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
-                        for (int i = 0; i < ratings.size(); i++){
-                            if (i == 0) {
-
-                            }else if (i%2 == 0) {
-
-                            } else {
+                        for (int i = 0; i < tempList.size(); i++){
+                            Log.d("each", "each thing in tempList" + tempList.size());
+                            if (i%2 == 1) {
+                                Log.d("each", "each thing in tempList: " + tempList.get(i));
                                 ratings.add(Integer.parseInt(tempList.get(i)));
+                                Log.d("size", "size of ratings: " + ratings.size());
                             }
-
                         }
+                        for (int j = 0; j < ratings.size(); j++) {
+                            total += ratings.get(j);
+                        }
+                        total /= ratings.size();
+                        //Log.d("size", "size of ratings: " + ratings.size());
+
                         location = new Location(document.getString("Name"),document.getString("Address")
                                 ,document.getString("Category"),document.getString("Description"),
                                 document.getString("time"),rating,ratings.size(),
@@ -130,6 +139,7 @@ public class LocationFragment extends Fragment {
                         binding.locationCategory.setText(location.getCategory());
                         binding.locationTags.setText(location.getTags().toString());
                         binding.locationAddress.setText(location.getAddress());
+                        binding.ratingAverageOutput.setText(String.valueOf(total));
 
                     } else {
                     }
