@@ -108,6 +108,7 @@ public class LocationFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
+
                         ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
                         for (int i = 0; i < ratings.size(); i++){
                             if (i == 0) {
@@ -205,20 +206,6 @@ public class LocationFragment extends Fragment {
             }
         });
 
-        /* Code for submitting a review
-        HashMap<String, Object> review = new HashMap<>();
-        review.put("creator","");
-        review.put("review","");
-        review.put("time_created","");
-
-        docRef.collection("reviews")
-                .add(review)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-
-                    }
-                });*/
     }
     public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecyclerViewAdapter.ReviewViewHolder> {
         ArrayList<Review> items;

@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class Locations {
@@ -54,7 +55,7 @@ public class Locations {
         public int currentRating;
         public int numberofRatings;
         public ArrayList<String> Reviews;
-        public Person.Users Creator;
+        public String Creator;
         public Boolean Verified;
         public Boolean isHiddenGem;
         public int Views;
@@ -103,6 +104,14 @@ public class Locations {
             this.numberofRatings = numberofRatings;
             this.Tags = Tags;
 
+        }
+
+        public Location(String docID, String Creator, String Name, String Category, ArrayList<String> Tags) {
+            this.docID = docID;
+            this.Creator = Creator;
+            this.Name = Name;
+            this.Category = Category;
+            this.Tags = Tags;
         }
 
         @Override
@@ -198,11 +207,11 @@ public class Locations {
             this.numberofRatings = numberofRatings;
         }
 
-        public Person.Users getCreator() {
+        public String getCreator() {
             return Creator;
         }
 
-        public void setCreator(Person.Users creator) {
+        public void setCreator(String creator) {
             Creator = creator;
         }
 

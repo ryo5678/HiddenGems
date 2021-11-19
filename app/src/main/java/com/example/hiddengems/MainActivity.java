@@ -100,6 +100,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
+    public void gems() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, MyGemsFragment.newInstance())
+                .addToBackStack("gems")
+                .commit();
+    }
+
+    @Override
     public void operatingHoursRequest() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, HoursChangeFragment.newInstance())
@@ -130,6 +138,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("editProfile")
                 .commit();
     }
+
+
 
     @Override
     public void likedLocationsRequest() {

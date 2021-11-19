@@ -1,10 +1,20 @@
 package com.example.hiddengems;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,27 +25,40 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.hiddengems.dataModels.Locations.Location;
 import com.example.hiddengems.databinding.FragmentAddScreenBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
+import java.util.UUID;
 
 public class AddScreenFragment extends Fragment {
 
@@ -49,7 +72,11 @@ public class AddScreenFragment extends Fragment {
     String[] tagArray;
     List<String> tagData = new ArrayList<>();
     String id;
-
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    byte[] data;
+    Geocoder geocoder;
 
     public AddScreenFragment() {
         // Required empty public constructor
@@ -67,6 +94,28 @@ public class AddScreenFragment extends Fragment {
         if (getArguments() != null) {
             locations = (Location) getArguments().getSerializable("Location");
         }
+        geocoder = new Geocoder(getActivity());
+
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result.getResultCode() == -1 && result.getData() != null) {
+                            Bundle bundle = result.getData().getExtras();
+                            Bitmap bitmap = (Bitmap) bundle.get("data");
+                            binding.imagePlaceholder.setImageBitmap(bitmap);
+                            binding.imagePlaceholder.setDrawingCacheEnabled(true);
+                            binding.imagePlaceholder.buildDrawingCache();
+                            Bitmap placeholder = ((BitmapDrawable) binding.imagePlaceholder.getDrawable()).getBitmap();
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            placeholder.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            data = baos.toByteArray();
+
+
+                        }
+                    }
+                });
     }
 
     @Override
@@ -92,6 +141,20 @@ public class AddScreenFragment extends Fragment {
         endTime = binding.editAddEndTime;
         getTime(endTime);
 
+        FloatingActionButton fab = binding.floatingActionButton;
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, 5);
+                } else {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    activityResultLauncher.launch(intent);
+                }
+            }
+        });
+
+
         binding.addSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +169,9 @@ public class AddScreenFragment extends Fragment {
                 boolean allInput = name.isEmpty()  || address.isEmpty() || category.isEmpty() || tagData.isEmpty() || startTime.isEmpty() || endTime.isEmpty();
                 boolean minInput = name.isEmpty()  || address.isEmpty() || category.isEmpty();
 
-                if(minInput) {
+                if(allInput){
+                    addImage();}
+                else if(minInput) {
                     missingInput(getActivity());
                 }
                 else if(!allInput){
@@ -114,6 +179,11 @@ public class AddScreenFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void addImage() {
+        UploadTask uploadTask = storageReference.child("images/"+UUID.randomUUID().toString()).putBytes(data);
+
     }
 
     public void addPage(String name, String address, String category, List<String> tags, String time) {
@@ -140,7 +210,16 @@ public class AddScreenFragment extends Fragment {
         location.put("is_Event", false);
         location.put("is_HiddenGem", false);
         location.put("ratings", new ArrayList<String>());
-        location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
+
+        try {
+            List<Address> addressList = geocoder.getFromLocationName(address,1);
+            Address address1 = addressList.get(0);
+            location.put("Coordinates",new GeoPoint(address1.getLatitude(),address1.getLongitude()));
+        } catch (IOException e) {
+            location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
+            e.printStackTrace();
+        }
+
 
         reference.set(location).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

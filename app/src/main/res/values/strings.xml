@@ -107,10 +107,14 @@
     <string name="addStartTime">Start Time: </string>
     <string name="addEndTime">End Time: </string>
     <string name="addImageUpload">Image Upload:\n(max of 5)</string>
+    <string name="addImage">Add Image</string>
 
     <string name="profileName">John Doe</string>
     <string name="profileEmail">johndoe@gmail.com</string>
     <string name="editProfileButton">Edit</string>
+    <string name="editButtonGem">Return To Profile</string>
+    <string name="textView15">My Gems</string>
+    <string name="saveButtonGem">Save</string>
     <string name="saveProfileButton">Save</string>
 
     <!-- Login page -->

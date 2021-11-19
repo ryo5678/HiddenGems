@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 
 import com.example.hiddengems.R;
 import com.example.hiddengems.dataModels.Locations;
@@ -33,6 +35,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MapFragment extends Fragment {
@@ -55,6 +58,7 @@ public class MapFragment extends Fragment {
     String SelectedFilter = null;
     GoogleMap ourMaps;
     ArrayList<Marker> markers = new ArrayList<>();
+    //List<Long> ratings = new ArrayList<>();
 
 
     @Override
@@ -170,9 +174,23 @@ public class MapFragment extends Fragment {
                                 GeoPoint geoPoint = document.getGeoPoint("Coordinates");
                                 LatLng latLng = new LatLng((double) geoPoint.getLatitude(), (double) geoPoint.getLongitude());
                                 newPlace.setCoordinates(latLng);
-                                Random random = new Random();
-                                int randnum = random.nextInt(5 + 1);
-                                newPlace.setCurrentRating(randnum);
+                               // ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
+                                //for (int i = 0; i < tempList.size(); i++){
+                                  //  if (i == 0) {
+
+                                   // } else if (i%2 == 1){
+                                     //   ratings.add(Long.parseLong(tempList.get(i)));
+                                   //     Log.d("Test","adding to ratings");
+                                 //   }
+
+                               // }
+                               // int num = 0;
+                               // for(int x=0; x<ratings.size();x++) {
+                                 //   num += ratings.get(x);
+                               // }
+                                //num /= (ratings.size()/2);
+                                Random rand = new Random();
+                                newPlace.setCurrentRating(rand.nextInt(6));
                                 Log.d("Maps", "Adding Location");
                                 Log.d("Maps", ("Coordinates: " + newPlace.getCoordinates().toString()));
                                 allLocations.add(newPlace);
@@ -204,6 +222,7 @@ public class MapFragment extends Fragment {
                                      .title(allLocations.get(x).getName())
                                      .snippet("Rating: " + allLocations.get(x).getCurrentRating() + " / 5")
                                      .alpha(1));
+                  newMarker.setTag(0);
                   markers.add(newMarker);
                }
 
@@ -223,16 +242,26 @@ public class MapFragment extends Fragment {
                ourMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                    @Override
                    public boolean onMarkerClick(@NonNull Marker marker) {
-                       boolean check = true;
-                       for(int y=0; y < allLocations.size(); y++) {
-                           if (allLocations.get(y).getName().equals(marker.getTitle())) {
-                               action.showLocation(allLocations.get(y).docID);
-                               check = true;
-                           } else
-                               check = false;
+
+                       Integer clickCount = (Integer) marker.getTag();
+
+                       if (clickCount == 0) {
+                           marker.setTag(1);
+                           return false;
+                       } else {
+                           boolean check = true;
+                           for(int y=0; y < allLocations.size(); y++) {
+                               if (allLocations.get(y).getName().equals(marker.getTitle())) {
+                                   marker.setTag(0);
+                                   action.showLocation(allLocations.get(y).docID);
+                                   check = true;
+                               } else
+                                   check = false;
+                           }
+
+                           return check;
                        }
 
-                       return check;
                    }
                });
            }
