@@ -90,6 +90,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        binding.MyGems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.gems();
+            }
+        });
+
         binding.requestOperatingHours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,5 +150,6 @@ public class ProfileFragment extends Fragment {
         void editProfile();
         void likedLocationsRequest();
         void logout();
+        void gems();
     }
 }
