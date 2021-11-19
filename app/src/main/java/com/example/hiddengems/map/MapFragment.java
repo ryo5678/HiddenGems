@@ -57,6 +57,7 @@ public class MapFragment extends Fragment {
     ArrayList<Marker> markers = new ArrayList<>();
 
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -204,6 +205,7 @@ public class MapFragment extends Fragment {
                                      .title(allLocations.get(x).getName())
                                      .snippet("Rating: " + allLocations.get(x).getCurrentRating() + " / 5")
                                      .alpha(1));
+                  newMarker.setTag(0);
                   markers.add(newMarker);
                }
 
@@ -223,16 +225,26 @@ public class MapFragment extends Fragment {
                ourMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                    @Override
                    public boolean onMarkerClick(@NonNull Marker marker) {
-                       boolean check = true;
-                       for(int y=0; y < allLocations.size(); y++) {
-                           if (allLocations.get(y).getName().equals(marker.getTitle())) {
-                               action.showLocation(allLocations.get(y).docID);
-                               check = true;
-                           } else
-                               check = false;
+
+                       Integer clickCount = (Integer) marker.getTag();
+
+                       if (clickCount == 0) {
+                           marker.setTag(1);
+                           return false;
+                       } else {
+                           boolean check = true;
+                           for(int y=0; y < allLocations.size(); y++) {
+                               if (allLocations.get(y).getName().equals(marker.getTitle())) {
+                                   marker.setTag(0);
+                                   action.showLocation(allLocations.get(y).docID);
+                                   check = true;
+                               } else
+                                   check = false;
+                           }
+
+                           return check;
                        }
 
-                       return check;
                    }
                });
            }

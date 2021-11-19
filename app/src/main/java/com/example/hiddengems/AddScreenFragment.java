@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -29,6 +31,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -49,6 +52,7 @@ public class AddScreenFragment extends Fragment {
     String[] tagArray;
     List<String> tagData = new ArrayList<>();
     String id;
+    Geocoder geocoder;
 
 
     public AddScreenFragment() {
@@ -67,6 +71,7 @@ public class AddScreenFragment extends Fragment {
         if (getArguments() != null) {
             locations = (Location) getArguments().getSerializable("Location");
         }
+        geocoder = new Geocoder(getActivity());
     }
 
     @Override
@@ -140,7 +145,16 @@ public class AddScreenFragment extends Fragment {
         location.put("is_Event", false);
         location.put("is_HiddenGem", false);
         location.put("ratings", new ArrayList<String>());
-        location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
+
+        try {
+            List<Address> addressList = geocoder.getFromLocationName(address,1);
+            Address address1 = addressList.get(0);
+            location.put("Coordinates",new GeoPoint(address1.getLatitude(),address1.getLongitude()));
+        } catch (IOException e) {
+            location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
+            e.printStackTrace();
+        }
+
 
         reference.set(location).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
