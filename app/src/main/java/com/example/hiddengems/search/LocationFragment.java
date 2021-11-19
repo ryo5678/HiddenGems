@@ -62,6 +62,8 @@ public class LocationFragment extends Fragment {
     LinearLayoutManager layoutManager;
     ReviewRecyclerViewAdapter adapter;
     FirebaseAuth mAuth;
+    String reviewID;
+    FirebaseUser user;
 
 
     public LocationFragment() {
@@ -94,6 +96,9 @@ public class LocationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("locations").document(id);
@@ -173,9 +178,6 @@ public class LocationFragment extends Fragment {
                         reviewText = input.getText().toString();
 
                         HashMap<String, Object> review = new HashMap<>();
-                        mAuth = FirebaseAuth.getInstance();
-                        FirebaseUser user = mAuth.getCurrentUser();
-
                         review.put("creator",user.getDisplayName());
                         review.put("review",reviewText);
                         review.put("time_created", Timestamp.now());
@@ -235,10 +237,19 @@ public class LocationFragment extends Fragment {
         public void onBindViewHolder(@NonNull ReviewViewHolder holder, @SuppressLint("RecyclerView") int position) {
             Review review = items.get(position);
 
+            mAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = mAuth.getCurrentUser();
+
             holder.position = position;
             holder.nameView.setText(review.creator);
             holder.reviewView.setText(review.review);
             holder.dateView.setText(review.date);
+
+            if(review.creator.equals(user.getDisplayName())) {
+                holder.imageView3.setVisibility(View.VISIBLE);
+            } else {
+                holder.imageView3.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -252,6 +263,7 @@ public class LocationFragment extends Fragment {
             TextView nameView;
             TextView reviewView;
             TextView dateView;
+            ImageView imageView3;
 
 
             public ReviewViewHolder(@NonNull View itemView) {
@@ -260,7 +272,30 @@ public class LocationFragment extends Fragment {
                 nameView = itemView.findViewById(R.id.reviewName);
                 reviewView = itemView.findViewById(R.id.reviewDesc);
                 dateView = itemView.findViewById(R.id.reviewDate);
+                imageView3 = itemView.findViewById(R.id.imageView3);
 
+                itemView.findViewById(R.id.imageView3).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        DocumentReference docRef = db.collection("locations").document(id);
+                        docRef.collection("reviews").document(items.get(position).reviewID)
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+                    }
+                });
             }
         }
     }
