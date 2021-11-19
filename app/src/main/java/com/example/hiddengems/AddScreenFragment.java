@@ -67,7 +67,7 @@ public class AddScreenFragment extends Fragment {
     TextView spinner;
     EditText startTime, endTime;
     Location locations;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser user;
     ArrayList<Integer> tagSelect = new ArrayList<>();
     String[] tagArray;
     List<String> tagData = new ArrayList<>();
@@ -77,6 +77,7 @@ public class AddScreenFragment extends Fragment {
     StorageReference storageReference = storage.getReference();
     byte[] data;
     Geocoder geocoder;
+    FirebaseAuth mAuth;
 
     public AddScreenFragment() {
         // Required empty public constructor
@@ -194,6 +195,8 @@ public class AddScreenFragment extends Fragment {
         id = db.collection("locations").document().getId();
         DocumentReference reference = db.collection("locations").document(id);
 
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
         String creator = user.getUid();
 
         location.put("Address", address);
@@ -211,14 +214,14 @@ public class AddScreenFragment extends Fragment {
         location.put("is_HiddenGem", false);
         location.put("ratings", new ArrayList<String>());
 
-        try {
+        /*try {
             List<Address> addressList = geocoder.getFromLocationName(address,1);
             Address address1 = addressList.get(0);
             location.put("Coordinates",new GeoPoint(address1.getLatitude(),address1.getLongitude()));
-        } catch (IOException e) {
+        } catch (IOException e) {*/
             location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
-            e.printStackTrace();
-        }
+            //e.printStackTrace();
+      //  }
 
 
         reference.set(location).addOnSuccessListener(new OnSuccessListener<Void>() {
