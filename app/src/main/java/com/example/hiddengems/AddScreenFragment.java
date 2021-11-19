@@ -171,7 +171,8 @@ public class AddScreenFragment extends Fragment {
                 boolean minInput = name.isEmpty()  || address.isEmpty() || category.isEmpty();
 
                 if(allInput){
-                    addImage();}
+                    //addImage();
+                }
                 else if(minInput) {
                     missingInput(getActivity());
                 }
@@ -183,7 +184,7 @@ public class AddScreenFragment extends Fragment {
     }
 
     public void addImage() {
-        UploadTask uploadTask = storageReference.child("images/"+UUID.randomUUID().toString()).putBytes(data);
+        //UploadTask uploadTask = storageReference.child("images/"+UUID.randomUUID().toString()).putBytes(data);
 
     }
 
@@ -194,6 +195,8 @@ public class AddScreenFragment extends Fragment {
         // Generate id first
         id = db.collection("locations").document().getId();
         DocumentReference reference = db.collection("locations").document(id);
+
+
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -207,7 +210,7 @@ public class AddScreenFragment extends Fragment {
         location.put("Name", name);
         location.put("Season", "");
         location.put("Tags", tags);
-        location.put("Time", time);
+        location.put("time", time);
         location.put("Verified", false);
         location.put("Views", 0);
         location.put("is_Event", false);
