@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hiddengems.R;
-import com.example.hiddengems.dataModels.Locations;
+import com.example.hiddengems.dataModels.Locations.*;
 import com.example.hiddengems.databinding.FragmentHoursChangeBinding;
 import com.example.hiddengems.databinding.FragmentLocationRemovalBinding;
 import com.example.hiddengems.databinding.FragmentMyGemsBinding;
@@ -41,7 +41,8 @@ public class MyGemsFragment extends Fragment {
     FragmentMyGemsBinding binding;
     String text;
     FirebaseAuth mAuth;
-    ArrayList<Locations.Location> allLocations = new ArrayList<>();
+    ArrayList<Location> allLocations = new ArrayList<>();
+    ArrayList<Location> finalLocations = new ArrayList<>();
 
     public MyGemsFragment() {
         // Required empty public constructor
@@ -83,10 +84,10 @@ public class MyGemsFragment extends Fragment {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         allLocations.clear();
                         for(QueryDocumentSnapshot document : value) {
-                            //mauth.getuser()
 
-                            Locations.Location newPlace = new Locations.Location(document.getString("Name"),document.getString("Address"),document.getString("Category"));
-                            newPlace.setDocID(document.getId());
+
+                            Location newPlace = new Location(document.getId(), document.getString("Creator"));
+
                             Log.d("Check","Adding Location");
                             allLocations.add(newPlace);
 
@@ -98,6 +99,11 @@ public class MyGemsFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         String name = user.getDisplayName();
+        for (int i = 0; i < allLocations.size(); i++) {
+            if (allLocations.get(i).Creator == name) {
+                finalLocations.add(allLocations.get(i));
+            }
+        }
 
 
 
