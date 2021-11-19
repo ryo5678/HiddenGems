@@ -1,5 +1,6 @@
 package com.example.hiddengems.home;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -46,5 +47,25 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Hidden Gems");
+
+        binding.visitPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.showPick();
+            }
+        });
+    }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof goPicks){
+            action = (goPicks) context;
+        }
+    }
+
+    public static goPicks action;
+
+    public interface goPicks{
+        void showPick();
     }
 }

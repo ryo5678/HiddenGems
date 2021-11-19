@@ -34,7 +34,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile,
         RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location,
         EditProfileFragment.profile, LoginFragment.login,
-        BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
+        BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results,
+        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks {
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -224,6 +225,30 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         navView.setVisibility(View.VISIBLE);
         navView.setOnNavigationItemSelectedListener(this);
         navView.setSelectedItemId(R.id.navigation_home);
+    }
+
+    @Override
+    public void gemShow(String id) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
+                .addToBackStack("ShowLocation")
+                .commit();
+    }
+
+    @Override
+    public void pickShow(String id) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
+                .addToBackStack("ShowLocation")
+                .commit();
+    }
+
+    @Override
+    public void showPick() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new OurPicksFragment())
+                .addToBackStack("OurPicks")
+                .commit();
     }
 
 
