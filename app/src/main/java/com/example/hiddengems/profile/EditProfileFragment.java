@@ -70,6 +70,7 @@ public class EditProfileFragment extends Fragment {
         binding.editName.setText(person.getDisplayName());
         binding.editEmail.setText(person.getEmail());
 
+
         binding.saveProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
