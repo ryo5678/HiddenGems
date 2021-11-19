@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -38,13 +40,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class AddScreenFragment extends Fragment {
 
@@ -59,6 +68,9 @@ public class AddScreenFragment extends Fragment {
     List<String> tagData = new ArrayList<>();
     String id;
     ActivityResultLauncher<Intent> activityResultLauncher;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    byte[] data;
 
     public AddScreenFragment() {
         // Required empty public constructor
@@ -86,6 +98,13 @@ public class AddScreenFragment extends Fragment {
                             Bundle bundle = result.getData().getExtras();
                             Bitmap bitmap = (Bitmap) bundle.get("data");
                             binding.imagePlaceholder.setImageBitmap(bitmap);
+                            binding.imagePlaceholder.setDrawingCacheEnabled(true);
+                            binding.imagePlaceholder.buildDrawingCache();
+                            Bitmap placeholder = ((BitmapDrawable) binding.imagePlaceholder.getDrawable()).getBitmap();
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            placeholder.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            data = baos.toByteArray();
+
 
                         }
                     }
@@ -143,17 +162,21 @@ public class AddScreenFragment extends Fragment {
                 boolean allInput = name.isEmpty()  || address.isEmpty() || category.isEmpty() || tagData.isEmpty() || startTime.isEmpty() || endTime.isEmpty();
                 boolean minInput = name.isEmpty()  || address.isEmpty() || category.isEmpty();
 
-                if(minInput) {
+                if(allInput){
+                    addImage();}
+                else if(minInput) {
                     missingInput(getActivity());
                 }
                 else if(!allInput){
                     addPage(name, address, category, tagData, time);
                 }
+
             }
         });
     }
 
     public void addImage() {
+        UploadTask uploadTask = storageReference.child("images/"+UUID.randomUUID().toString()).putBytes(data);
 
     }
 
