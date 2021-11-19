@@ -1,12 +1,16 @@
 package com.example.hiddengems;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +19,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.hiddengems.dataModels.Locations.Location;
 import com.example.hiddengems.databinding.FragmentAddScreenBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,7 +45,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class AddScreenFragment extends Fragment {
 
@@ -49,7 +58,7 @@ public class AddScreenFragment extends Fragment {
     String[] tagArray;
     List<String> tagData = new ArrayList<>();
     String id;
-
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     public AddScreenFragment() {
         // Required empty public constructor
@@ -67,6 +76,20 @@ public class AddScreenFragment extends Fragment {
         if (getArguments() != null) {
             locations = (Location) getArguments().getSerializable("Location");
         }
+
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result.getResultCode() == -1 && result.getData() != null) {
+                            Bundle bundle = result.getData().getExtras();
+                            Bitmap bitmap = (Bitmap) bundle.get("data");
+                            binding.imagePlaceholder.setImageBitmap(bitmap);
+
+                        }
+                    }
+                });
     }
 
     @Override
@@ -92,6 +115,20 @@ public class AddScreenFragment extends Fragment {
         endTime = binding.editAddEndTime;
         getTime(endTime);
 
+        FloatingActionButton fab = binding.floatingActionButton;
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, 5);
+                } else {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    activityResultLauncher.launch(intent);
+                }
+            }
+        });
+
+
         binding.addSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +151,10 @@ public class AddScreenFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void addImage() {
+
     }
 
     public void addPage(String name, String address, String category, List<String> tags, String time) {
