@@ -29,6 +29,7 @@ import com.example.hiddengems.databinding.FragmentMyGemsBinding;
 
 import com.example.hiddengems.search.SearchResultsFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
@@ -86,37 +87,52 @@ public class MyGemsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        Log.d("TAG","Before db");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("locations")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        Log.d("TAG","Before clear");
                         allLocations.clear();
                         for (QueryDocumentSnapshot document : value) {
 
 
                             Location newPlace = new Location(document.getId(), document.getString("Creator"), document.getString("Name"), document.getString("Category"), (ArrayList<String>) document.get("Tags"));
 
-                            Log.d("Check", "Adding Location");
+                            Log.d("TAG", "Adding Location");
                             allLocations.add(newPlace);
 
 
                         }
+                        mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        String name = user.getUid();
+                        Log.d("TAG",name);
+                        Log.d("TAG",allLocations.toString());
+                        Log.d("TAG",allLocations.get(0).Creator);
+                        for (int i = 0; i < allLocations.size(); i++) {
+
+                            if (allLocations.get(i).Creator.equals(name)) {
+                                finalLocations.add(allLocations.get(i));
+                                Log.d("TAG",allLocations.get(0).Creator);
+
+                            }
+                        }
+
+                        getActivity().setTitle("My Gems");
+                        Log.d("TAG",finalLocations.toString());
+                        recyclerView = binding.myGemsRecycler;
+                        recyclerView.setHasFixedSize(true);
+                        layoutManager = new LinearLayoutManager(getActivity());
+                        recyclerView.setLayoutManager(layoutManager);
+                        adapter = new GemsRecyclerViewAdapter(finalLocations);
+                        recyclerView.setAdapter(adapter);
                     }
+
                 });
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        String name = user.getDisplayName();
-        for (int i = 0; i < allLocations.size(); i++) {
-            if (allLocations.get(i).Creator == name) {
-                finalLocations.add(allLocations.get(i));
-            }
-        }
 
-
-        getActivity().setTitle("My Gems");
 
     }
 
@@ -124,15 +140,6 @@ public class MyGemsFragment extends Fragment {
 
         FragmentManager fm = getActivity()
                 .getSupportFragmentManager();
-
-        recyclerView = binding.myGemsRecycler;
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new GemsRecyclerViewAdapter(finalLocations);
-        recyclerView.setAdapter(adapter);
-//binding
-
         fm.popBackStack("gems", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 /*}
             }
