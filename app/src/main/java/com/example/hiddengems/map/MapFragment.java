@@ -207,7 +207,9 @@ public class MapFragment extends Fragment {
                   markers.add(newMarker);
                }
 
-               ourMaps.moveCamera(CameraUpdateFactory.newLatLng(UNCC));
+               //ourMaps.moveCamera(CameraUpdateFactory.newLatLng(UNCC));
+               LatLng NoDa = new LatLng(35.2456, -80.8018);
+               ourMaps.animateCamera(CameraUpdateFactory.newLatLngZoom(NoDa, 13));
 
                ourMaps.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                    @Override

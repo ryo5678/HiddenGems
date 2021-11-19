@@ -67,6 +67,7 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         person = mAuth.getCurrentUser();
 
+
         binding.profileName.setText(person.getDisplayName());
         binding.profileEmail.setText(person.getEmail());
         /*
