@@ -98,7 +98,9 @@ public class MyGemsFragment extends Fragment {
                         for (QueryDocumentSnapshot document : value) {
 
 
-                            Location newPlace = new Location(document.getId(), document.getString("Creator"), document.getString("Name"), document.getString("Category"), (ArrayList<String>) document.get("Tags"));
+                            Location newPlace = new Location(document.getId(), document.getString("Creator"),
+                                    document.getString("Name"), document.getString("Category"),
+                                    (ArrayList<String>) document.get("Tags"));
 
                             Log.d("TAG", "Adding Location");
                             allLocations.add(newPlace);
@@ -197,7 +199,7 @@ public class MyGemsFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        //action.showLocation(Locations.get(position).docID);
+                        action.gemShow(Locations.get(position).docID);
                     }
                 });
 
@@ -210,6 +212,19 @@ public class MyGemsFragment extends Fragment {
 
     public void missingInput(Context context) {
         Toast.makeText(context, getString(R.string.missing), Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof locationGem){
+            action = (locationGem) context;
+        }
+    }
+
+    public static locationGem action;
+
+    public interface locationGem{
+        void gemShow(String id);
     }
 
 

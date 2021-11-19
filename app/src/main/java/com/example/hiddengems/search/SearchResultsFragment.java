@@ -24,9 +24,19 @@ import com.example.hiddengems.dataModels.Locations;
 import com.example.hiddengems.dataModels.Locations.*;
 import com.example.hiddengems.dataModels.Person;
 import com.example.hiddengems.databinding.FragmentSearchResultsBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,6 +94,7 @@ public class SearchResultsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         getActivity().setTitle("Search Results");
         recyclerView = binding.recyclerView;
         recyclerView.setHasFixedSize(true);
@@ -96,6 +107,9 @@ public class SearchResultsFragment extends Fragment {
 
     public static class LocationRecyclerViewAdapter extends RecyclerView.Adapter<LocationRecyclerViewAdapter.LocationViewHolder> {
         ArrayList<Location> Locations;
+        int count = 0;
+        List<Integer> ratings = new ArrayList<>();
+        int total = 0;
         public LocationRecyclerViewAdapter(ArrayList<Location> data) {
             this.Locations = data;
         }
@@ -110,10 +124,50 @@ public class SearchResultsFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull LocationViewHolder holder, @SuppressLint("RecyclerView") int position) {
             Location location = Locations.get(position);
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("locations").document(location.docID).collection("reviews")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            for (QueryDocumentSnapshot document : value) {
+                                count +=1;
+                            }
+                        }
+                    });
+            DocumentReference docRef = db.collection("locations").document(location.docID);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+
+                            ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
+                            for (int i = 0; i < tempList.size(); i++){
+                                if (i%2 == 1) {
+                                    ratings.add(Integer.parseInt(tempList.get(i)));
+                                }
+
+                            }
+                            for (int j = 0; j< ratings.size(); j++) {
+                                total += ratings.get(j);
+                            }
+
+                            total /= ratings.size();
+                            location.setCurrentRating(total);
+                            location.setNumberofRatings(ratings.size());
+                        } else {
+                        }
+                    } else {
+                    }
+                }
+            });
+
             holder.position = position;
             holder.nameView.setText(location.getName());
             holder.rateView.setText("Current rating: " + location.getCurrentRating());
-            holder.reView.setText("Total ratings: " + location.getNumberofRatings());
+            holder.reView.setText("Total reviews: " + count);
             // Not working yet for images, holder.preView.set
 
 

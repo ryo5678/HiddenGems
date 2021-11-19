@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.hiddengems.AddScreenFragment;
@@ -124,7 +125,7 @@ public class LocationFragment extends Fragment {
 
                         location = new Location(document.getString("Name"),document.getString("Address")
                                 ,document.getString("Category"),document.getString("Description"),
-                                document.getString("time"),rating,ratings.size(),
+                                document.getString("time"),total,ratings.size(),
                                 (ArrayList<String>)document.get("Tags"));
 
                         getActivity().setTitle(location.getName());
@@ -139,6 +140,30 @@ public class LocationFragment extends Fragment {
                     }
                 } else {
                 }
+            }
+        });
+
+        binding.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                int rating = (int) ratingBar.getRating();
+
+                total *= ratings.size();
+                total += rating;
+                ratings.add(rating);
+                total /= ratings.size();
+
+                location.setNumberofRatings(ratings.size());
+                location.setCurrentRating(total);
+
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                DocumentReference docRef = db.collection("locations").document(id);
+
+                docRef.update("ratings",FieldValue.arrayUnion(user.getUid().toString()));
+                docRef.update("ratings",FieldValue.arrayUnion(String.valueOf(rating)));
+                binding.ratingAverageOutput.setText(String.valueOf(total));
             }
         });
         db.collection("locations").document(id).collection("reviews")

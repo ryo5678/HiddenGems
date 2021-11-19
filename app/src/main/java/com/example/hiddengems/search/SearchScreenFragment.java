@@ -31,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class SearchScreenFragment extends Fragment {
@@ -95,10 +96,13 @@ public class SearchScreenFragment extends Fragment {
                                 }
                              */
 
-                            Location newPlace = new Location(document.getString("Name"),document.getString("Address"),document.getString("Category"));
+                            Location newPlace = new Location(document.getString("Name"),
+                                    document.getString("Address"),document.getString("Category"));
                             newPlace.setTags((ArrayList<String>) document.get("Tags"));
                             newPlace.setSeason(document.getString("Season"));
                             newPlace.setDocID(document.getId());
+
+
                             Log.d("Check","Adding Location");
                             allLocations.add(newPlace);
                         }
