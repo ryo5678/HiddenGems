@@ -119,7 +119,7 @@ public class MyGemsFragment extends Fragment {
                 if (text.isEmpty()) {
                     missingInput(getActivity());
                 } else {
-                    submitTags(text);
+                    submitGems(text);
                 }
             }
         });
@@ -128,7 +128,7 @@ public class MyGemsFragment extends Fragment {
 
     }
 
-    public void submitTags(String text) {
+    public void submitGems(String text) {
 
         FragmentManager fm = getActivity()
                 .getSupportFragmentManager();
