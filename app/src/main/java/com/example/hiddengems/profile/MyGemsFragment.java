@@ -108,7 +108,7 @@ public class MyGemsFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        String name = user.getDisplayName();
+        String name = user.getUid();
         for (int i = 0; i < allLocations.size(); i++) {
             if (allLocations.get(i).Creator == name) {
                 finalLocations.add(allLocations.get(i));
@@ -118,26 +118,29 @@ public class MyGemsFragment extends Fragment {
 
         getActivity().setTitle("My Gems");
 
-    }
-
-    public void submitGems(String text) {
-
-        FragmentManager fm = getActivity()
-                .getSupportFragmentManager();
-
         recyclerView = binding.myGemsRecycler;
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new GemsRecyclerViewAdapter(finalLocations);
         recyclerView.setAdapter(adapter);
+
+
+
+    }
+        public void submitGems (String text){
+
+            FragmentManager fm = getActivity()
+                    .getSupportFragmentManager();
+
 //binding
 
-        fm.popBackStack("gems", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fm.popBackStack("gems", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 /*}
             }
         });*/
-    }
+        }
+
 
     public static class GemsRecyclerViewAdapter extends RecyclerView.Adapter<GemsRecyclerViewAdapter.GemsViewHolder> {
         ArrayList<Location> Locations;
