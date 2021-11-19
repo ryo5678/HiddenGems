@@ -54,7 +54,7 @@ public class Locations {
         public int currentRating;
         public int numberofRatings;
         public ArrayList<String> Reviews;
-        public Person.Users Creator;
+        public String Creator;
         public Boolean Verified;
         public Boolean isHiddenGem;
         public int Views;
@@ -103,6 +103,11 @@ public class Locations {
             this.numberofRatings = numberofRatings;
             this.Tags = Tags;
 
+        }
+
+        public Location(String docID, String Creator) {
+            this.docID = docID;
+            this.Creator = Creator;
         }
 
         @Override
@@ -198,11 +203,11 @@ public class Locations {
             this.numberofRatings = numberofRatings;
         }
 
-        public Person.Users getCreator() {
+        public String getCreator() {
             return Creator;
         }
 
-        public void setCreator(Person.Users creator) {
+        public void setCreator(String creator) {
             Creator = creator;
         }
 
