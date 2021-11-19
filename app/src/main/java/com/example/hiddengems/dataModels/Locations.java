@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class Locations {
@@ -105,9 +106,12 @@ public class Locations {
 
         }
 
-        public Location(String docID, String Creator) {
+        public Location(String docID, String Creator, String Name, String Category, ArrayList<String> Tags) {
             this.docID = docID;
             this.Creator = Creator;
+            this.Name = Name;
+            this.Category = Category;
+            this.Tags = Tags;
         }
 
         @Override

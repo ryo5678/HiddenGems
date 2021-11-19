@@ -91,7 +91,7 @@ public class MyGemsFragment extends Fragment {
                         for(QueryDocumentSnapshot document : value) {
 
 
-                            Location newPlace = new Location(document.getId(), document.getString("Creator"));
+                            Location newPlace = new Location(document.getId(), document.getString("Creator"), document.getString("Name"), document.getString("Category"), document.get(ArrayList<String> Tags));
 
                             Log.d("Check","Adding Location");
                             allLocations.add(newPlace);
