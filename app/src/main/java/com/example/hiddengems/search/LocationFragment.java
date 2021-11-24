@@ -111,17 +111,19 @@ public class LocationFragment extends Fragment {
                     if (document.exists()) {
 
                         ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
-                        for (int i = 0; i < tempList.size(); i++){
-                            if (i%2 == 1) {
-                                ratings.add(Integer.parseInt(tempList.get(i)));
+                        if (tempList != null && tempList.size() != 0) {
+                            for (int i = 0; i < tempList.size(); i++) {
+                                if (i % 2 == 1) {
+                                    ratings.add(Integer.parseInt(tempList.get(i)));
+                                }
+
+                            }
+                            for (int j = 0; j < ratings.size(); j++) {
+                                total += ratings.get(j);
                             }
 
+                            total /= ratings.size();
                         }
-                        for (int j = 0; j< ratings.size(); j++) {
-                            total += ratings.get(j);
-                        }
-
-                        total /= ratings.size();
 
                         location = new Location(document.getString("Name"),document.getString("Address")
                                 ,document.getString("Category"),document.getString("Description"),

@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class menuItem implements Serializable {
     String dishName;
-    int price;
+    float price;
     int calories;
     String[] Allergies;
 
-    public menuItem(String dish, int Price, int Calories, String[] allergies) {
+    public menuItem(String dish, float Price, int Calories, String[] allergies) {
         this.dishName = dish;
         this.price = Price;
         this.calories = Calories;
