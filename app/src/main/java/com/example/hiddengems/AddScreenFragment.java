@@ -2,6 +2,7 @@ package com.example.hiddengems;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,9 +14,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -141,8 +145,13 @@ public class AddScreenFragment extends Fragment {
                 if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, 5);
                 } else {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    activityResultLauncher.launch(intent);
+//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    activityResultLauncher.launch(intent);
+                    Dialog dialog = new Dialog(getContext());
+                    dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE); // To remove extra space
+                    dialog.setContentView(R.layout.layout_add_image); // to set custom layout
+                    dialog.show();
+
                 }
             }
         });
@@ -177,7 +186,6 @@ public class AddScreenFragment extends Fragment {
 
     public void addImage() {
         UploadTask uploadTask = storageReference.child("images/"+UUID.randomUUID().toString()).putBytes(data);
-
     }
 
     public void addPage(String name, String address, String category, List<String> tags, String time) {
@@ -198,7 +206,7 @@ public class AddScreenFragment extends Fragment {
         location.put("Name", name);
         location.put("Season", "");
         location.put("Tags", tags);
-        location.put("Time", time);
+        location.put("time", time);
         location.put("Verified", false);
         location.put("Views", 0);
         location.put("is_Event", false);
