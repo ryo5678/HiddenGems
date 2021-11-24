@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout8"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".profile.MyGemsFragment">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="448dp"
-        android:text="Tags: Aesthetic, Bakery"
-        android:translationX="20dp"
-        android:translationY="80dp" />
-
-    <TextView
-        android:id="@+id/myGems"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/service"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:translationX="20dp"
-        android:translationY="30dp"
+    <Button
+        android:id="@+id/editButtonGems2"
+        android:layout_width="140dp"
+        android:layout_height="59dp"
+        android:text="@string/editButtonGem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintHorizontal_bias="0.939"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.616"
-        tools:text="Amelie's French Bakery" />
+        app:layout_constraintVertical_bias="0.019" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myGemsRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editButtonGems2" />
 
     <TextView
-        android:id="@+id/gemss"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Category: Restaurant"
-        android:translationX="20dp"
-        android:translationY="60dp" />
-
-</FrameLayout>
+        android:id="@+id/textView8"
+        android:layout_width="129dp"
+        android:layout_height="52dp"
+        android:text="@string/textView15"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+</androidx.constraintlayout.widget.ConstraintLayout>

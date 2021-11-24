@@ -31,7 +31,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.profile, RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location, EditProfileFragment.profile, LoginFragment.login, BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.profile,
+        RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location,
+        EditProfileFragment.profile, LoginFragment.login,
+        BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results,
+        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks {
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -97,6 +101,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
+    public void gems() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, MyGemsFragment.newInstance())
+                .addToBackStack("gems")
+                .commit();
+    }
+
+    @Override
     public void operatingHoursRequest() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, HoursChangeFragment.newInstance())
@@ -127,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("editProfile")
                 .commit();
     }
+
+
 
     @Override
     public void likedLocationsRequest() {
@@ -212,6 +226,32 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         navView.setOnNavigationItemSelectedListener(this);
         navView.setSelectedItemId(R.id.navigation_home);
     }
+
+    @Override
+    public void gemShow(String id) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
+                .addToBackStack("ShowLocation")
+                .commit();
+    }
+
+    @Override
+    public void pickShow(String id) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
+                .addToBackStack("ShowLocation")
+                .commit();
+    }
+
+    @Override
+    public void showPick() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new OurPicksFragment())
+                .addToBackStack("OurPicks")
+                .commit();
+    }
+
+
 
     /*
     @Override

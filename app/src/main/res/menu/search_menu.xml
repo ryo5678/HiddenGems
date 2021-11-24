@@ -57,6 +57,8 @@
                         android:title="Waterfall"/>
                     <item android:id="@+id/Overlook"
                         android:title="Overlook"/>
+                    <item android:id="@+id/Music"
+                        android:title="Music"/>
                     <item android:id="@+id/Thai"
                         android:title="Thai"/>
                     <item android:id="@+id/Dancing"
@@ -102,6 +104,9 @@
                 </menu>
 
             </item>
+
+            <item android:id="@+id/Reset"
+                android:title="Reset"/>
 
         </menu>
 

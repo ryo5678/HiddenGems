@@ -2,7 +2,6 @@ package com.example.hiddengems;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,16 +9,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -48,6 +48,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.net.URI;
@@ -66,7 +67,7 @@ public class AddScreenFragment extends Fragment {
     TextView spinner;
     EditText startTime, endTime;
     Location locations;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser user;
     ArrayList<Integer> tagSelect = new ArrayList<>();
     String[] tagArray;
     List<String> tagData = new ArrayList<>();
@@ -75,6 +76,8 @@ public class AddScreenFragment extends Fragment {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReference();
     byte[] data;
+    Geocoder geocoder;
+    FirebaseAuth mAuth;
 
     public AddScreenFragment() {
         // Required empty public constructor
@@ -92,6 +95,7 @@ public class AddScreenFragment extends Fragment {
         if (getArguments() != null) {
             locations = (Location) getArguments().getSerializable("Location");
         }
+        geocoder = new Geocoder(getActivity());
 
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -145,13 +149,8 @@ public class AddScreenFragment extends Fragment {
                 if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, 5);
                 } else {
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    activityResultLauncher.launch(intent);
-                    Dialog dialog = new Dialog(getContext());
-                    dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE); // To remove extra space
-                    dialog.setContentView(R.layout.layout_add_image); // to set custom layout
-                    dialog.show();
-
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    activityResultLauncher.launch(intent);
                 }
             }
         });
@@ -172,20 +171,21 @@ public class AddScreenFragment extends Fragment {
                 boolean minInput = name.isEmpty()  || address.isEmpty() || category.isEmpty();
 
                 if(allInput){
-                    addImage();}
+                    //addImage();
+                }
                 else if(minInput) {
                     missingInput(getActivity());
                 }
                 else if(!allInput){
                     addPage(name, address, category, tagData, time);
                 }
-
             }
         });
     }
 
     public void addImage() {
-        UploadTask uploadTask = storageReference.child("images/"+UUID.randomUUID().toString()).putBytes(data);
+        //UploadTask uploadTask = storageReference.child("images/"+UUID.randomUUID().toString()).putBytes(data);
+
     }
 
     public void addPage(String name, String address, String category, List<String> tags, String time) {
@@ -196,6 +196,10 @@ public class AddScreenFragment extends Fragment {
         id = db.collection("locations").document().getId();
         DocumentReference reference = db.collection("locations").document(id);
 
+
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
         String creator = user.getUid();
 
         location.put("Address", address);
@@ -212,7 +216,16 @@ public class AddScreenFragment extends Fragment {
         location.put("is_Event", false);
         location.put("is_HiddenGem", false);
         location.put("ratings", new ArrayList<String>());
-        location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
+
+        /*try {
+            List<Address> addressList = geocoder.getFromLocationName(address,1);
+            Address address1 = addressList.get(0);
+            location.put("Coordinates",new GeoPoint(address1.getLatitude(),address1.getLongitude()));
+        } catch (IOException e) {*/
+            location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
+            //e.printStackTrace();
+      //  }
+
 
         reference.set(location).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

@@ -31,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class SearchScreenFragment extends Fragment {
@@ -42,6 +43,8 @@ public class SearchScreenFragment extends Fragment {
     //ArrayList<Location> allLocations = Locations.getLocations("Locations");
     ArrayList<Location> allLocations = new ArrayList<>();
     ArrayList<Location> foundLocations = new ArrayList<Location>();
+
+
 
     public SearchScreenFragment() {
         // Required empty public constructor
@@ -93,10 +96,13 @@ public class SearchScreenFragment extends Fragment {
                                 }
                              */
 
-                            Location newPlace = new Location(document.getString("Name"),document.getString("Address"),document.getString("Category"));
+                            Location newPlace = new Location(document.getString("Name"),
+                                    document.getString("Address"),document.getString("Category"));
                             newPlace.setTags((ArrayList<String>) document.get("Tags"));
                             newPlace.setSeason(document.getString("Season"));
                             newPlace.setDocID(document.getId());
+
+
                             Log.d("Check","Adding Location");
                             allLocations.add(newPlace);
                         }
@@ -112,7 +118,7 @@ public class SearchScreenFragment extends Fragment {
                     missingInput(getActivity());
                 } else {
                     for(int x=0;x < allLocations.size(); x++) {
-                       // Log.d(TAG, "in loop: " + x);
+                        Log.d(TAG, "in loop: " + x);
                         if(allLocations.get(x).getName().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
                             if (SelectedFilter != null &&   (allLocations.get(x).getCategory().equals(SelectedFilter) ||
                                                             checkTags(SelectedFilter, allLocations.get(x)) ||
@@ -121,7 +127,7 @@ public class SearchScreenFragment extends Fragment {
                                 foundLocations.add(allLocations.get(x));
                             } else if (SelectedFilter == null){
                                 foundLocations.add(allLocations.get(x));
-                              //  Log.d(TAG, String.valueOf(foundLocations.size()));
+                                Log.d(TAG, String.valueOf(foundLocations.size()));
                             }
                         }
                     }
@@ -191,7 +197,11 @@ public class SearchScreenFragment extends Fragment {
             return false;
         }else if (selectedItem.equals("Seasons")) {
             return false;
-        }else  {
+        } else if (selectedItem.equals("Reset")) {
+            SelectedFilter = null;
+            getActivity().setTitle("Search");
+            return false;
+        } else  {
             return true;
         }
 
