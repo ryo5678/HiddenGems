@@ -58,7 +58,7 @@ public class MapFragment extends Fragment {
     String SelectedFilter = null;
     GoogleMap ourMaps;
     ArrayList<Marker> markers = new ArrayList<>();
-    //List<Long> ratings = new ArrayList<>();
+    List<Integer> ratings = new ArrayList<>();
 
 
     @Override
@@ -174,23 +174,20 @@ public class MapFragment extends Fragment {
                                 GeoPoint geoPoint = document.getGeoPoint("Coordinates");
                                 LatLng latLng = new LatLng((double) geoPoint.getLatitude(), (double) geoPoint.getLongitude());
                                 newPlace.setCoordinates(latLng);
-                               // ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
-                                //for (int i = 0; i < tempList.size(); i++){
-                                  //  if (i == 0) {
+                                ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
+                                for (int i = 1; i < tempList.size(); i+=2){
 
-                                   // } else if (i%2 == 1){
-                                     //   ratings.add(Long.parseLong(tempList.get(i)));
-                                   //     Log.d("Test","adding to ratings");
-                                 //   }
+                                        ratings.add(Integer.parseInt(tempList.get(i)));
+                                        Log.d("Test",newPlace.getName());
 
-                               // }
-                               // int num = 0;
-                               // for(int x=0; x<ratings.size();x++) {
-                                 //   num += ratings.get(x);
-                               // }
-                                //num /= (ratings.size()/2);
-                                Random rand = new Random();
-                                newPlace.setCurrentRating(rand.nextInt(6));
+                                }
+                                int num = 0;
+                                for(int x=0; x<ratings.size();x++) {
+                                    num += ratings.get(x);
+                                }
+                                num /= ratings.size();
+                                newPlace.setCurrentRating(num);
+                                ratings.clear();
                                 Log.d("Maps", "Adding Location");
                                 Log.d("Maps", ("Coordinates: " + newPlace.getCoordinates().toString()));
                                 allLocations.add(newPlace);
@@ -211,9 +208,9 @@ public class MapFragment extends Fragment {
            public void onMapReady(@NonNull GoogleMap maps) {
                ourMaps = maps;
                LatLng UNCC = new LatLng(35.303555, -80.73238);
-               ourMaps.addMarker(new MarkerOptions()
-                    .position(UNCC)
-                    .title("UNCC Marker"));
+              // ourMaps.addMarker(new MarkerOptions()
+                //    .position(UNCC)
+                 //   .title("UNCC Marker"));
                Log.d("Maps", String.valueOf(allLocations.size()));
                for (int x=0; x<allLocations.size(); x++) {
                    Log.d("Maps","Adding Location to Map");
