@@ -18,6 +18,14 @@ import android.widget.Toast;
 import com.example.hiddengems.databinding.FragmentCustomerServiceBinding;
 
 import com.example.hiddengems.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +36,11 @@ public class ContactUsFragment extends Fragment {
 
     FragmentCustomerServiceBinding binding;
     String text;
+    String id;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    FirebaseAuth mAuth;
+    FirebaseUser user;
 
     public ContactUsFragment() {
         // Required empty public constructor
@@ -64,14 +77,34 @@ public class ContactUsFragment extends Fragment {
                 if (text.isEmpty()) {
                     missingInput(getActivity());
                 } else {
-                    submitTags(text);
+                    submitFeedback(text);
                 }
             }
         });
 
     }
 
-    public void submitTags(String text){
+    public void submitFeedback(String text){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        HashMap<String,Object> feedback = new HashMap<>();
+
+        // Generate id first
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        String creator = user.getUid();
+
+        feedback.put("creator", creator);
+        feedback.put("contact", text);
+
+        db.collection("contactUs")
+                .add(feedback);
+
+        FragmentManager fm = getActivity()
+                .getSupportFragmentManager();
+        fm.popBackStack("contactUs", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
         //String token = mUserToken.token;
         /*FormBody formBody = new FormBody.Builder()
                 .add("post_text", text)
@@ -95,9 +128,6 @@ public class ContactUsFragment extends Fragment {
                     String body = responseBody.string();
                     Log.d(TAG,body);
                     */
-        FragmentManager fm = getActivity()
-                .getSupportFragmentManager();
-        fm.popBackStack("contactUs", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 /*}
             }
         });*/
@@ -105,7 +135,5 @@ public class ContactUsFragment extends Fragment {
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
     }
-    
-
     
 }

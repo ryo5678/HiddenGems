@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location,
         EditProfileFragment.profile, LoginFragment.login,
         BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results,
-        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks {
+        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks{
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
