@@ -1,10 +1,12 @@
 package com.example.hiddengems.map;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -24,6 +26,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -163,6 +167,7 @@ public class MapFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("locations")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         allLocations.clear();
@@ -187,6 +192,10 @@ public class MapFragment extends Fragment {
                                 }
                                 num /= ratings.size();
                                 newPlace.setCurrentRating(num);
+                                newPlace.setChain((Boolean) document.get("is_Chain"));
+                                newPlace.setVerified((Boolean) document.get("Verified"));
+                                newPlace.setViews(Math.toIntExact((Long) document.get("Views")));
+                                newPlace.setHiddenGem(num, newPlace.getViews(), newPlace.getVerified(), newPlace.isChain() );
                                 ratings.clear();
                                 Log.d("Maps", "Adding Location");
                                 Log.d("Maps", ("Coordinates: " + newPlace.getCoordinates().toString()));
@@ -220,6 +229,10 @@ public class MapFragment extends Fragment {
                                      .snippet("Rating: " + allLocations.get(x).getCurrentRating() + " / 5")
                                      .alpha(1));
                   newMarker.setTag(0);
+                  if (allLocations.get(x).getHiddenGem()){
+                      BitmapDescriptor bd = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET);
+                      newMarker.setIcon(bd);
+                  }
                   markers.add(newMarker);
                }
 
