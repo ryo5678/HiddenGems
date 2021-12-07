@@ -132,6 +132,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
 
+   @Override
+    public void requestVerification() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, RequestVerificationFragment.newInstance())
+                .addToBackStack("requestVerification")
+                .commit();
+    }
+
     @Override
     public void editProfile() {
         getSupportFragmentManager().beginTransaction()
@@ -201,15 +209,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("ShowLocation")
                 .commit();
     }
-    /*
-    @Override
-    public void search() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, SearchScreenFragment.newInstance())
-                .addToBackStack("Search")
-                .commit();
-    }
-    */
 
     @Override
     public void addLocation(String id) {

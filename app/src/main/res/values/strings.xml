@@ -85,6 +85,13 @@
     </string>
     <string name="locHint">Insert location name</string>
 
+    <!-- Verified Button -->
+    <string name="verified">Request Verification</string>
+    <string name="verificDescription">
+        Would you like to be a verified and let others know that you are a legitimate business? \n\n
+        List the name of your business and the reason you would like to be verified along with a phone number to get in contact with you.
+    </string>
+
     <!-- Report Page -->
     <string name="reportTitle">Report Page</string>
     <string-array name="reportReason">

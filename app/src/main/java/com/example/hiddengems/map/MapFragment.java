@@ -190,7 +190,7 @@ public class MapFragment extends Fragment {
                                // }
                                 //num /= (ratings.size()/2);
                                 Random rand = new Random();
-                                newPlace.setCurrentRating(rand.nextInt(6));
+                                newPlace.setCurrentRating(0);
                                 Log.d("Maps", "Adding Location");
                                 Log.d("Maps", ("Coordinates: " + newPlace.getCoordinates().toString()));
                                 allLocations.add(newPlace);

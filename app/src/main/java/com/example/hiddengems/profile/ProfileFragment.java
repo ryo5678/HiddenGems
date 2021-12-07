@@ -133,10 +133,10 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) { action.editProfile(); }
         });
 
-        binding.LikedLocations.setOnClickListener(new View.OnClickListener() {
+        binding.verified.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                action.likedLocationsRequest();
+                action.requestVerification();
             }
         });
 
@@ -171,5 +171,6 @@ public class ProfileFragment extends Fragment {
         void likedLocationsRequest();
         void logout();
         void gems();
+        void requestVerification();
     }
 }
