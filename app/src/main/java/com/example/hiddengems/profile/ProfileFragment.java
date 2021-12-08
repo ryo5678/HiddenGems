@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ import com.example.hiddengems.databinding.FragmentProfileBinding;
 
 import com.example.hiddengems.dataModels.Person.*;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,6 +42,7 @@ public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
     FirebaseUser person;
     private FirebaseAuth mAuth;
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
 
     public ProfileFragment() {
@@ -85,6 +89,13 @@ public class ProfileFragment extends Fragment {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             binding.profileImage.setImageBitmap(myBitmap);
         }*/
+
+        storageReference.child("images/profile/" + person.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext()).load(uri).into(binding.profileImage);
+            }
+        });
 
 
         binding.profileLogout.setOnClickListener(new View.OnClickListener() {

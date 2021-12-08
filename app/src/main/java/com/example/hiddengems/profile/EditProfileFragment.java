@@ -1,29 +1,42 @@
 package com.example.hiddengems.profile;
 
-import android.app.Person;
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.hiddengems.R;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
-import com.example.hiddengems.dataModels.Person.*;
+import com.bumptech.glide.Glide;
+import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentEditProfileBinding;
-import com.example.hiddengems.databinding.FragmentProfileBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Transaction;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 
 public class EditProfileFragment extends Fragment {
@@ -31,6 +44,9 @@ public class EditProfileFragment extends Fragment {
     FragmentEditProfileBinding binding;
     FirebaseAuth mAuth;
     FirebaseUser person;
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    byte[] data;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -49,6 +65,25 @@ public class EditProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result.getResultCode() == -1 && result.getData() != null) {
+                            Bundle bundle = result.getData().getExtras();
+                            Bitmap bitmap = (Bitmap) bundle.get("data");
+                            binding.editPic.setImageBitmap(bitmap);
+                            binding.editPic.setDrawingCacheEnabled(true);
+                            binding.editPic.buildDrawingCache();
+                            Bitmap placeholder = ((BitmapDrawable) binding.editPic.getDrawable()).getBitmap();
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            placeholder.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            data = baos.toByteArray();
+                        }
+                    }
+                });
     }
 
     @Override
@@ -70,6 +105,30 @@ public class EditProfileFragment extends Fragment {
         binding.editName.setText(person.getDisplayName());
         binding.editEmail.setText(person.getEmail());
 
+        storageReference.child("images/profile/" + person.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getContext()).load(uri).into(binding.editPic);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        binding.editPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, 5);
+                } else {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    activityResultLauncher.launch(intent);
+                }
+            }
+        });
+
 
         binding.saveProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +145,9 @@ public class EditProfileFragment extends Fragment {
                             .setDisplayName(name)
                             .build();
                     person.updateProfile(profileUpdates);
-
+                    if (data != null) {
+                        UploadTask uploadTask = storageReference.child("images/profile/" + person.getUid().toString()).putBytes(data);
+                    }
 
                     action.profile();
                 }
