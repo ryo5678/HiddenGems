@@ -56,8 +56,9 @@ public class Locations {
         public int numberofRatings;
         public ArrayList<String> Reviews;
         public String Creator;
-        public Boolean Verified;
-        public Boolean isHiddenGem;
+        public boolean Verified;
+        public boolean isHiddenGem;
+        public boolean isChain;
         public int Views;
         public String docID;
         public LatLng Coordinates;
@@ -79,6 +80,7 @@ public class Locations {
             this.Views = 0;
             this.Description = "";
             this.docID = "";
+            this.isChain = false;
         }
 
         public Location(String Name, String Address, String Category) {
@@ -231,8 +233,16 @@ public class Locations {
             return isHiddenGem;
         }
 
-        public void setHiddenGem(Boolean hiddenGem) {
-            isHiddenGem = hiddenGem;
+        public void setHiddenGem(int rating, int numviews, boolean isVerified, boolean chain) {
+            boolean result;
+
+            if (isVerified && (rating >= 4) && !chain && numviews < 300) {
+                result = true;
+            } else {
+                result = false;
+            }
+
+            isHiddenGem = result;
         }
 
         public int getViews() {
@@ -274,6 +284,14 @@ public class Locations {
 
         public void setCoordinates(LatLng coordinates) {
             Coordinates = coordinates;
+        }
+
+        public boolean isChain() {
+            return isChain;
+        }
+
+        public void setChain(boolean chain) {
+            isChain = chain;
         }
 
 

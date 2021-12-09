@@ -105,6 +105,9 @@
 
             </item>
 
+            <item android:id="@+id/HiddenGems"
+                android:title="Hidden Gems"/>
+
             <item android:id="@+id/Reset"
                 android:title="Reset"/>
 

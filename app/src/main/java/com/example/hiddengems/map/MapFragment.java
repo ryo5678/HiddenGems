@@ -1,10 +1,12 @@
 package com.example.hiddengems.map;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -24,6 +26,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -58,7 +62,7 @@ public class MapFragment extends Fragment {
     String SelectedFilter = null;
     GoogleMap ourMaps;
     ArrayList<Marker> markers = new ArrayList<>();
-    //List<Long> ratings = new ArrayList<>();
+    List<Integer> ratings = new ArrayList<>();
 
 
     @Override
@@ -163,6 +167,7 @@ public class MapFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("locations")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         allLocations.clear();
@@ -174,23 +179,26 @@ public class MapFragment extends Fragment {
                                 GeoPoint geoPoint = document.getGeoPoint("Coordinates");
                                 LatLng latLng = new LatLng((double) geoPoint.getLatitude(), (double) geoPoint.getLongitude());
                                 newPlace.setCoordinates(latLng);
-                               // ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
-                                //for (int i = 0; i < tempList.size(); i++){
-                                  //  if (i == 0) {
 
-                                   // } else if (i%2 == 1){
-                                     //   ratings.add(Long.parseLong(tempList.get(i)));
-                                   //     Log.d("Test","adding to ratings");
-                                 //   }
+                                ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
+                                for (int i = 1; i < tempList.size(); i+=2){
 
-                               // }
-                               // int num = 0;
-                               // for(int x=0; x<ratings.size();x++) {
-                                 //   num += ratings.get(x);
-                               // }
-                                //num /= (ratings.size()/2);
-                                Random rand = new Random();
-                                newPlace.setCurrentRating(rand.nextInt(6));
+                                        ratings.add(Integer.parseInt(tempList.get(i)));
+                                        Log.d("Test",newPlace.getName());
+
+                                }
+                                int num = 0;
+                                for(int x=0; x<ratings.size();x++) {
+                                    num += ratings.get(x);
+                                }
+                                num /= ratings.size();
+                                newPlace.setCurrentRating(num);
+                                newPlace.setChain((Boolean) document.get("is_Chain"));
+                                newPlace.setVerified((Boolean) document.get("Verified"));
+                                newPlace.setViews(Math.toIntExact((Long) document.get("Views")));
+                                newPlace.setHiddenGem(num, newPlace.getViews(), newPlace.getVerified(), newPlace.isChain() );
+                                ratings.clear();
+                              
                                 Log.d("Maps", "Adding Location");
                                 Log.d("Maps", ("Coordinates: " + newPlace.getCoordinates().toString()));
                                 allLocations.add(newPlace);
@@ -211,9 +219,9 @@ public class MapFragment extends Fragment {
            public void onMapReady(@NonNull GoogleMap maps) {
                ourMaps = maps;
                LatLng UNCC = new LatLng(35.303555, -80.73238);
-               ourMaps.addMarker(new MarkerOptions()
-                    .position(UNCC)
-                    .title("UNCC Marker"));
+              // ourMaps.addMarker(new MarkerOptions()
+                //    .position(UNCC)
+                 //   .title("UNCC Marker"));
                Log.d("Maps", String.valueOf(allLocations.size()));
                for (int x=0; x<allLocations.size(); x++) {
                    Log.d("Maps","Adding Location to Map");
@@ -223,6 +231,10 @@ public class MapFragment extends Fragment {
                                      .snippet("Rating: " + allLocations.get(x).getCurrentRating() + " / 5")
                                      .alpha(1));
                   newMarker.setTag(0);
+                  if (allLocations.get(x).getHiddenGem()){
+                      BitmapDescriptor bd = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET);
+                      newMarker.setIcon(bd);
+                  }
                   markers.add(newMarker);
                }
 

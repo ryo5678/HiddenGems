@@ -2,10 +2,12 @@ package com.example.hiddengems.search;
 
 import android.content.Context;
 import android.location.Geocoder;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -40,9 +42,9 @@ public class SearchScreenFragment extends Fragment {
     String SelectedFilter = null;
     FragmentSearchScreenBinding binding;
     String text;
-    //ArrayList<Location> allLocations = Locations.getLocations("Locations");
     ArrayList<Location> allLocations = new ArrayList<>();
     ArrayList<Location> foundLocations = new ArrayList<Location>();
+    List<Integer> ratings = new ArrayList<>();
 
 
 
@@ -80,30 +82,33 @@ public class SearchScreenFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("locations")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         allLocations.clear();
                         for(QueryDocumentSnapshot document : value) {
-                            /*
-                            ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
-                            for (int i = 0; i < ratings.size(); i++){
-                                if (i == 0) {
-
-                                }else if (i%2 == 0) {
-
-                                } else {
-                                    ratings.add(Integer.parseInt(tempList.get(i)));
-                                }
-                             */
-
                             Location newPlace = new Location(document.getString("Name"),
                                     document.getString("Address"),document.getString("Category"));
                             newPlace.setTags((ArrayList<String>) document.get("Tags"));
                             newPlace.setSeason(document.getString("Season"));
                             newPlace.setDocID(document.getId());
+                            ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
+                            for (int i = 1; i < tempList.size(); i+=2){
 
+                                ratings.add(Integer.parseInt(tempList.get(i)));
 
-                            Log.d("Check","Adding Location");
+                            }
+                            int num = 0;
+                            for(int x=0; x<ratings.size();x++) {
+                                num += ratings.get(x);
+                            }
+                            num /= ratings.size();
+                            newPlace.setCurrentRating(num);
+                            newPlace.setChain((Boolean) document.get("is_Chain"));
+                            newPlace.setVerified((Boolean) document.get("Verified"));
+                            newPlace.setViews(Math.toIntExact((Long) document.get("Views")));
+                            newPlace.setHiddenGem(num, newPlace.getViews(), newPlace.getVerified(), newPlace.isChain() );
+                            ratings.clear();
                             allLocations.add(newPlace);
                         }
                     }
@@ -123,7 +128,8 @@ public class SearchScreenFragment extends Fragment {
                             if (SelectedFilter != null &&   (allLocations.get(x).getCategory().equals(SelectedFilter) ||
                                                             checkTags(SelectedFilter, allLocations.get(x)) ||
                                                             checkSeason(SelectedFilter,allLocations.get(x)) ||
-                                                            checkRating(SelectedFilter, allLocations.get(x)) )) {
+                                                            checkRating(SelectedFilter, allLocations.get(x)) ||
+                                                            checkIfGem(SelectedFilter, allLocations.get(x)) )) {
                                 foundLocations.add(allLocations.get(x));
                             } else if (SelectedFilter == null){
                                 foundLocations.add(allLocations.get(x));
@@ -168,6 +174,18 @@ public class SearchScreenFragment extends Fragment {
         }
 
         return false;
+    }
+
+    private boolean checkIfGem(String filter, Location location) {
+        Log.d("Gem", filter);
+        Log.d("Gem", location.getHiddenGem().toString());
+        if (location.getHiddenGem() && filter.equals("Hidden Gems")) {
+            Log.d("Gem", "true");
+            return true;
+        } else {
+            Log.d("Gem", "false");
+            return false;
+        }
     }
 
     @Override
