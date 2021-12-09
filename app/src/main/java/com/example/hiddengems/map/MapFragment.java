@@ -179,6 +179,7 @@ public class MapFragment extends Fragment {
                                 GeoPoint geoPoint = document.getGeoPoint("Coordinates");
                                 LatLng latLng = new LatLng((double) geoPoint.getLatitude(), (double) geoPoint.getLongitude());
                                 newPlace.setCoordinates(latLng);
+
                                 ArrayList<String> tempList = (ArrayList<String>) document.get("ratings");
                                 for (int i = 1; i < tempList.size(); i+=2){
 
@@ -197,6 +198,7 @@ public class MapFragment extends Fragment {
                                 newPlace.setViews(Math.toIntExact((Long) document.get("Views")));
                                 newPlace.setHiddenGem(num, newPlace.getViews(), newPlace.getVerified(), newPlace.isChain() );
                                 ratings.clear();
+                              
                                 Log.d("Maps", "Adding Location");
                                 Log.d("Maps", ("Coordinates: " + newPlace.getCoordinates().toString()));
                                 allLocations.add(newPlace);

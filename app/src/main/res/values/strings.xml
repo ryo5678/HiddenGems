@@ -85,6 +85,13 @@
     </string>
     <string name="locHint">Insert location name</string>
 
+    <!-- Verified Button -->
+    <string name="verified">Request Verification</string>
+    <string name="verificDescription">
+        Would you like to be verified and let others know that you are a legitimate business/user? \n\n
+        List the your name and/or the name of your business and the reason you would like to be verified along with a phone number to get in contact with you.
+    </string>
+
     <!-- Report Page -->
     <string name="reportTitle">Report Page</string>
     <string-array name="reportReason">
@@ -94,7 +101,6 @@
         <item>Wrong Information</item>
         <item>Inappropriate Content</item>
     </string-array>
-    <string name="reportDescription">Enter short description</string>
     <string name="reportHint">Enter description here</string>
 
     <!-- Add Page -->
@@ -138,6 +144,9 @@
     <string name="locationAddress">Address:</string>
     <string name="locationReview">Reviews:</string>
     <string name="locationAddReview">Write a review!</string>
+    <string name="report">Report</string>
+    <string name="reportReason">State the reason you would like to report this post in the textbox below. \n\n
+    We appreciate and value your feedback. Thank you. </string>
 
 
 </resources>

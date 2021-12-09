@@ -27,6 +27,7 @@ import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.dataModels.Locations.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location,
         EditProfileFragment.profile, LoginFragment.login,
         BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results,
-        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks {
+        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks, LocationFragment.location{
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -132,6 +133,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
 
+   @Override
+    public void requestVerification() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, RequestVerificationFragment.newInstance())
+                .addToBackStack("requestVerification")
+                .commit();
+    }
+
     @Override
     public void editProfile() {
         getSupportFragmentManager().beginTransaction()
@@ -140,7 +149,13 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
 
-
+    @Override
+    public void report(DocumentReference docRef) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new ReportPageFragment(docRef))
+                .addToBackStack("report")
+                .commit();
+    }
 
     @Override
     public void likedLocationsRequest() {
@@ -201,15 +216,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .addToBackStack("ShowLocation")
                 .commit();
     }
-    /*
-    @Override
-    public void search() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, SearchScreenFragment.newInstance())
-                .addToBackStack("Search")
-                .commit();
-    }
-    */
 
     @Override
     public void addLocation(String id) {

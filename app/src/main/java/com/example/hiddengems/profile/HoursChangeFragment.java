@@ -16,12 +16,26 @@ import android.widget.Toast;
 
 import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentHoursChangeBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
 
 
 public class HoursChangeFragment extends Fragment {
 
     FragmentHoursChangeBinding binding;
-    String text;
+    String placeName;
+    String placeHours;
+    String id;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    FirebaseAuth mAuth;
+    FirebaseUser user;
 
     public HoursChangeFragment() {
         // Required empty public constructor
@@ -53,17 +67,32 @@ public class HoursChangeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                text = binding.OperatingHoursSubmit.getText().toString();
-                if (text.isEmpty()) {
+                placeName = binding.enterLocName.getText().toString();
+                placeHours = binding.enterLocName2.getText().toString();
+                if (placeName.isEmpty() || placeHours.isEmpty()) {
                     missingInput(getActivity());
                 } else {
-                    submitHours(text);
+                    submitHours(placeName, placeHours);
                 }
             }
         });
     }
 
-    public void submitHours(String text){
+    public void submitHours(String placeName, String placeHours){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        HashMap<String,Object> hourChange = new HashMap<>();
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        hourChange.put("place", placeName);
+        hourChange.put("hours", placeHours);
+
+        db.collection("opHours")
+                .add(hourChange);
+
+
         //String token = mUserToken.token;
         /*FormBody formBody = new FormBody.Builder()
                 .add("post_text", text)
@@ -97,4 +126,6 @@ public class HoursChangeFragment extends Fragment {
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
     }
+
+
 }

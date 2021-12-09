@@ -29,6 +29,7 @@ import com.example.hiddengems.R;
 
 import com.example.hiddengems.dataModels.Locations.*;
 import com.example.hiddengems.databinding.FragmentLocationBinding;
+import com.example.hiddengems.profile.ProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,6 +69,7 @@ public class LocationFragment extends Fragment {
     String reviewID;
     FirebaseUser user;
     int total = 0;
+    int allRatings = 0;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -156,13 +158,17 @@ public class LocationFragment extends Fragment {
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 int rating = (int) ratingBar.getRating();
 
-                total *= ratings.size();
+                //total *= ratings.size();
                 total += rating;
                 ratings.add(rating);
+                for (int i=0; i < ratings.size(); i++) {
+                    allRatings += ratings.get(i);
+                }
+                allRatings /= ratings.size();
                 total /= ratings.size();
 
                 location.setNumberofRatings(ratings.size());
-                location.setCurrentRating(total);
+                location.setCurrentRating(allRatings);
 
                 mAuth = FirebaseAuth.getInstance();
                 FirebaseUser user = mAuth.getCurrentUser();
@@ -171,7 +177,10 @@ public class LocationFragment extends Fragment {
 
                 docRef.update("ratings",FieldValue.arrayUnion(user.getUid()));
                 docRef.update("ratings",FieldValue.arrayUnion(String.valueOf(rating)));
-                binding.ratingAverageOutput.setText(String.valueOf(total));
+                binding.ratingAverageOutput.setText(String.valueOf(allRatings));
+                binding.ratingBar.setClickable(false);
+                binding.ratingBar.setFocusable(false);
+                binding.ratingBar.setIsIndicator(true);
             }
         });
         db.collection("locations").document(id).collection("reviews")
@@ -239,6 +248,14 @@ public class LocationFragment extends Fragment {
                 });
 
                 builder.show();
+            }
+        });
+
+        binding.reportButton.setOnClickListener(new View.OnClickListener() {
+            DocumentReference docRef = db.collection("locations").document(id);
+            @Override
+            public void onClick(View view) {
+                action.report(docRef);
             }
         });
 
@@ -321,6 +338,20 @@ public class LocationFragment extends Fragment {
                 });
             }
         }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof location){
+            action = (location) context;
+        }
+    }
+
+    public static location action;
+
+    public interface location{
+        void report(DocumentReference docRef);
     }
 
     public class Review {
