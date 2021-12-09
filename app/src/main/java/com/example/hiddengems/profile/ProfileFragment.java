@@ -15,16 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
+//import com.bumptech.glide.Glide;
+//import com.bumptech.glide.Registry;
+//import com.bumptech.glide.annotation.GlideModule;
+//import com.bumptech.glide.module.AppGlideModule;
 import com.example.hiddengems.Camera_Activity;
 import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentProfileBinding;
 
 import com.example.hiddengems.dataModels.Person.*;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
+//import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -133,10 +133,10 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) { action.editProfile(); }
         });
 
-        binding.LikedLocations.setOnClickListener(new View.OnClickListener() {
+        binding.verified.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                action.likedLocationsRequest();
+                action.requestVerification();
             }
         });
 
@@ -149,7 +149,7 @@ public class ProfileFragment extends Fragment {
             action = (profile) context;
         }
     }
-    @GlideModule
+   /* @GlideModule
     public class MyAppGlideModule extends AppGlideModule {
 
         @Override
@@ -158,7 +158,7 @@ public class ProfileFragment extends Fragment {
             registry.append(StorageReference.class, InputStream.class,
                     new FirebaseImageLoader.Factory());
         }
-    }
+    }*/
 
     public static profile action;
 
@@ -171,5 +171,6 @@ public class ProfileFragment extends Fragment {
         void likedLocationsRequest();
         void logout();
         void gems();
+        void requestVerification();
     }
 }

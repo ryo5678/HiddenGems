@@ -12,19 +12,35 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.hiddengems.AddScreenFragment;
 import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentRequestTagsBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 
 
 public class RequestTagsFragment extends Fragment {
 
     FragmentRequestTagsBinding binding;
     String text;
+    String id;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+
 
     public RequestTagsFragment() {
         // Required empty public constructor
@@ -72,6 +88,24 @@ public class RequestTagsFragment extends Fragment {
     }
 
     public void submitTags(String text){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        HashMap<String,Object> tags = new HashMap<>();
+
+        // Generate id first
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        tags.put("tag", text);
+
+        db.collection("reqTags")
+                .add(tags);
+
+        FragmentManager fm = getActivity()
+                .getSupportFragmentManager();
+        fm.popBackStack("TagRequest", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+
         //String token = mUserToken.token;
         /*FormBody formBody = new FormBody.Builder()
                 .add("post_text", text)
@@ -95,9 +129,9 @@ public class RequestTagsFragment extends Fragment {
                     String body = responseBody.string();
                     Log.d(TAG,body);
                     */
-                    FragmentManager fm = getActivity()
-                            .getSupportFragmentManager();
-                    fm.popBackStack("TagRequest", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+          //          FragmentManager fm = getActivity()
+          //                  .getSupportFragmentManager();
+          //          fm.popBackStack("TagRequest", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 /*}
             }
         });*/
@@ -105,4 +139,5 @@ public class RequestTagsFragment extends Fragment {
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
     }
+
 }

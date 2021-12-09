@@ -16,10 +16,23 @@ import android.widget.Toast;
 import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentHoursChangeBinding;
 import com.example.hiddengems.databinding.FragmentLocationRemovalBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
 
 public class LocationRemovalFragment extends Fragment {
 
     FragmentLocationRemovalBinding binding;
+    String id;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    FirebaseAuth mAuth;
+    FirebaseUser user;
 
     public LocationRemovalFragment() {
         // Required empty public constructor
@@ -65,6 +78,18 @@ public class LocationRemovalFragment extends Fragment {
 
     public void removeLocation(String locationName){
         // Remove location from database
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        HashMap<String,Object> locations = new HashMap<>();
+
+        // Generate id first
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        locations.put("location", locationName);
+
+        db.collection("remLocation")
+                .add(locations);
 
         FragmentManager fm = getActivity()
                 .getSupportFragmentManager();
@@ -74,4 +99,6 @@ public class LocationRemovalFragment extends Fragment {
     public void missingInput(Context context){
         Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
     }
+
+
 }
