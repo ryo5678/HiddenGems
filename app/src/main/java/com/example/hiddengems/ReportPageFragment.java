@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.hiddengems.databinding.FragmentReportPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -30,13 +32,15 @@ public class ReportPageFragment extends Fragment {
     StorageReference storageReference = storage.getReference();
     FirebaseAuth mAuth;
     FirebaseUser user;
+    DocumentReference docRef;
 
-    public ReportPageFragment() {
+    public ReportPageFragment(DocumentReference documentReference) {
+        this.docRef = documentReference;
         // Required empty public constructor
     }
 
     public static ReportPageFragment newInstance() {
-        ReportPageFragment fragment = new ReportPageFragment();
+        ReportPageFragment fragment = new ReportPageFragment(newInstance().docRef);
         return fragment;
     }
 
@@ -80,6 +84,7 @@ public class ReportPageFragment extends Fragment {
 
         reportLocation.put("user", user.getUid());
         reportLocation.put("reason", reportDescription);
+        reportLocation.put("locationID", docRef);
 
         db.collection("reportLocation")
                 .add(reportLocation);

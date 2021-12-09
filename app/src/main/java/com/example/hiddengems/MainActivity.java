@@ -27,6 +27,7 @@ import com.example.hiddengems.dataModels.Person.*;
 import com.example.hiddengems.dataModels.Locations.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -149,9 +150,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
-    public void report() {
+    public void report(DocumentReference docRef) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, new ReportPageFragment())
+                .replace(R.id.fragmentContainerView, new ReportPageFragment(docRef))
                 .addToBackStack("report")
                 .commit();
     }

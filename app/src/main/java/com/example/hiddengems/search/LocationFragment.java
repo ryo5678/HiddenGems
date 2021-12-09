@@ -246,9 +246,10 @@ public class LocationFragment extends Fragment {
         });
 
         binding.reportButton.setOnClickListener(new View.OnClickListener() {
+            DocumentReference docRef = db.collection("locations").document(id);
             @Override
             public void onClick(View view) {
-                action.report();
+                action.report(docRef);
             }
         });
 
@@ -344,7 +345,7 @@ public class LocationFragment extends Fragment {
     public static location action;
 
     public interface location{
-        void report();
+        void report(DocumentReference docRef);
     }
 
     public class Review {
