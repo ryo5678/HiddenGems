@@ -88,8 +88,8 @@
     <!-- Verified Button -->
     <string name="verified">Request Verification</string>
     <string name="verificDescription">
-        Would you like to be a verified and let others know that you are a legitimate business/user? \n\n
-        List the your name and/or name of your business and the reason you would like to be verified along with a phone number to get in contact with you.
+        Would you like to be verified and let others know that you are a legitimate business/user? \n\n
+        List the your name and/or the name of your business and the reason you would like to be verified along with a phone number to get in contact with you.
     </string>
 
     <!-- Report Page -->
