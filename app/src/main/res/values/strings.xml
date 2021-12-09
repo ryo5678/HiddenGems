@@ -88,8 +88,8 @@
     <!-- Verified Button -->
     <string name="verified">Request Verification</string>
     <string name="verificDescription">
-        Would you like to be a verified and let others know that you are a legitimate business? \n\n
-        List the name of your business and the reason you would like to be verified along with a phone number to get in contact with you.
+        Would you like to be a verified and let others know that you are a legitimate business/user? \n\n
+        List the your name and/or name of your business and the reason you would like to be verified along with a phone number to get in contact with you.
     </string>
 
     <!-- Report Page -->
@@ -101,7 +101,6 @@
         <item>Wrong Information</item>
         <item>Inappropriate Content</item>
     </string-array>
-    <string name="reportDescription">Enter short description</string>
     <string name="reportHint">Enter description here</string>
 
     <!-- Add Page -->
@@ -145,6 +144,9 @@
     <string name="locationAddress">Address:</string>
     <string name="locationReview">Reviews:</string>
     <string name="locationAddReview">Write a review!</string>
+    <string name="report">Report</string>
+    <string name="reportReason">State the name of the location you would like to report and the reason you would like to report this post in the textbox below. \n\n
+    We appreciate and value your feedback. Thank you. </string>
 
 
 </resources>

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location,
         EditProfileFragment.profile, LoginFragment.login,
         BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results,
-        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks{
+        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks, LocationFragment.location{
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -148,7 +148,13 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
 
-
+    @Override
+    public void report() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new ReportPageFragment())
+                .addToBackStack("report")
+                .commit();
+    }
 
     @Override
     public void likedLocationsRequest() {

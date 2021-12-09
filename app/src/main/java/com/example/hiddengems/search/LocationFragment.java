@@ -27,6 +27,7 @@ import com.example.hiddengems.R;
 
 import com.example.hiddengems.dataModels.Locations.*;
 import com.example.hiddengems.databinding.FragmentLocationBinding;
+import com.example.hiddengems.profile.ProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -244,6 +245,13 @@ public class LocationFragment extends Fragment {
             }
         });
 
+        binding.reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.report();
+            }
+        });
+
     }
     public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecyclerViewAdapter.ReviewViewHolder> {
         ArrayList<Review> items;
@@ -323,6 +331,20 @@ public class LocationFragment extends Fragment {
                 });
             }
         }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof location){
+            action = (location) context;
+        }
+    }
+
+    public static location action;
+
+    public interface location{
+        void report();
     }
 
     public class Review {

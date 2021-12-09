@@ -14,10 +14,22 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hiddengems.databinding.FragmentReportPageBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
 
 public class ReportPageFragment extends Fragment {
 
     FragmentReportPageBinding binding;
+    String id;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    FirebaseAuth mAuth;
+    FirebaseUser user;
 
     public ReportPageFragment() {
         // Required empty public constructor
@@ -48,23 +60,36 @@ public class ReportPageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String reportDescription =  binding.reportDescription.getText().toString();
-                String reason = binding.reportReason.getSelectedItem().toString();
 
                 if(reportDescription.isEmpty()) {
-                    reportPage(reason, "");
+                    missingInput(getActivity());
                 }
                 else {
-                    reportPage(reason, reportDescription);
+                    reportPage(reportDescription);
                 }
             }
         });
     }
 
-    public void reportPage(String reason, String reportDescription){
-        // Send report and return to previous page
+    public void reportPage(String reportDescription){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        HashMap<String,Object> reportLocation = new HashMap<>();
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        reportLocation.put("user", user.getUid());
+        reportLocation.put("reason", reportDescription);
+
+        db.collection("reportLocation")
+                .add(reportLocation);
 
         FragmentManager fm = getActivity()
                 .getSupportFragmentManager();
-        fm.popBackStack("reportPage", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fm.popBackStack("report", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    public void missingInput(Context context){
+        Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
     }
 }
