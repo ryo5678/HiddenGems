@@ -134,7 +134,15 @@ public class MyGemsFragment extends Fragment {
 
                 });
 
+                binding.editButtonGems2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FragmentManager fm = getActivity()
+                                .getSupportFragmentManager();
+                        fm.popBackStack("gems", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
+                    }
+                });
 
     }
 
