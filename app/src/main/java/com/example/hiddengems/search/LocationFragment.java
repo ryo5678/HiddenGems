@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -106,6 +108,7 @@ public class LocationFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("locations").document(id);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -131,7 +134,9 @@ public class LocationFragment extends Fragment {
                                 ,document.getString("Category"),document.getString("Description"),
                                 document.getString("time"),total,ratings.size(),
                                 (ArrayList<String>)document.get("Tags"));
-
+                        location.setViews(Math.toIntExact((Long) document.get("Views")));
+                        location.setViews(location.getViews() + 1);
+                        docRef.update("Views",location.getViews());
                         getActivity().setTitle(location.getName());
                         binding.locationViewName.setText(location.getName());
                         binding.locationDescription.setText(location.getDescription());
@@ -144,6 +149,7 @@ public class LocationFragment extends Fragment {
                     }
                 } else {
                 }
+
             }
         });
 
