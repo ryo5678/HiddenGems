@@ -62,7 +62,7 @@ public class RequestVerificationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Request Operating Hours");
+        getActivity().setTitle("Request Verification");
         binding.submitVerific.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
