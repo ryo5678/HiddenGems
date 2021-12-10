@@ -49,6 +49,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.UploadTask;
 
 import org.w3c.dom.Text;
@@ -56,6 +57,7 @@ import org.w3c.dom.Text;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -182,12 +184,15 @@ public class editLocationFragment extends Fragment {
                                 (ArrayList<String>)document.get("Tags"));
                         location.setViews(Math.toIntExact((Long) document.get("Views")));
                         location.setViews(location.getViews() + 1);
+                        String tags = location.getTags().toString().replace("[","")
+                                .replace("]","").trim();
+
                         docRef.update("Views",location.getViews());
                         getActivity().setTitle(location.getName());
                         binding.locationViewName.setText(location.getName());
                         binding.locationDescription.setText(location.getDescription());
                         binding.locationCategory.setText(location.getCategory());
-                        binding.locationTags.setText(location.getTags().toString());
+                        binding.locationTags.setText(tags);
                         binding.locationAddress.setText(location.getAddress());
                         binding.ratingAverageOutput.setText(String.valueOf(total));
 
@@ -212,8 +217,30 @@ public class editLocationFragment extends Fragment {
                 }
                 else {
                     //add code to update firebase
+                    String newDes = binding.locationDescription.getText().toString();
+                    String newCat = binding.locationCategory.getText().toString();
+                    String listTags = binding.locationTags.getText().toString();
+                    ArrayList<String> newTags = new ArrayList<String>(Arrays.asList(listTags.split(",")));
+                    String newAdd = binding.locationAddress.getText().toString();
 
-                    action.editLocation();
+                    HashMap<String, Object> editLoc = new HashMap<>();
+                    editLoc.put("Description",newDes);
+                    editLoc.put("Category",newCat);
+                    editLoc.put("Tags", newTags);
+                    editLoc.put("Address", newAdd);
+
+                    db.collection("locations").document(documentReference.getId())
+                            .set(editLoc, SetOptions.merge())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                }
+                            });
+
+                    action.returnLocation(documentReference.getId());
+
+
                 }
             }
         });
@@ -263,7 +290,7 @@ public class editLocationFragment extends Fragment {
     public static editLocation action;
 
     public interface editLocation{
-        void editLocation();
+        void returnLocation(String id);
     }
 
 

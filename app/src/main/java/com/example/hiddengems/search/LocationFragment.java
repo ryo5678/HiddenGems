@@ -172,6 +172,8 @@ public class LocationFragment extends Fragment {
                                 ,document.getString("Category"),document.getString("Description"),
                                 document.getString("time"),total,ratings.size(),
                                 (ArrayList<String>)document.get("Tags"));
+                        String tags = location.getTags().toString().replace("[","")
+                                .replace("]","").trim();
                         location.setViews(Math.toIntExact((Long) document.get("Views")));
                         location.setViews(location.getViews() + 1);
                         docRef.update("Views",location.getViews());
@@ -179,7 +181,7 @@ public class LocationFragment extends Fragment {
                         binding.locationViewName.setText(location.getName());
                         binding.locationDescription.setText(location.getDescription());
                         binding.locationCategory.setText(location.getCategory());
-                        binding.locationTags.setText(location.getTags().toString());
+                        binding.locationTags.setText(tags);
                         binding.locationAddress.setText(location.getAddress());
                         binding.ratingAverageOutput.setText(String.valueOf(total));
 

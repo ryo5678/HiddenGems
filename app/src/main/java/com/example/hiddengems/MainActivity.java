@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location,
         EditProfileFragment.profile, LoginFragment.login,
         BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results,
-        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks, LocationFragment.location{
+        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks, LocationFragment.location,
+        editLocationFragment.editLocation{
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                             if(document.getBoolean("banned").equals(true)) {
                                 Toast.makeText(getBaseContext(),document.getString("ban_reason"),Toast.LENGTH_SHORT).show();
                                 logout();
+                                Log.d(TAG, "banned");
                             }
                         } else {
 
@@ -324,4 +326,11 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
 
+    @Override
+    public void returnLocation(String id) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
+                .addToBackStack("ShowLocation")
+                .commit();
+    }
 }
