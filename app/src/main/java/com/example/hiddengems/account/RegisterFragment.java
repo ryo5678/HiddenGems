@@ -111,7 +111,6 @@ public class RegisterFragment extends Fragment {
                                             newUser.put("banned",false);
                                             newUser.put("ban_reason","");
                                             newUser.put("verified",false);
-                                            newUser.put("blocked",blockedList);
 
                                             db.collection("users").document(user.getUid())
                                                     .set(newUser)
