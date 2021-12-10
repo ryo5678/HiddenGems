@@ -102,7 +102,11 @@ public class SearchScreenFragment extends Fragment {
                             for(int x=0; x<ratings.size();x++) {
                                 num += ratings.get(x);
                             }
-                            num /= ratings.size();
+                            if (ratings.size() == 0){
+                                num = 0;
+                            } else {
+                                num /= ratings.size();
+                            }
                             newPlace.setCurrentRating(num);
                             newPlace.setChain((Boolean) document.get("is_Chain"));
                             newPlace.setVerified((Boolean) document.get("Verified"));
