@@ -158,6 +158,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
     @Override
+    public void goProfile(String id) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, ProfileFragment.newInstance(id))
+                .addToBackStack("Profile")
+                .commit();
+    }
+
+    @Override
     public void likedLocationsRequest() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, LikedLocationsFragment.newInstance())
