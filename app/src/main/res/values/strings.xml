@@ -122,6 +122,8 @@
     <string name="textView15">My Gems</string>
     <string name="saveButtonGem">Save</string>
     <string name="saveProfileButton">Save</string>
+    <string name="profileBan">Ban User</string>
+    <string name="profileReport">Report</string>
 
     <!-- Login page -->
     <string name="userView">Username:</string>

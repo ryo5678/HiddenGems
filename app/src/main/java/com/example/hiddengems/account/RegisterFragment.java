@@ -106,7 +106,7 @@ public class RegisterFragment extends Fragment {
                                             List<String> blockedList = new ArrayList<>();
                                             HashMap<String, Object> newUser = new HashMap<>();
                                             newUser.put("UID",user.getUid());
-                                            newUser.put("name",user.getDisplayName());
+                                            newUser.put("name",firstName + " " + lastName);
                                             newUser.put("photo",user.getPhotoUrl());
                                             newUser.put("banned",false);
                                             newUser.put("ban_reason","");

@@ -107,6 +107,8 @@ public class SearchScreenFragment extends Fragment {
                             } else {
                                 num /= ratings.size();
                             }
+
+
                             newPlace.setCurrentRating(num);
                             newPlace.setChain((Boolean) document.get("is_Chain"));
                             newPlace.setVerified((Boolean) document.get("Verified"));
