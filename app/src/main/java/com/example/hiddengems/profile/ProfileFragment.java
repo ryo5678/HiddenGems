@@ -48,6 +48,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -135,7 +136,7 @@ public class ProfileFragment extends Fragment {
             binding.editProfileButton.setVisibility(View.VISIBLE);
         }
 
-        if(person.getUid() == "YPKp0avJHTPNI30gT7Rcgf9jme62") {
+        if(person.getUid().equals("YPKp0avJHTPNI30gT7Rcgf9jme62")) {
             isMod = true;
         } else {
             isMod = false;
@@ -201,7 +202,47 @@ public class ProfileFragment extends Fragment {
         binding.profileBan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Ban a user!");
 
+
+                final EditText input = new EditText(getActivity());
+
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+
+                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String banText;
+                        banText = input.getText().toString();
+
+                        HashMap<String, Object> userBan = new HashMap<>();
+                        userBan.put("ban_reason",banText);
+                        userBan.put("banned",true);
+
+                        db.collection("users").document(cID)
+                                .set(userBan, SetOptions.merge())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                    }
+                                });
+
+
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 
