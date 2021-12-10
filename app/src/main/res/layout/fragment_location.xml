@@ -7,7 +7,23 @@ android:layout_height="match_parent"
 tools:context=".search.LocationFragment">
 
 
-<TextView
+    <Button
+        android:id="@+id/editLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:capitalize="none"
+        android:minWidth="10dp"
+        android:minHeight="10dp"
+        android:text="@string/editProfileButton"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/locationDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/locationViewName"
+        app:layout_constraintVertical_bias="0.742" />
+
+    <TextView
     android:id="@+id/locationViewName"
     android:layout_width="wrap_content"
     android:layout_height="40dp"
@@ -189,16 +205,16 @@ tools:context=".search.LocationFragment">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:capitalize="none"
-        android:minHeight="10dp"
         android:minWidth="10dp"
+        android:minHeight="10dp"
         android:text="@string/report"
         android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@+id/locationDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toEndOf="@+id/locationViewName"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/locationViewName"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.746" />
 
     <ImageView
         android:id="@+id/deleteLocation"

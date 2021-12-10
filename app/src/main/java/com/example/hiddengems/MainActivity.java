@@ -21,6 +21,7 @@ import com.example.hiddengems.home.*;
 import com.example.hiddengems.search.LocationFragment;
 import com.example.hiddengems.search.SearchResultsFragment;
 import com.example.hiddengems.search.SearchScreenFragment;
+import com.example.hiddengems.search.editLocationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.hiddengems.dataModels.Person.*;
@@ -146,6 +147,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, new EditProfileFragment())
                 .addToBackStack("editProfile")
+                .commit();
+    }
+
+    @Override
+    public void editLocation(DocumentReference docRef) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new editLocationFragment(docRef))
+                .addToBackStack("editLocation")
                 .commit();
     }
 
