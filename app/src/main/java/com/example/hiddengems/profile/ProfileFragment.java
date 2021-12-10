@@ -26,7 +26,7 @@ import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentProfileBinding;
 
 import com.example.hiddengems.dataModels.Person.*;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
+//import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -82,6 +82,7 @@ public class ProfileFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         person = mAuth.getCurrentUser();
+
 
         if(person.getUid() == "YPKp0avJHTPNI30gT7Rcgf9jme62") {
             isMod = true;

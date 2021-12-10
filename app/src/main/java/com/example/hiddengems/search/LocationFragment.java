@@ -108,7 +108,7 @@ public class LocationFragment extends Fragment {
 
         /* Moderator Code Start */
 
-        if(user.getUid() == "YPKp0avJHTPNI30gT7Rcgf9jme62") {
+        if(user.getUid().equals("YPKp0avJHTPNI30gT7Rcgf9jme62")) {
             isMod = true;
         } else {
             isMod = false;
@@ -323,7 +323,7 @@ public class LocationFragment extends Fragment {
             holder.reviewView.setText(review.review);
             holder.dateView.setText(review.date);
 
-            if(review.creator.equals(user.getDisplayName())) {
+            if(review.creator.equals(user.getDisplayName()) || isMod == true) {
                 holder.imageView3.setVisibility(View.VISIBLE);
             } else {
                 holder.imageView3.setVisibility(View.GONE);
@@ -351,6 +351,13 @@ public class LocationFragment extends Fragment {
                 reviewView = itemView.findViewById(R.id.reviewDesc);
                 dateView = itemView.findViewById(R.id.reviewDate);
                 imageView3 = itemView.findViewById(R.id.imageView3);
+
+                itemView.findViewById(R.id.reviewName).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
 
                 itemView.findViewById(R.id.imageView3).setOnClickListener(new View.OnClickListener() {
                     @Override

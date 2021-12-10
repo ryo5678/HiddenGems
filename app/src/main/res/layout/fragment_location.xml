@@ -99,13 +99,14 @@ tools:context=".search.LocationFragment">
         android:id="@+id/locationDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/locationCategory"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textViewCategory"
         app:layout_constraintTop_toBottomOf="@+id/locationViewName"
-        app:layout_constraintVertical_bias="0.139" />
+        app:layout_constraintVertical_bias="0.097" />
 
     <TextView
         android:id="@+id/locationAddress"
@@ -181,7 +182,7 @@ tools:context=".search.LocationFragment">
         app:layout_constraintHorizontal_bias="0.834"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationAddress"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintVertical_bias="0.047" />
 
     <Button
         android:id="@+id/reportButton"
