@@ -122,6 +122,15 @@ public class ProfileFragment extends Fragment {
                             binding.profileName.setText(user.getDisplayName());
                             binding.profileLogout.setVisibility(View.GONE);
                             binding.editProfileButton.setVisibility(View.GONE);
+                            storageReference.child("images/profile/" + document.getString("photo")).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Glide.with(getContext()).load(uri).into(binding.profileImage);
+                                }
+                            });
+
+
+
                         } else {
                         }
                     } else {
@@ -134,6 +143,12 @@ public class ProfileFragment extends Fragment {
             binding.profileEmail.setText(person.getEmail());
             binding.profileLogout.setVisibility(View.VISIBLE);
             binding.editProfileButton.setVisibility(View.VISIBLE);
+            storageReference.child("images/profile/" + person.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(getContext()).load(uri).into(binding.profileImage);
+                }
+            });
         }
 
         if(person.getUid().equals("YPKp0avJHTPNI30gT7Rcgf9jme62")) {
@@ -252,14 +267,6 @@ public class ProfileFragment extends Fragment {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             binding.profileImage.setImageBitmap(myBitmap);
         }*/
-
-        storageReference.child("images/profile/" + person.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(getContext()).load(uri).into(binding.profileImage);
-            }
-        });
-
 
         binding.profileLogout.setOnClickListener(new View.OnClickListener() {
             @Override
