@@ -106,6 +106,8 @@ public class LocationFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
+
+
         /* Moderator Code Start */
 
         if(user.getUid().equals("YPKp0avJHTPNI30gT7Rcgf9jme62")) {
@@ -229,7 +231,8 @@ public class LocationFragment extends Fragment {
                         for(QueryDocumentSnapshot document : value){
                             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd h:mm a");
                             reviews.add(new Review(document.getString("creator"), document.getString("review"),
-                                    dateFormat.format(document.getTimestamp("time_created").toDate()), document.getId()));
+                                    dateFormat.format(document.getTimestamp("time_created").toDate()), document.getId(),
+                                    document.getString("creatorID")));
                         }
                          adapter.notifyDataSetChanged();
                     }
@@ -265,6 +268,7 @@ public class LocationFragment extends Fragment {
                         review.put("creator",user.getDisplayName());
                         review.put("review",reviewText);
                         review.put("time_created", Timestamp.now());
+                        review.put("creatorID",user.getUid());
 
                         docRef.collection("reviews")
                                 .add(review)
@@ -355,6 +359,11 @@ public class LocationFragment extends Fragment {
                 itemView.findViewById(R.id.reviewName).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (items.get(position).creatorID != null) {
+                            Log.d("TAG","Click log");
+                            Log.d("TAG",items.get(position).creatorID);
+                            action.goProfile(items.get(position).creatorID);
+                        }
 
                     }
                 });
@@ -397,6 +406,7 @@ public class LocationFragment extends Fragment {
 
     public interface location{
         void report(DocumentReference docRef);
+        void goProfile(String id);
     }
 
     public class Review {
@@ -404,12 +414,22 @@ public class LocationFragment extends Fragment {
         String review;
         String date;
         String reviewID;
+        String creatorID;
 
-        public Review(String creator, String review, String date, String reviewID) {
+        public Review(String creator, String review, String date, String reviewID, String creatorID) {
             this.creator = creator;
             this.review = review;
             this.date = date;
             this.reviewID = reviewID;
+            this.creatorID = creatorID;
+        }
+
+        public String getCreatorID() {
+            return creatorID;
+        }
+
+        public void setCreatorID(String creatorID) {
+            this.creatorID = creatorID;
         }
 
         public String getCreator() {

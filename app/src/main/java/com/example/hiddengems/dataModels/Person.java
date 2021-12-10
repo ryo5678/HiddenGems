@@ -40,6 +40,14 @@ public class Person {
             this.profilePic = ProfilePic;
         }
 
+        public Users(String display, String ProfilePic) {
+            this.displayName = display;
+            this.profilePic = ProfilePic;
+        }
+        public Users(String display) {
+            this.displayName = display;
+        }
+
         @Override
         public String toString() {
             return "Users{" +
