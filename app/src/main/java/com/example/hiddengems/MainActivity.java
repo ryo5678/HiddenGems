@@ -24,6 +24,7 @@ import com.example.hiddengems.home.*;
 import com.example.hiddengems.search.LocationFragment;
 import com.example.hiddengems.search.SearchResultsFragment;
 import com.example.hiddengems.search.SearchScreenFragment;
+import com.example.hiddengems.search.editLocationFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -48,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location,
         EditProfileFragment.profile, LoginFragment.login,
         BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results,
-        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks, LocationFragment.location{
+        MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks, LocationFragment.location,
+        editLocationFragment.editLocation{
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                             if(document.getBoolean("banned").equals(true)) {
                                 Toast.makeText(getBaseContext(),document.getString("ban_reason"),Toast.LENGTH_SHORT).show();
                                 logout();
+                                Log.d(TAG, "banned");
                             }
                         } else {
 
@@ -180,6 +183,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, new EditProfileFragment())
                 .addToBackStack("editProfile")
+                .commit();
+    }
+
+    @Override
+    public void editLocation(DocumentReference docRef) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new editLocationFragment(docRef))
+                .addToBackStack("editLocation")
                 .commit();
     }
 
@@ -315,4 +326,11 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
     }
 
 
+    @Override
+    public void returnLocation(String id) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
+                .addToBackStack("ShowLocation")
+                .commit();
+    }
 }
