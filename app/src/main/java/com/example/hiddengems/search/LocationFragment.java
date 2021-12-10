@@ -70,6 +70,7 @@ public class LocationFragment extends Fragment {
     FirebaseUser user;
     int total = 0;
     int allRatings = 0;
+    boolean isMod;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -104,6 +105,43 @@ public class LocationFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+
+        /* Moderator Code Start */
+
+        if(user.getUid().equals("YPKp0avJHTPNI30gT7Rcgf9jme62")) {
+            isMod = true;
+        } else {
+            isMod = false;
+        }
+
+        if(isMod == true) {
+            binding.deleteLocation.setVisibility(View.VISIBLE);
+        } else {
+            binding.deleteLocation.setVisibility(View.GONE);
+        }
+        
+        binding.deleteLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference docRef = db.collection("locations").document(id);
+                docRef.delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+            }
+        });
+
+        /* Moderator Code End */
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("locations").document(id);
@@ -285,7 +323,7 @@ public class LocationFragment extends Fragment {
             holder.reviewView.setText(review.review);
             holder.dateView.setText(review.date);
 
-            if(review.creator.equals(user.getDisplayName())) {
+            if(review.creator.equals(user.getDisplayName()) || isMod == true) {
                 holder.imageView3.setVisibility(View.VISIBLE);
             } else {
                 holder.imageView3.setVisibility(View.GONE);
@@ -313,6 +351,13 @@ public class LocationFragment extends Fragment {
                 reviewView = itemView.findViewById(R.id.reviewDesc);
                 dateView = itemView.findViewById(R.id.reviewDate);
                 imageView3 = itemView.findViewById(R.id.imageView3);
+
+                itemView.findViewById(R.id.reviewName).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
 
                 itemView.findViewById(R.id.imageView3).setOnClickListener(new View.OnClickListener() {
                     @Override

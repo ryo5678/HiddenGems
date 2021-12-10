@@ -20,12 +20,13 @@ import android.widget.ImageView;
 //import com.bumptech.glide.Registry;
 //import com.bumptech.glide.annotation.GlideModule;
 //import com.bumptech.glide.module.AppGlideModule;
+import com.bumptech.glide.Glide;
 import com.example.hiddengems.Camera_Activity;
 import com.example.hiddengems.R;
 import com.example.hiddengems.databinding.FragmentProfileBinding;
 
 import com.example.hiddengems.dataModels.Person.*;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
+//import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -44,6 +45,7 @@ public class ProfileFragment extends Fragment {
     FirebaseUser person;
     private FirebaseAuth mAuth;
     StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    boolean isMod;
 
 
     public ProfileFragment() {
@@ -80,6 +82,13 @@ public class ProfileFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         person = mAuth.getCurrentUser();
+
+
+        if(person.getUid() == "YPKp0avJHTPNI30gT7Rcgf9jme62") {
+            isMod = true;
+        } else {
+            isMod = false;
+        }
 
 
         binding.profileName.setText(person.getDisplayName());

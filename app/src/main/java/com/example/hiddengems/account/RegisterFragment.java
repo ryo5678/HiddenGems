@@ -18,11 +18,19 @@ import com.example.hiddengems.databinding.FragmentRegisterBinding;
 
 import com.example.hiddengems.dataModels.Person.*;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class RegisterFragment extends Fragment {
@@ -94,6 +102,25 @@ public class RegisterFragment extends Fragment {
                                                     .build();
                                             user.updateProfile(profileUpdates);
                                             action.signUp(user);
+                                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                            List<String> blockedList = new ArrayList<>();
+                                            HashMap<String, Object> newUser = new HashMap<>();
+                                            newUser.put("UID",user.getUid());
+                                            newUser.put("name",user.getDisplayName());
+                                            newUser.put("photo",user.getPhotoUrl());
+                                            newUser.put("banned",false);
+                                            newUser.put("ban_reason","");
+                                            newUser.put("verified",false);
+                                            newUser.put("blocked",blockedList);
+
+                                            db.collection("users").document(user.getUid())
+                                                    .set(newUser)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                        }
+                                                    });
 
                                         } else {
 
