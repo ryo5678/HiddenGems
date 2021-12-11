@@ -310,6 +310,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
                 .commit();
     }
 
+    @Override
+    public void whatsNew() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, new WhatsNewFragment())
+                .addToBackStack("WhatsNew")
+                .commit();
+    }
+
 
 
     /*
