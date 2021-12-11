@@ -54,6 +54,12 @@ public class HomeFragment extends Fragment {
                 action.showPick();
             }
         });
+        binding.buttonVisit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action.whatsNew();
+            }
+        });
     }
     @Override
     public void onAttach(@NonNull Context context) {
@@ -67,5 +73,6 @@ public class HomeFragment extends Fragment {
 
     public interface goPicks{
         void showPick();
+        void whatsNew();
     }
 }

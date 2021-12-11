@@ -87,14 +87,14 @@ public class OurPicksFragment extends Fragment {
 
                             Location newPlace = new Location(document.getId(), document.getString("Creator"),
                                     document.getString("Name"), document.getString("Category"),
-                                    (ArrayList<String>) document.get("Tags"));
+                                    (ArrayList<String>) document.get("Tags"),document.getBoolean("is_HiddenGem"));
                             Log.d("Check","Adding Location");
                             allLocations.add(newPlace);
                         }
                         mAuth = FirebaseAuth.getInstance();
                         for (int i = 0; i < allLocations.size(); i++) {
-                            String match = allLocations.get(i).Name;
-                            if (match.equals("Heist Brewery") || match.equals("Haberdish")) {
+                            boolean match = allLocations.get(i).isHiddenGem;
+                            if (match == true) {
                                 finalLocations.add(allLocations.get(i));
                             }
                         }
