@@ -47,7 +47,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.profile,
         RegisterFragment.register, AddScreenFragment.add, SearchResultsFragment.location,
-        EditProfileFragment.profile, LoginFragment.login,
+        EditProfileFragment.eprofile, LoginFragment.login,
         BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results,
         MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks, LocationFragment.location,
         editLocationFragment.editLocation, WhatsNewFragment.ourPick{
