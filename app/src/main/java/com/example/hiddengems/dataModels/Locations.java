@@ -116,6 +116,15 @@ public class Locations {
             this.Tags = Tags;
         }
 
+        public Location(String docID, String Creator, String Name, String Category, ArrayList<String> Tags, Boolean isHiddenGem) {
+            this.docID = docID;
+            this.Creator = Creator;
+            this.Name = Name;
+            this.Category = Category;
+            this.Tags = Tags;
+            this.isHiddenGem = isHiddenGem;
+        }
+
         @Override
         public String toString() {
             return "Gems{" +
