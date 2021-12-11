@@ -87,7 +87,8 @@ public class MapFragment extends Fragment {
                         if(allLocations.get(y).getCategory().equals(SelectedFilter) ||
                                 checkRating(SelectedFilter, allLocations.get(y)) ||
                                 checkSeason(SelectedFilter,allLocations.get(y)) ||
-                                checkTags(SelectedFilter, allLocations.get(y))) {
+                                checkTags(SelectedFilter, allLocations.get(y)) ||
+                                checkIfGem(SelectedFilter,allLocations.get(y))) {
 
                             markers.get(x).setVisible(true);
                         } else {
@@ -126,6 +127,14 @@ public class MapFragment extends Fragment {
         }
 
         return false;
+    }
+
+    private boolean checkIfGem(String filter, Locations.Location location) {
+        if (location.getHiddenGem() && filter.equals("Hidden Gems")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
