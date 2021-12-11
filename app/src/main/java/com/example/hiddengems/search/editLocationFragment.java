@@ -23,12 +23,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hiddengems.AddScreenFragment;
 import com.example.hiddengems.R;
 
 import com.example.hiddengems.dataModels.Locations.*;
+import com.example.hiddengems.databinding.FragmentEditLocationBinding;
 import com.example.hiddengems.databinding.FragmentLocationBinding;
+import com.example.hiddengems.profile.EditProfileFragment;
 import com.example.hiddengems.profile.ProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,6 +40,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -45,18 +49,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.UploadTask;
 
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class LocationFragment extends Fragment {
+public class editLocationFragment extends Fragment {
 
-    FragmentLocationBinding binding;
+    FragmentEditLocationBinding binding;
     Location location;
     String id;
     List<Integer> ratings = new ArrayList<>();
@@ -71,14 +78,17 @@ public class LocationFragment extends Fragment {
     int total = 0;
     int allRatings = 0;
     boolean isMod;
+    DocumentReference documentReference;
 
-    public LocationFragment() {
-        // Required empty public constructor
+
+    public editLocationFragment(DocumentReference docRef) {
+        this.documentReference = docRef;
+
     }
 
 
-    public static LocationFragment newInstance(String id) {
-        LocationFragment fragment = new LocationFragment();
+    public static editLocationFragment newInstance(String id) {
+        editLocationFragment fragment = new editLocationFragment(newInstance(id).documentReference);
         Bundle args = new Bundle();
         args.putString("Location",id);
         fragment.setArguments(args);
@@ -95,7 +105,7 @@ public class LocationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentLocationBinding.inflate(inflater,container,false);
+        binding = FragmentEditLocationBinding.inflate(inflater,container,false);
         return binding.getRoot();
     }
 
@@ -119,12 +129,12 @@ public class LocationFragment extends Fragment {
         } else {
             binding.deleteLocation.setVisibility(View.GONE);
         }
-        
+
         binding.deleteLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                DocumentReference docRef = db.collection("locations").document(id);
+                DocumentReference docRef = db.collection("locations").document(documentReference.getId());
                 docRef.delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -144,7 +154,7 @@ public class LocationFragment extends Fragment {
         /* Moderator Code End */
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("locations").document(id);
+        DocumentReference docRef = db.collection("locations").document(documentReference.getId());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -172,10 +182,11 @@ public class LocationFragment extends Fragment {
                                 ,document.getString("Category"),document.getString("Description"),
                                 document.getString("time"),total,ratings.size(),
                                 (ArrayList<String>)document.get("Tags"));
-                        String tags = location.getTags().toString().replace("[","")
-                                .replace("]","").trim();
                         location.setViews(Math.toIntExact((Long) document.get("Views")));
                         location.setViews(location.getViews() + 1);
+                        String tags = location.getTags().toString().replace("[","")
+                                .replace("]","").trim();
+
                         docRef.update("Views",location.getViews());
                         getActivity().setTitle(location.getName());
                         binding.locationViewName.setText(location.getName());
@@ -193,37 +204,51 @@ public class LocationFragment extends Fragment {
             }
         });
 
-        binding.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        binding.saveEdits.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                int rating = (int) ratingBar.getRating();
+            public void onClick(View view) {
+                String description = binding.locationDescription.getText().toString();
+                String category = binding.locationCategory.getText().toString();
+                String tags = binding.locationTags.getText().toString();
+                String address = binding.locationAddress.getText().toString();
 
-                //total *= ratings.size();
-                total += rating;
-                ratings.add(rating);
-                for (int i=0; i < ratings.size(); i++) {
-                    allRatings += ratings.get(i);
+                if(description.isEmpty()  || category.isEmpty() || tags.isEmpty() || address.isEmpty()) {
+                    missingInput(getActivity());
                 }
-                allRatings /= ratings.size();
-                total /= ratings.size();
+                else {
+                    //add code to update firebase
+                    String newDes = binding.locationDescription.getText().toString();
+                    String newCat = binding.locationCategory.getText().toString();
+                    String listTags = binding.locationTags.getText().toString();
+                    ArrayList<String> newTags = new ArrayList<String>(Arrays.asList(listTags.split(",")));
+                    String newAdd = binding.locationAddress.getText().toString();
 
-                location.setNumberofRatings(ratings.size());
-                location.setCurrentRating(allRatings);
+                    HashMap<String, Object> editLoc = new HashMap<>();
+                    editLoc.put("Description",newDes);
+                    editLoc.put("Category",newCat);
+                    editLoc.put("Tags", newTags);
+                    editLoc.put("Address", newAdd);
 
-                mAuth = FirebaseAuth.getInstance();
-                FirebaseUser user = mAuth.getCurrentUser();
+                    db.collection("locations").document(documentReference.getId())
+                            .set(editLoc, SetOptions.merge())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
 
-                DocumentReference docRef = db.collection("locations").document(id);
+                                }
+                            });
 
-                docRef.update("ratings",FieldValue.arrayUnion(user.getUid()));
-                docRef.update("ratings",FieldValue.arrayUnion(String.valueOf(rating)));
-                binding.ratingAverageOutput.setText(String.valueOf(allRatings));
-                binding.ratingBar.setClickable(false);
-                binding.ratingBar.setFocusable(false);
-                binding.ratingBar.setIsIndicator(true);
+                    action.returnLocation(documentReference.getId());
+
+
+                }
             }
         });
-        db.collection("locations").document(id).collection("reviews")
+
+
+
+        binding.ratingBar.setEnabled(false);
+        db.collection("locations").document(documentReference.getId()).collection("reviews")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -231,10 +256,9 @@ public class LocationFragment extends Fragment {
                         for(QueryDocumentSnapshot document : value){
                             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd h:mm a");
                             reviews.add(new Review(document.getString("creator"), document.getString("review"),
-                                    dateFormat.format(document.getTimestamp("time_created").toDate()), document.getId(),
-                                    document.getString("creatorID")));
+                                    dateFormat.format(document.getTimestamp("time_created").toDate()), document.getId()));
                         }
-                         adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();
                     }
                 });
 
@@ -245,71 +269,31 @@ public class LocationFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        binding.addReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Add a review!");
+        binding.addReview.setEnabled(false);
 
-
-                final EditText input = new EditText(getActivity());
-
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-
-
-                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String reviewText;
-                        reviewText = input.getText().toString();
-
-                        HashMap<String, Object> review = new HashMap<>();
-                        review.put("creator",user.getDisplayName());
-                        review.put("review",reviewText);
-                        review.put("time_created", Timestamp.now());
-                        review.put("creatorID",user.getUid());
-
-                        docRef.collection("reviews")
-                                .add(review)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                });
-
-
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-            }
-        });
-
-        binding.reportButton.setOnClickListener(new View.OnClickListener() {
-            DocumentReference docRef = db.collection("locations").document(id);
-            @Override
-            public void onClick(View view) {
-                action.report(docRef);
-            }
-        });
-
-        binding.editLocation.setOnClickListener(new View.OnClickListener() {
-            DocumentReference docRef = db.collection("locations").document(id);
-            @Override
-            public void onClick(View view) {
-                action.editLocation(docRef);
-            }
-        });
+        binding.reportButton.setEnabled(false);
 
     }
+
+    public void missingInput(Context context){
+        Toast.makeText(context, getString(R.string.missing),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof editLocation) {
+            action = (editLocation) context;
+        }
+    }
+
+    public static editLocation action;
+
+    public interface editLocation{
+        void returnLocation(String id);
+    }
+
+
     public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecyclerViewAdapter.ReviewViewHolder> {
         ArrayList<Review> items;
         public ReviewRecyclerViewAdapter(ArrayList<Review> data) {
@@ -367,11 +351,6 @@ public class LocationFragment extends Fragment {
                 itemView.findViewById(R.id.reviewName).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (items.get(position).creatorID != null) {
-                            Log.d("TAG","Click log");
-                            Log.d("TAG",items.get(position).creatorID);
-                            action.goProfile(items.get(position).creatorID);
-                        }
 
                     }
                 });
@@ -402,43 +381,18 @@ public class LocationFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if(context instanceof location){
-            action = (location) context;
-        }
-    }
-
-    public static location action;
-
-    public interface location{
-        void report(DocumentReference docRef);
-        void editLocation(DocumentReference docRef);
-        void goProfile(String id);
-    }
 
     public class Review {
         String creator;
         String review;
         String date;
         String reviewID;
-        String creatorID;
 
-        public Review(String creator, String review, String date, String reviewID, String creatorID) {
+        public Review(String creator, String review, String date, String reviewID) {
             this.creator = creator;
             this.review = review;
             this.date = date;
             this.reviewID = reviewID;
-            this.creatorID = creatorID;
-        }
-
-        public String getCreatorID() {
-            return creatorID;
-        }
-
-        public void setCreatorID(String creatorID) {
-            this.creatorID = creatorID;
         }
 
         public String getCreator() {

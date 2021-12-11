@@ -217,14 +217,14 @@ public class AddScreenFragment extends Fragment {
         location.put("is_HiddenGem", false);
         location.put("ratings", new ArrayList<String>());
 
-        /*try {
+        try {
             List<Address> addressList = geocoder.getFromLocationName(address,1);
             Address address1 = addressList.get(0);
             location.put("Coordinates",new GeoPoint(address1.getLatitude(),address1.getLongitude()));
-        } catch (IOException e) {*/
+        } catch (IOException e) {
             location.put("Coordinates", new GeoPoint(35.312636212037155, -80.74201626366117));
-            //e.printStackTrace();
-      //  }
+            e.printStackTrace();
+        }
 
 
         reference.set(location).addOnSuccessListener(new OnSuccessListener<Void>() {
