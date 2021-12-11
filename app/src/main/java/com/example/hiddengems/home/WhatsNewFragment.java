@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.example.hiddengems.dataModels.Locations.Location;
 
 import java.util.ArrayList;
 
@@ -106,8 +107,8 @@ public class WhatsNewFragment extends Fragment {
 
     }
     public static class GemsRecyclerViewAdapter extends RecyclerView.Adapter<GemsRecyclerViewAdapter.GemsViewHolder> {
-        ArrayList<com.example.hiddengems.dataModels.Locations.Location> Locations;
-        public GemsRecyclerViewAdapter(ArrayList<com.example.hiddengems.dataModels.Locations.Location> data) {
+        ArrayList<Location> Locations;
+        public GemsRecyclerViewAdapter(ArrayList<Location> data) {
             this.Locations = data;
         }
         @NonNull
@@ -120,7 +121,7 @@ public class WhatsNewFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull GemsRecyclerViewAdapter.GemsViewHolder holder, @SuppressLint("RecyclerView") int position) {
-            com.example.hiddengems.dataModels.Locations.Location location = Locations.get(position);
+            Location location = Locations.get(position);
             holder.position = position;
             holder.nameView.setText(location.getName());
             holder.categoryView.setText(location.getCategory());
@@ -155,7 +156,7 @@ public class WhatsNewFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        action.pickShow(Locations.get(position).docID);
+                        action.pickShow2(Locations.get(position).docID);
                     }
                 });
 
@@ -176,6 +177,6 @@ public class WhatsNewFragment extends Fragment {
     public static ourPick action;
 
     public interface ourPick{
-        void pickShow(String id);
+        void pickShow2(String id);
     }
 }

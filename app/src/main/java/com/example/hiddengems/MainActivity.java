@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
         EditProfileFragment.profile, LoginFragment.login,
         BottomNavigationView.OnNavigationItemSelectedListener,SearchScreenFragment.results,
         MyGemsFragment.locationGem, OurPicksFragment.ourPicks, HomeFragment.goPicks, LocationFragment.location,
-        editLocationFragment.editLocation{
+        editLocationFragment.editLocation, WhatsNewFragment.ourPick{
 
     ActivityMainBinding binding;
     HomeFragment homeFragment = new HomeFragment();
@@ -336,6 +336,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.p
 
     @Override
     public void returnLocation(String id) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
+                .addToBackStack("ShowLocation")
+                .commit();
+    }
+
+    @Override
+    public void pickShow2(String id) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainerView, LocationFragment.newInstance(id))
                 .addToBackStack("ShowLocation")
