@@ -162,14 +162,13 @@ public class EditProfileFragment extends Fragment {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-
                                     }
                                 });
 
-                    }
 
-                    action.profile();
+                    }
                 }
+                action.profile();
             }
         });
     }
@@ -181,14 +180,14 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof profile) {
-            action = (profile) context;
+        if (context instanceof eprofile) {
+            action = (eprofile) context;
         }
     }
 
-    public static profile action;
+    public static eprofile action;
 
-    public interface profile{
+    public interface eprofile{
         void profile();
     }
 
